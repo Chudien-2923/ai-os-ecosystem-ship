@@ -415,7 +415,7 @@ Một mốc qua nhiều repo không atomic. Giữ contract Project commit trư�
 
 ## 14. Hợp nhất và tương thích
 
-### 14.1. Trạng thái Ship V0.1.1
+### 14.1. Trạng thái Ship V0.1.2
 
 - Factory, Playbook và shared context thuộc Intelligence; Staff/Projects là các repo độc lập ở sibling folders.
 - Clean distribution không mang legacy Factory, USER, work, Staff, Project hoặc runtime history của người phát hành.

@@ -1,6 +1,6 @@
 # AI OS Ecosystem Registry
 
-- Ship release: V0.1.1
+- Ship release: V0.1.2
 - Last reconciled: 2026-10-17
 - Root convention: sibling folders `OS Intelligence`, `OS Staff`, `OS Projects`
 
@@ -28,3 +28,4 @@ Version metadata không chứng minh runtime. Sau khi tạo hoặc nâng instanc
 - Fresh OMP 18.11.3 read-only creation prompts cho Staff và Project: pass; no mutation.
 - Staff/Project production runtime: chưa có instance nên chưa kiểm chứng, không bị ghi giả là pass.
 - Public packaging: root README/CHANGELOG/VERSION và `.gitkeep` placeholders; component contracts không đổi.
+- Public documentation: Vietnamese-first cho học viên Việt Nam; English technical terms MAY giữ nguyên khi rõ nghĩa hơn.

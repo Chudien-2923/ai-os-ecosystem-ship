@@ -16,3 +16,9 @@
 - Thêm root README, VERSION và CHANGELOG để GitHub hiển thị mục đích, version matrix và release history.
 - Thêm `.gitkeep` trong `OS Staff` và `OS Projects` để fresh clone giữ hai product folders chưa có instance.
 - Component contracts giữ nguyên; đây là Ship patch release về packaging và documentation.
+
+## 2026-10-17 — Ship V0.1.2 Vietnamese-first public docs
+
+- Correction từ người phát hành: học viên chủ yếu là người Việt Nam nên README và public release documentation dùng tiếng Việt làm ngôn ngữ chính.
+- Thuật ngữ kỹ thuật tiếng Anh được giữ khi rõ nghĩa hơn; không dịch máy móc.
+- Component contracts và behavior không đổi; đây là documentation/localization patch release.

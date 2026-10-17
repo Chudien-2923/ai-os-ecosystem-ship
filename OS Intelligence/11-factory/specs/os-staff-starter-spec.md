@@ -641,4 +641,4 @@ Nguồn dùng để học nguyên tắc, không phải dependency của spec:
 
 Tài liệu và source của các harness thay đổi theo phiên bản. Khi tích hợp phải kiểm tra bản đang dùng, không coi mô tả discovery hôm nay là cam kết vĩnh viễn.
 
-Spec này là contract tạo Staff của Ship V0.1.1. Mỗi Staff mới phải được kiểm tra bằng starter inventory, routing, fresh first-use và Project Context Gate khi có Project; generalized learning reuse, concurrent shared edits và bàn giao đa harness là acceptance theo từng instance. V0.2.3 không triển khai creative-learning V0.3.
+Spec này là contract tạo Staff của Ship V0.1.2. Mỗi Staff mới phải được kiểm tra bằng starter inventory, routing, fresh first-use và Project Context Gate khi có Project; generalized learning reuse, concurrent shared edits và bàn giao đa harness là acceptance theo từng instance. V0.2.3 không triển khai creative-learning V0.3.

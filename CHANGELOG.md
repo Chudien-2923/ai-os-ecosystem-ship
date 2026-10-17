@@ -1,36 +1,50 @@
-# Changelog
+# Lịch sử thay đổi
 
-All notable changes to AI OS Ecosystem Ship are recorded here. Ship versions use SemVer independently from OS Intelligence, Staff and Projects component versions.
+Mọi thay đổi đáng kể của AI OS Ecosystem Ship được ghi tại đây. Ship dùng SemVer độc lập với version của OS Intelligence, Staff và Projects.
+
+## [V0.1.2] — 2026-10-17
+
+### Đã thay đổi
+
+- Việt hóa README và Changelog cho nhóm học viên chủ yếu là người Việt Nam.
+- Giữ các thuật ngữ kỹ thuật bằng tiếng Anh khi rõ nghĩa hơn thay vì dịch máy móc.
+- Chuyển GitHub repository description và release notes hiện hành sang tiếng Việt.
+- Thêm Vietnamese-first audience contract vào Ship release metadata.
+
+### Không thay đổi
+
+- Component contracts vẫn là Intelligence V0.2.1, Staff V0.2.3 và Projects V0.1.3.
+- Cấu trúc, Skills, Factory behavior và privacy boundary giữ nguyên.
 
 ## [V0.1.1] — 2026-10-17
 
-### Added
+### Đã thêm
 
-- Public GitHub README with setup, architecture, privacy boundary and versioning guidance.
-- Root `VERSION` file for machine-readable Ship version.
-- `.gitkeep` placeholders so fresh clones preserve empty `OS Staff` and `OS Projects` product folders.
-- Public repository metadata and release notes workflow.
+- Public GitHub README với hướng dẫn setup, kiến trúc, privacy boundary và versioning.
+- Root `VERSION` để tool đọc được Ship version.
+- `.gitkeep` để fresh clone giữ hai product folders `OS Staff` và `OS Projects` chưa có instance data.
+- GitHub repository metadata và release notes workflow.
 
-### Changed
+### Đã thay đổi
 
-- Fresh-install acceptance now distinguishes three product folders from repository metadata files.
-- Ship release metadata advanced from V0.1.0 to V0.1.1; component contract versions are unchanged.
+- Fresh-install acceptance phân biệt ba product folders với repository metadata files.
+- Nâng Ship metadata từ V0.1.0 lên V0.1.1; component contract versions không đổi.
 
 ## [V0.1.0] — 2026-10-17
 
-### Added
+### Đã thêm
 
-- Initial clean teaching distribution.
+- Clean teaching distribution đầu tiên.
 - OS Intelligence V0.2.1 clean starter.
-- OS Staff V0.2.3 and OS Projects V0.1.3 Factory specs.
-- Portable `skill-creator`, `pre-compact` and `close` Skills with Claude adapters.
-- Factory routing to create Staff and Projects from natural-language prompts.
-- Ship SemVer, migration contract, registry and release-local log.
+- Factory specs cho OS Staff V0.2.3 và OS Projects V0.1.3.
+- Portable Skills `skill-creator`, `pre-compact`, `close` cùng Claude adapters.
+- Factory routing để tạo Staff và Project từ natural-language prompt.
+- Ship SemVer, migration contract, registry và release-local log.
 
-### Verified
+### Đã kiểm chứng
 
-- Mandatory starter inventory and privacy scan.
+- Mandatory starter inventory và privacy scan.
 - 97 active wikilinks/headings.
-- Exact Skill trees, lock file and Claude adapter realpaths.
-- Official validation for all three bundled Skills.
-- Fresh OMP read-only Staff and Project creation prompt smokes.
+- Exact Skill trees, lock file và Claude adapter realpaths.
+- Official validation cho cả ba bundled Skills.
+- Fresh OMP read-only smoke cho prompt tạo Staff và Project.

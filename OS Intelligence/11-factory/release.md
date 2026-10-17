@@ -1,6 +1,6 @@
 # AI OS Ecosystem Ship Release
 
-- Release: V0.1.1
+- Release: V0.1.2
 - Released: 2026-10-17
 - Intelligence contract: V0.2.1
 - Staff contract: V0.2.3
@@ -9,6 +9,10 @@
 ## Mục đích
 
 Bản ship là clean teaching distribution. Nó giữ generic operating system, Factory specs, portable Skills và khả năng tạo Staff/Project từ prompt; không chứa dữ liệu, work, research, output hoặc runtime history của người phát hành.
+
+## Ngôn ngữ phân phối
+
+Public README, changelog, repository description và release notes dùng tiếng Việt làm ngôn ngữ chính vì nhóm học viên chủ yếu là người Việt Nam. Thuật ngữ kỹ thuật MAY giữ bằng tiếng Anh khi cách đó chính xác hoặc dễ hiểu hơn; không dịch máy móc chỉ để thuần Việt.
 
 ## SemVer cho Ship
 
@@ -48,6 +52,12 @@ Version Ship độc lập với version ba component. Một release phải ghi r
 - Không có private names, brand data, machine-specific absolute paths, runtime IDs hoặc production artifacts.
 
 ## Upgrade history
+
+### V0.1.2
+
+- Việt hóa public README, changelog, GitHub description và release notes theo audience contract.
+- Giữ English technical terms khi rõ nghĩa hơn.
+- Component contracts, runtime behavior, Skills và privacy boundary không đổi.
 
 ### V0.1.1
 

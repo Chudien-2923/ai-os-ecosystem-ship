@@ -1,51 +1,53 @@
 # AI OS Ecosystem Ship
 
-Clean, versioned teaching starter for building a personal AI operating system with three layers: **OS Intelligence**, role-based **OS Staff**, and brand/workspace **OS Projects**.
+Bản khởi tạo sạch, có quản lý phiên bản để giảng dạy cách xây dựng một hệ điều hành AI cá nhân gồm ba lớp: **OS Intelligence**, **OS Staff** theo vai trò và **OS Projects** theo brand/workspace.
 
-## Current release
+Tài liệu dành chủ yếu cho học viên Việt Nam nên phần hướng dẫn và mô tả sử dụng tiếng Việt. Các thuật ngữ kỹ thuật như Staff, Project, Skill, Factory, runtime, workflow, version và migration được giữ bằng tiếng Anh khi rõ nghĩa hơn.
 
-- Ship: **V0.1.1**
+## Phiên bản hiện hành
+
+- Ship: **V0.1.2**
 - OS Intelligence contract: **V0.2.1**
 - OS Staff contract: **V0.2.3**
 - OS Projects contract: **V0.1.3**
 
-Release changes are recorded in [CHANGELOG.md](CHANGELOG.md). Detailed component and migration contracts live in [`OS Intelligence/11-factory/`](OS%20Intelligence/11-factory/).
+Thay đổi theo từng release được ghi tại [CHANGELOG.md](CHANGELOG.md). Contract chi tiết của component và migration nằm trong [`OS Intelligence/11-factory/`](OS%20Intelligence/11-factory/).
 
-## Structure
+## Cấu trúc
 
 ```text
 AI OS Ecosystem/
-├── OS Intelligence/   # Chief of Staff, research, Factory, Playbook and Skills
-├── OS Staff/          # Empty until Intelligence creates role-based Staff
-└── OS Projects/       # Empty until Intelligence creates brand/project workspaces
+├── OS Intelligence/   # Chief of Staff, nghiên cứu, Factory, Playbook và Skills
+├── OS Staff/          # Trống cho tới khi Intelligence tạo Staff theo vai trò
+└── OS Projects/       # Trống cho tới khi Intelligence tạo brand/project workspace
 ```
 
-`OS Staff` and `OS Projects` contain only `.gitkeep` in a fresh Git clone so the empty product folders remain present.
+Trong fresh Git clone, `OS Staff` và `OS Projects` chỉ có `.gitkeep` để Git giữ lại hai product folders chưa có instance data.
 
-## Start here
+## Bắt đầu sử dụng
 
-1. Clone or download the repository.
-2. Open `OS Intelligence` with Oh My Pi, Codex, Claude Code, or another compatible coding-agent harness.
-3. Start a fresh session. The agent reads `AGENTS.md`, `IDENTITY.md`, `SOUL.md`, and the clean `USER.md`.
-4. Ask naturally, for example:
+1. Clone hoặc tải repository về máy.
+2. Mở folder `OS Intelligence` bằng Oh My Pi, Codex, Claude Code hoặc coding-agent harness tương thích.
+3. Bắt đầu fresh session. Agent sẽ đọc `AGENTS.md`, `IDENTITY.md`, `SOUL.md` và `USER.md` sạch.
+4. Prompt tự nhiên, ví dụ:
    - `Hãy tạo cho tôi một AI Staff Video Editor.`
    - `Hãy tạo Project cho brand của tôi.`
-5. Intelligence uses the Factory specs to create Staff under `OS Staff/` or Projects under `OS Projects/`, then validates structure, links and runtime behavior.
+5. Intelligence dùng Factory specs để tạo Staff trong `OS Staff/` hoặc Project trong `OS Projects/`, sau đó kiểm tra cấu trúc, links và runtime behavior.
 
-## Clean-distribution boundary
+## Ranh giới của bản sạch
 
-The repository ships without the publisher's personal profile, private work, research, runtime IDs, Staff/Project instances, brand data, assets or production outputs. Learner data is added only during use and remains owned by that learner's instance.
+Repository không chứa hồ sơ cá nhân, private work, research, runtime IDs, Staff/Project instances, brand data, assets hoặc production outputs của người phát hành. Dữ liệu học viên chỉ được thêm trong quá trình sử dụng và thuộc instance của chính học viên đó.
 
-## Versioning and upgrades
+## Quản lý phiên bản và nâng cấp
 
-Ship releases use SemVer independently from the three component specs:
+Ship release dùng SemVer độc lập với version của ba component specs:
 
-- **Major:** breaking layout, ownership or migration changes.
-- **Minor:** backward-compatible capabilities, specs or Skills.
-- **Patch:** packaging, security, compatibility, link or documentation fixes.
+- **Major:** breaking change về layout, ownership hoặc migration contract.
+- **Minor:** capability, spec hoặc Skill mới có backward compatibility.
+- **Patch:** sửa packaging, security, compatibility, links hoặc documentation mà không đổi contract chính.
 
-A source-system upgrade does not automatically overwrite this distribution or an existing learner instance. Migration must preserve learner `USER`, context, work, Staff, Projects, assets and outputs. See [`release.md`](OS%20Intelligence/11-factory/release.md).
+Việc source system được nâng cấp không tự ghi đè bản phân phối này hoặc learner instance đang sử dụng. Migration phải giữ `USER`, context, work, Staff, Projects, assets và outputs của học viên. Xem [`release.md`](OS%20Intelligence/11-factory/release.md).
 
-## Skills and licensing
+## Skills và license
 
-The bundled Anthropic `skill-creator` package retains its upstream Apache-2.0 license at `OS Intelligence/.agents/skills/skill-creator/LICENSE.txt`. No separate repository-wide license is declared in this release.
+Anthropic `skill-creator` đi kèm vẫn giữ upstream Apache-2.0 license tại `OS Intelligence/.agents/skills/skill-creator/LICENSE.txt`. Release này chưa khai báo repository-wide license riêng.
