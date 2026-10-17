@@ -1,0 +1,5 @@
+# Intelligence Knowledge
+
+Kinh nghiệm và kiến thức chuyên biệt của Chief of Staff/Factory. Skill chuyên môn của Staff ở Staff; brand context ở Project; tri thức từ nguồn ngoài ở [[07-wiki/index]].
+
+Hiện chưa có entry.

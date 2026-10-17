@@ -1,0 +1,29 @@
+{
+  "skill_name": "pre-compact",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I'm about to run /compact. This session approved a launch date, changed one pricing assumption, created an artifact, and left one research question open, but the fixture WORK and context files still contain the old state. Run the pre-compact check and update only the correct canonical fixture files.",
+      "expected_output": "Updates the correct fixture owners, preserves the open question, validates the resume path, and returns READY TO COMPACT with a final Markdown change report.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Run pre-compact. Everything durable from this session is already present in the fixture WORK file and no Markdown change is needed.",
+      "expected_output": "Makes no files changes, reports the durable state as already current, omits the Markdown change section, and returns READY TO COMPACT.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Run pre-compact. The target fixture file has a newer conflicting decision from another session, while this conversation contains an older value.",
+      "expected_output": "Does not overwrite the concurrent decision, returns BLOCKED, names the conflict and next resolution action, and does not claim the compact is safe.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Run pre-compact twice against the same fixture after the first run has persisted every durable delta.",
+      "expected_output": "The first run persists required deltas; the second run is idempotent with zero new mutation and still returns an accurate receipt.",
+      "files": []
+    }
+  ]
+}

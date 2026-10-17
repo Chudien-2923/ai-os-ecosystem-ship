@@ -1,0 +1,61 @@
+# AI OS Ecosystem Ship Release
+
+- Release: V0.1.0
+- Released: 2026-10-17
+- Intelligence contract: V0.2.1
+- Staff contract: V0.2.3
+- Projects contract: V0.1.3
+
+## Mục đích
+
+Bản ship là clean teaching distribution. Nó giữ generic operating system, Factory specs, portable Skills và khả năng tạo Staff/Project từ prompt; không chứa dữ liệu, work, research, output hoặc runtime history của người phát hành.
+
+## SemVer cho Ship
+
+- **Major:** breaking layout, ownership hoặc migration contract.
+- **Minor:** capability/spec/Skill mới tương thích ngược.
+- **Patch:** bug, security, link, wording hoặc adapter fix không đổi contract chính.
+
+Version Ship độc lập với version ba component. Một release phải ghi rõ component matrix như header trên.
+
+## Include / exclude
+
+| Loại thay đổi từ hệ thống nguồn | Hành động với Ship |
+| --- | --- |
+| Generic instruction, Factory rule, spec, Skill, adapter | Đánh giá và port có kiểm chứng |
+| Security hoặc compatibility fix | Ưu tiên patch release |
+| USER, context, work, daily, meeting, private decision | Không copy |
+| Staff/Project instance, brand facts, assets, outputs | Không copy vào clean distribution |
+| Playbook/knowledge | Chỉ ship khi được chọn làm curriculum/public method và không chứa dữ liệu riêng |
+| Runtime IDs, transcript, absolute machine path, credentials | Không ship |
+
+## Quy trình phát hành nâng cấp
+
+1. Đọc release hiện hành, source specs/Skills và feedback có evidence.
+2. Lập migration matrix: source artifact → ship artifact → include/exclude/transform → compatibility → verification.
+3. Áp dụng trên bản Ship source-of-truth; không duplicate private state để rồi cố scrub sau.
+4. Chạy privacy scan, mandatory inventory, wikilink/locator, Skill hash/symlink và fresh prompt smoke cho tạo Staff/Project.
+5. Cập nhật release, registry và log; ghi migration notes cho learner instances.
+6. Không tự sửa bản learner đang dùng. Upgrade learner phải giữ `USER`, context, work, Staff, Projects, assets và output; conflict/breaking change cần checkpoint cùng approval.
+
+## Fresh-install acceptance
+
+- Root chỉ có ba sibling folders: `OS Intelligence`, `OS Staff`, `OS Projects`.
+- Hai folder Staff/Projects trống trước lần tạo đầu.
+- Intelligence có mandatory starter, clean USER/context/work/wiki/registry.
+- `skill-creator`, `pre-compact`, `close` canonical và Claude adapters cùng realpath.
+- Prompt tạo Staff/Project route đúng spec và target sibling folder.
+- Không có private names, brand data, machine-specific absolute paths, runtime IDs hoặc production artifacts.
+
+## Upgrade history
+
+### V0.1.0
+
+Initial clean teaching distribution.
+
+Verification:
+
+- Root/empty instance folders, mandatory Intelligence inventory và privacy scan: pass.
+- 97 active wikilinks/headings: pass.
+- Exact Skill trees/lock/adapters và official validation cho ba Skills: pass.
+- Fresh OMP 18.11.3 read-only Staff/Project creation prompts: pass, no mutation.

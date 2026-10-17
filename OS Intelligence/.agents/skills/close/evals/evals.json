@@ -1,0 +1,29 @@
+{
+  "skill_name": "close",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Close this fixture session. The work is still active, two todo items exist only in the conversation, and the next session must resume from the fixture WORK file.",
+      "expected_output": "Loads the pre-compact core, persists durable todo state, keeps work active, emits a usable next-session handoff, and returns READY TO CLOSE.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Close this fixture session. The final deliverable exists, but one named acceptance criterion has not been exercised.",
+      "expected_output": "Does not mark the work completed, checkpoints the missing verification, and returns a truthful close receipt with the next action.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Close this fixture session. A worker owned by this session is still running and its current status is unavailable.",
+      "expected_output": "Does not infer success or kill/release the worker, records the runtime blocker or owner, and returns BLOCKED rather than orphaning runtime state.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Run close twice after all fixture state is checkpointed and no runtime remains.",
+      "expected_output": "The second run makes no new mutation, retains the same accurate next action, and returns READY TO CLOSE.",
+      "files": []
+    }
+  ]
+}
