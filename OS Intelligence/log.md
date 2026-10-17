@@ -10,3 +10,9 @@
 - Upgrade policy và release history ở [[11-factory/release]].
 - Fresh-install inventory, privacy, wikilinks/headings, Skill hashes/adapters/official validation đều pass.
 - Fresh OMP 18.11.3 read-only prompts xác nhận Intelligence route đúng quy trình tạo Staff và Project; không mutation.
+
+## 2026-10-17 — Ship V0.1.1 public packaging
+
+- Thêm root README, VERSION và CHANGELOG để GitHub hiển thị mục đích, version matrix và release history.
+- Thêm `.gitkeep` trong `OS Staff` và `OS Projects` để fresh clone giữ hai product folders chưa có instance.
+- Component contracts giữ nguyên; đây là Ship patch release về packaging và documentation.

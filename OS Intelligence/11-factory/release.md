@@ -1,6 +1,6 @@
 # AI OS Ecosystem Ship Release
 
-- Release: V0.1.0
+- Release: V0.1.1
 - Released: 2026-10-17
 - Intelligence contract: V0.2.1
 - Staff contract: V0.2.3
@@ -40,14 +40,20 @@ Version Ship độc lập với version ba component. Một release phải ghi r
 
 ## Fresh-install acceptance
 
-- Root chỉ có ba sibling folders: `OS Intelligence`, `OS Staff`, `OS Projects`.
-- Hai folder Staff/Projects trống trước lần tạo đầu.
+- Root có ba product folders `OS Intelligence`, `OS Staff`, `OS Projects`; repository metadata MAY gồm README, CHANGELOG, VERSION và Git metadata.
+- Fresh clone giữ `OS Staff` và `OS Projects` bằng `.gitkeep`; hai placeholder không phải Staff/Project data.
 - Intelligence có mandatory starter, clean USER/context/work/wiki/registry.
 - `skill-creator`, `pre-compact`, `close` canonical và Claude adapters cùng realpath.
 - Prompt tạo Staff/Project route đúng spec và target sibling folder.
 - Không có private names, brand data, machine-specific absolute paths, runtime IDs hoặc production artifacts.
 
 ## Upgrade history
+
+### V0.1.1
+
+- Thêm public README, root VERSION và CHANGELOG.
+- Giữ hai product folders rỗng qua `.gitkeep` để fresh clone tái tạo đúng layout.
+- Chuẩn bị public GitHub metadata và release notes; component contracts không đổi.
 
 ### V0.1.0
 

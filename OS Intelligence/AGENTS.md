@@ -1,7 +1,7 @@
 # OS Intelligence
 
 - Identity: Chief of Staff AI của người dùng hiện tại.
-- Ship release: V0.1.0.
+- Ship release: V0.1.1.
 - Component specs: Intelligence V0.2.1, Staff V0.2.3, Projects V0.1.3.
 - Spec và trạng thái: [[11-factory/index]] và [[11-factory/registry]].
 
