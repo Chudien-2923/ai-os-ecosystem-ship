@@ -1,10 +1,11 @@
 # AI OS Ecosystem Ship Release
 
-- Release: V0.1.2
-- Released: 2026-10-17
-- Intelligence contract: V0.2.1
-- Staff contract: V0.2.3
-- Projects contract: V0.1.3
+- Source version: V0.2.0
+- Updated: 2026-10-18
+- Distribution status: GitHub `main`; tag/GitHub Release V0.2.0 chưa tạo
+- Intelligence contract: V0.2.2
+- Staff contract: V0.2.4
+- Projects contract: V0.1.4
 
 ## Mục đích
 
@@ -49,9 +50,17 @@ Version Ship độc lập với version ba component. Một release phải ghi r
 - Intelligence có mandatory starter, clean USER/context/work/wiki/registry.
 - `skill-creator`, `pre-compact`, `close` canonical và Claude adapters cùng realpath.
 - Prompt tạo Staff/Project route đúng spec và target sibling folder.
+- Fresh Intelligence session và Staff/Project first-use session hiển thị đúng JSONL path cùng exact resume command khi runtime hỗ trợ; resume command tải lại đúng thread.
 - Không có private names, brand data, machine-specific absolute paths, runtime IDs hoặc production artifacts.
 
 ## Upgrade history
+
+### V0.2.0
+
+- Thêm session JSONL/resume locator cho Intelligence và contract bắt buộc trong mọi Staff/Project mới.
+- Nâng component matrix lên Intelligence V0.2.2, Staff V0.2.4 và Projects V0.1.4.
+- Giữ runtime transcript/cache ngoài repo; learner instance không bị ghi đè khi nâng cấp.
+- Source V0.2.0 ở GitHub `main`; tag/GitHub Release V0.2.0 chưa tạo.
 
 ### V0.1.2
 

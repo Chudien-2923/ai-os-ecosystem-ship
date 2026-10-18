@@ -1,11 +1,11 @@
 # OS Projects Starter Spec
 
-- **Phiên bản hiện hành:** V0.1.3.
+- **Phiên bản hiện hành:** V0.1.4.
 - **Trạng thái:** contract hiện hành để Factory tạo Project mới; clean Ship chưa có Project instance, runtime evidence phải ghi riêng tại registry sau khi tạo.
-- **Ngày ghi nhận:** 2026-10-15.
+- **Ngày ghi nhận:** 2026-10-18.
 - **Nơi duy trì:** OS Intelligence `11-factory/specs/os-projects-starter-spec.md`.
 - **Mục đích:** Làm nguồn chính để Factory trong Intelligence tạo các brand workspace độc lập trong OS Projects.
-- **Quyết định hiện tại:** Trải nghiệm V0.1.3; thêm locator/spec/Playbook compatibility trên V0.1.2, không thêm automation.
+- **Quyết định hiện tại:** V0.1.4 thêm session JSONL/resume locator tương thích ngược trên V0.1.3; không thêm automation riêng.
 
 > Mỗi Project là một brand workspace dài hạn và một repo độc lập. Staff mang vai trò và năng lực đến Project; Project giữ context, trạng thái chung và lịch sử của brand.
 
@@ -13,7 +13,7 @@
 
 OS Projects giúp các Staff làm đúng việc cho đúng brand mà không phải nạp toàn bộ hệ sinh thái hoặc dựa vào memory mơ hồ của session.
 
-Trong mô hình V0.1.3, kế thừa V0.1.2:
+Trong mô hình V0.1.4, kế thừa V0.1.3:
 
 - Một Project tương ứng một brand workspace dài hạn.
 - Brand của khách hàng và thương hiệu cá nhân dùng cùng một contract.
@@ -24,9 +24,9 @@ Trong mô hình V0.1.3, kế thừa V0.1.2:
 
 Spec dùng tên generic trong ví dụ. Clean Ship không khai báo sẵn brand, khách hàng, campaign hoặc public voice nào; Project chỉ được tạo từ dữ liệu người dùng hiện tại cung cấp.
 
-## 2. Phạm vi V0.1.3
+## 2. Phạm vi V0.1.4
 
-V0.1.3 định nghĩa:
+V0.1.4 định nghĩa:
 
 - Ranh giới một Project repo.
 - Starter tree tối thiểu.
@@ -40,7 +40,7 @@ V0.1.3 định nghĩa:
 - Session isolation giữa các brand.
 - Acceptance scenarios và quy trình factory khởi tạo Project.
 
-V0.1.3 không định nghĩa:
+V0.1.4 không định nghĩa:
 
 - Agent harness, background service, database, vector store hoặc context injector riêng.
 - Storage provider, Git LFS policy hoặc ngưỡng dung lượng bắt buộc.
@@ -95,6 +95,10 @@ Phần bắt buộc khi khởi tạo: `AGENTS.md`, `PROJECT.md`, `WORK.md`, `bra
 | `work/<workstream>/WORKSTREAM.md` | Shared source of truth của workstream | Khi Staff được giao workstream đó |
 
 `AGENTS.md` trong Project không tự được nạp khi current working directory là Staff repo. Project Context Gate của Staff phải đọc file này một cách tường minh.
+
+`AGENTS.md` của mọi Project mới và Project được nâng cấp phải thêm `Session hiện tại` trong câu trả lời đầu tiên: transcript JSONL path cùng exact resume command từ runtime/index, chỉ một lần. Nếu câu trả lời đầu tiên có `Markdown đã cập nhật`, session locator đứng ngay trước báo cáo đó; nếu không, nó là phần cuối. Trên Orca + OMP, dùng một cụm phân biệt từ prompt đầu tiên, giới hạn `agent=omp` và `cwd` là root Project trong `orca search ... --fresh --json`, rồi lấy nguyên `source.filePath` và `resumeCommand`. Không suy từ Session ID/file mới nhất; metadata không có thì ghi `không khả dụng`. Transcript, runtime ID, search index và cache không được commit vào Project.
+
+Output dùng `source.filePath` làm JSONL locator và paste `resumeCommand` nguyên văn trong một fenced block `bash`; không dựng lại command từ path hoặc đổi separator/ký tự.
 
 ## 5. `PROJECT.md` là router
 
@@ -397,7 +401,7 @@ Context của một brand không được dùng làm reference cho brand khác c
 
 Quyền đọc/ghi repo vẫn do filesystem, Git host và harness quyết định. Markdown instruction không cấp thêm permission.
 
-## 14. Acceptance scenarios V0.1.3
+## 14. Acceptance scenarios V0.1.4
 
 ### 14.1. Đúng Project và progressive loading
 
@@ -465,11 +469,19 @@ Quyền đọc/ghi repo vẫn do filesystem, Git host và harness quyết địn
 - Staff job resolve đúng Project/workstream; backlink từ workstream resolve đúng Staff job khi mở từ root Project.
 - Cả wikilink/heading lẫn locator plain text/inline code đều được kiểm tra, không chỉ chiều Staff → Project.
 
+### 14.11. Session JSONL/resume locator
+
+- Fresh Project session trả `Session hiện tại` đúng một lần trong câu trả lời đầu tiên.
+- JSONL path và resume command thuộc đúng agent/cwd; mở command trong terminal mới tải lại đúng thread.
+- Nếu câu trả lời đầu tiên cập nhật Markdown, locator đứng ngay trước `Markdown đã cập nhật`; metadata không có được báo `không khả dụng`.
+- Không copy hoặc commit transcript/runtime history vào Project.
+
+
 ## 15. Quy trình factory tạo một Project
 
 1. Xác nhận brand/project name, stable ID, repo name và loại Project.
 2. Xác nhận đường dẫn đích trong `OS Projects`; không ghi đè folder có dữ liệu.
-3. Dùng spec V0.1.3 này làm nguồn.
+3. Dùng spec V0.1.4 này làm nguồn.
 4. Trước khi ghi, lập implementation matrix: từng yêu cầu/spec artifact → target path → bắt buộc/conditional → nguồn dữ liệu → cách kiểm chứng.
 5. Tạo mandatory files, gồm `assets/ASSETS.md`; index chưa có entry phải giữ hướng dẫn và trạng thái trống, không bịa asset.
 6. Điền Project identity và mandatory base; không bịa brand facts còn thiếu.
@@ -481,13 +493,13 @@ Quyền đọc/ghi repo vẫn do filesystem, Git host và harness quyết địn
 
 Tạo Project repo không đồng nghĩa đã cập nhật mọi Staff hoặc Intelligence caller để biết Project Context Gate. Factory phải kiểm tra contract các phía khi triển khai.
 
-## 16. Compatibility với OS Staff V0.2.3 và Intelligence V0.1
+## 16. Compatibility với OS Staff V0.2.4 và Intelligence V0.2.2
 
-[[11-factory/specs/os-staff-starter-spec]] V0.2.3 giữ integration contract của V0.2.2 và thêm shared-context/Chief of Staff compatibility.
+[[11-factory/specs/os-staff-starter-spec]] V0.2.4 giữ integration contract của V0.2.3 và dùng cùng session locator contract.
 
-- OS Projects V0.1.3, OS Staff V0.2.3 và Intelligence V0.1 là bộ contract hiện hành.
-- V0.1/V0.1.1/V0.1.2 và Staff V0.2.1/V0.2.2 là nền contract; patch hiện hành đổi nguồn spec, Playbook locator và coordinator entry, không đổi Project ownership, learning approval, assets hoặc quyền Git.
-- Staff V0.2 hoặc cũ hơn chưa có Project integration contract; Staff trước V0.2.3 chưa có Intelligence compatibility.
+- OS Projects V0.1.4, OS Staff V0.2.4 và Intelligence V0.2.2 là bộ contract hiện hành.
+- V0.1/V0.1.1/V0.1.2/V0.1.3 và Staff V0.2.1/V0.2.2/V0.2.3 là nền contract; patch hiện hành thêm session locator, không đổi Project ownership, learning approval, assets hoặc quyền Git.
+- Staff V0.2 hoặc cũ hơn chưa có Project integration contract; Staff trước V0.2.3 chưa có Intelligence compatibility; Staff trước V0.2.4 chưa bắt buộc session locator.
 - Repo đã tạo không tự nâng cấp khi Factory đổi spec; migration phải nằm trong yêu cầu được duyệt.
 - File/path smoke không thay thế kiểm chứng với Intelligence, Staff và Project session thực.
 
@@ -538,3 +550,9 @@ Không chặn starter hiện hành:
 - Cho phép assignment qua Chief of Staff nhưng giữ Staff role, Project Context Gate và một brand mỗi worker session.
 - Route phương pháp dùng chung tới Intelligence `08-playbook/`; không tự publish hoặc copy Playbook vào Project.
 - Project instance hiện hữu được cập nhật locator/metadata trong phạm vi integration; brand context, assets và concurrent output giữ nguyên.
+
+### V0.1.4 — 2026-10-18 — Session JSONL/resume locator
+
+- Mọi Project mới và Project được nâng cấp hiển thị transcript JSONL path cùng exact resume command trong câu trả lời đầu tiên.
+- Locator lấy từ runtime metadata của đúng agent/cwd, không suy từ ID hoặc file mới nhất; transcript vẫn ở ngoài repo.
+- Đồng bộ compatibility với OS Staff V0.2.4 và OS Intelligence V0.2.2.

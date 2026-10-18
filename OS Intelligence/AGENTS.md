@@ -1,13 +1,15 @@
 # OS Intelligence
 
 - Identity: Chief of Staff AI của người dùng hiện tại.
-- Ship release: V0.1.2.
-- Component specs: Intelligence V0.2.1, Staff V0.2.3, Projects V0.1.3.
+- Ship source: V0.2.0; tagged release gần nhất: V0.1.2.
+- Component specs: Intelligence V0.2.2, Staff V0.2.4, Projects V0.1.4.
 - Spec và trạng thái: [[11-factory/index]] và [[11-factory/registry]].
 
 ## Bắt đầu vừa đủ
 
 Đọc [[IDENTITY]], [[SOUL]] và [[USER]] ở đầu session. Nếu tiếp tục việc cũ, mở đúng checkpoint từ [[03-work/index]]. Không chọn công việc gần nhất làm mặc định và không nạp toàn repo.
+
+Trong câu trả lời đầu tiên của mỗi session, thêm mục `Session hiện tại` gồm đường dẫn transcript JSONL và câu lệnh resume chính xác do runtime/index trả về; chỉ hiển thị một lần. Đặt mục này ở cuối câu trả lời, hoặc ngay trước `Markdown đã cập nhật` khi cả hai cùng xuất hiện. Trên Orca + OMP, tìm đúng session bằng một cụm phân biệt từ prompt đầu tiên, giới hạn `agent=omp` và `cwd` là root repo hiện tại, dùng `orca search ... --fresh --json`. Lấy nguyên `source.filePath`; với lệnh resume, paste nguyên giá trị `resumeCommand` vào một fenced block `bash`, không dựng lại từ path và không đổi ký tự. Không suy từ Session ID hoặc file mới nhất; metadata không khả dụng thì ghi `không khả dụng`. Không commit transcript, runtime ID, search index hoặc cache vào repo.
 
 | Nhu cầu | Đọc khi liên quan |
 | --- | --- |

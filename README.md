@@ -6,10 +6,10 @@ Tài liệu dành chủ yếu cho học viên Việt Nam nên phần hướng d�
 
 ## Phiên bản hiện hành
 
-- Ship: **V0.1.2**
-- OS Intelligence contract: **V0.2.1**
-- OS Staff contract: **V0.2.3**
-- OS Projects contract: **V0.1.3**
+- Ship source: **V0.2.0**
+- OS Intelligence contract: **V0.2.2**
+- OS Staff contract: **V0.2.4**
+- OS Projects contract: **V0.1.4**
 
 Thay đổi theo từng release được ghi tại [CHANGELOG.md](CHANGELOG.md). Contract chi tiết của component và migration nằm trong [`OS Intelligence/11-factory/`](OS%20Intelligence/11-factory/).
 
@@ -29,10 +29,11 @@ Trong fresh Git clone, `OS Staff` và `OS Projects` chỉ có `.gitkeep` để G
 1. Clone hoặc tải repository về máy.
 2. Mở folder `OS Intelligence` bằng Oh My Pi, Codex, Claude Code hoặc coding-agent harness tương thích.
 3. Bắt đầu fresh session. Agent sẽ đọc `AGENTS.md`, `IDENTITY.md`, `SOUL.md` và `USER.md` sạch.
-4. Prompt tự nhiên, ví dụ:
+4. Trong câu trả lời đầu tiên, Agent cung cấp `Session hiện tại` gồm JSONL path và exact resume command khi runtime hỗ trợ.
+5. Prompt tự nhiên, ví dụ:
    - `Hãy tạo cho tôi một AI Staff Video Editor.`
    - `Hãy tạo Project cho brand của tôi.`
-5. Intelligence dùng Factory specs để tạo Staff trong `OS Staff/` hoặc Project trong `OS Projects/`, sau đó kiểm tra cấu trúc, links và runtime behavior.
+6. Intelligence dùng Factory specs để tạo Staff trong `OS Staff/` hoặc Project trong `OS Projects/`, sau đó kiểm tra cấu trúc, links và runtime behavior.
 
 ## Ranh giới của bản sạch
 

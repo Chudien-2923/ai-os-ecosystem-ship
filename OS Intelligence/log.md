@@ -22,3 +22,10 @@
 - Correction từ người phát hành: học viên chủ yếu là người Việt Nam nên README và public release documentation dùng tiếng Việt làm ngôn ngữ chính.
 - Thuật ngữ kỹ thuật tiếng Anh được giữ khi rõ nghĩa hơn; không dịch máy móc.
 - Component contracts và behavior không đổi; đây là documentation/localization patch release.
+
+## 2026-10-18 — Ship V0.2.0 session resume source
+
+- Thêm session JSONL/resume locator vào clean Intelligence và Factory contracts cho mọi Staff/Project mới.
+- Nâng component matrix lên Intelligence V0.2.2, Staff V0.2.4 và Projects V0.1.4.
+- Giữ transcript, runtime IDs, indexes và caches ngoài distribution; source được commit/push lên `main`, tag/GitHub Release V0.2.0 chưa tạo.
+- Fresh OMP clean-Intelligence smoke trả đúng JSONL locator và exact resume command; terminal mới dùng command đó tải lại đúng thread. Fresh read-only Factory prompt nêu đúng mandatory Staff/Project behavior và component matrix, không mutation. Source Athena/Personal Branding cũng pass nhưng không được coi là learner-instance evidence trong clean Ship.

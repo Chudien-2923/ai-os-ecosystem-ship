@@ -2,6 +2,22 @@
 
 Mọi thay đổi đáng kể của AI OS Ecosystem Ship được ghi tại đây. Ship dùng SemVer độc lập với version của OS Intelligence, Staff và Projects.
 
+## [V0.2.0] — 2026-10-18
+
+### Đã thêm
+
+- `Session hiện tại` trong câu trả lời đầu tiên của Intelligence, Staff và Project: transcript JSONL path cùng exact resume command từ runtime metadata.
+- Factory contract để mọi Staff/Project được tạo sau này mang cùng cơ chế, không commit transcript/cache vào repo.
+
+### Đã thay đổi
+
+- Nâng component matrix lên Intelligence V0.2.2, Staff V0.2.4 và Projects V0.1.4.
+- Bổ sung fresh-session/resume acceptance cho learner setup.
+
+### Trạng thái phát hành
+
+- Source V0.2.0 được commit/push lên GitHub `main`; tag và GitHub Release V0.2.0 chưa được tạo.
+
 ## [V0.1.2] — 2026-10-17
 
 ### Đã thay đổi

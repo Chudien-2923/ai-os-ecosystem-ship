@@ -1,11 +1,11 @@
 # OS Intelligence Starter Spec
 
-- **Phiên bản hiện hành:** V0.2.1.
-- **Ngày chốt:** 2026-10-16.
-- **Trạng thái:** V0.2.1 giữ kiến trúc Skill portable của V0.2 và clean-cutover sang package chính thức Anthropic `skill-creator`; mọi lần tạo Skill phải invoke Skill Creator trước, update/eval thay đổi behavior cũng dùng Skill Creator. Trạng thái triển khai/runtime của instance được ghi tại [[11-factory/registry]].
+- **Phiên bản hiện hành:** V0.2.2.
+- **Ngày chốt:** 2026-10-18.
+- **Trạng thái:** V0.2.2 giữ kiến trúc Skill portable của V0.2.1 và thêm session JSONL/resume locator thống nhất cho Intelligence, Staff và Project.
 - **Nơi duy trì hiện tại:** OS Intelligence `11-factory/specs/os-intelligence-starter-spec.md`.
 - **Instance:** clean Ship instance; root resolve theo sibling folders, không hard-code đường dẫn máy.
-- **Compatibility hiện hành:** [[11-factory/specs/os-staff-starter-spec]] V0.2.3 và [[11-factory/specs/os-projects-starter-spec]] V0.1.3.
+- **Compatibility hiện hành:** [[11-factory/specs/os-staff-starter-spec]] V0.2.4 và [[11-factory/specs/os-projects-starter-spec]] V0.1.4.
 
 > OS Intelligence là Chief of Staff AI của người dùng: hiểu người dùng, cùng nghiên cứu và phát triển ý tưởng, tích lũy tri thức, điều phối Staff, đồng thời thiết kế và duy trì AI OS Ecosystem.
 
@@ -169,7 +169,16 @@ Nội dung chính xác của instance `CLAUDE.md`, ngoài newline cuối file:
 
 AGENTS chỉ dẫn đọc nền ngắn và phần cần cho nhiệm vụ. Tách file mà vẫn bắt đọc mọi file đầu session không phải progressive disclosure. Runtime có thể có instruction/memory toàn cục riêng; repo không tự xóa context đó. Khi đổi harness, kiểm tra entrypoint và quyền đọc/ghi cần thiết.
 
-### 4.1. Skill portable và adapter harness
+### 4.1. Session JSONL/resume locator
+
+`AGENTS.md` của Intelligence và mọi Staff/Project do Factory tạo hoặc nâng cấp phải yêu cầu câu trả lời đầu tiên của mỗi session hiển thị mục `Session hiện tại` gồm transcript JSONL path và exact resume command từ runtime/index; chỉ hiển thị một lần. Nếu cùng câu trả lời có `Markdown đã cập nhật`, session locator đứng ngay trước báo cáo đó; nếu không, nó là phần cuối.
+
+Trên Orca + OMP, Agent dùng một cụm phân biệt từ prompt đầu tiên, giới hạn `agent=omp` và `cwd` là root repo hiện tại trong `orca search ... --fresh --json`, rồi lấy nguyên `source.filePath` và `resumeCommand`. Không suy path từ Session ID hoặc file mới nhất. Nếu harness không expose metadata thì ghi `không khả dụng`, không bịa command. JSONL, runtime IDs, search indexes và caches ở ngoài repo; locator không thay WORK/job/workstream checkpoint.
+
+Output phải dùng `source.filePath` làm JSONL locator và paste `resumeCommand` nguyên văn trong một fenced block `bash`; không được dựng lại command từ path hoặc đổi separator/ký tự.
+
+
+### 4.2. Skill portable và adapter harness
 
 `.agents/skills/` là nguồn nội dung chính duy nhất cho Skill của Intelligence. Mỗi Skill nằm đúng một cấp tại `.agents/skills/<skill-name>/SKILL.md`; taxonomy lồng sâu không được dùng làm discovery path. `README.md` giữ contract và danh mục, không phải Skill.
 
@@ -415,11 +424,11 @@ Một mốc qua nhiều repo không atomic. Giữ contract Project commit trư�
 
 ## 14. Hợp nhất và tương thích
 
-### 14.1. Trạng thái Ship V0.1.2
+### 14.1. Trạng thái Ship source V0.2.0
 
 - Factory, Playbook và shared context thuộc Intelligence; Staff/Projects là các repo độc lập ở sibling folders.
 - Clean distribution không mang legacy Factory, USER, work, Staff, Project hoặc runtime history của người phát hành.
-- Compatibility hiện hành là Staff V0.2.3 và Projects V0.1.3.
+- Compatibility hiện hành là Staff V0.2.4 và Projects V0.1.4; session locator contract áp dụng cho cả ba OS.
 - Release và migration policy nằm tại [[11-factory/release]]; instance learner không tự nâng khi spec đổi.
 
 ### 14.2. Quy trình cutover đã áp dụng và dùng lại cho instance khác
@@ -444,6 +453,7 @@ Ba spec hiện resolve dưới `11-factory/specs/`; historical version statement
 | Starter đầy đủ | Có đủ root files, 12 folder cấp cao, 6 nhánh wiki và mọi index/README/spec trong cây; folder trống nói đúng trạng thái; không có placeholder giả |
 | Claude bootstrap | CLAUDE chứa đúng `@AGENTS.md`; session Claude Code thực đọc được AGENTS và áp dụng routing; kiểm tra text đơn thuần không chứng minh runtime import |
 | Đổi harness | Session mới với harness được chọn đọc checkpoint và tiếp tục đúng scope, không cần transcript cũ; báo giới hạn tool/quyền |
+| Session locator | Câu trả lời đầu tiên hiển thị đúng một lần JSONL path và exact resume command của chính agent/cwd; terminal mới resume đúng thread; Markdown report vẫn là phần cuối khi cùng xuất hiện; runtime không expose metadata thì báo `không khả dụng` |
 | Skill discovery | Fresh OMP và Codex session discover Skill từ canonical source; Claude adapter phải là symlink cùng bytes/realpath và đúng project path. Chỉ yêu cầu fresh Claude runtime smoke khi môi trường có account/provider khả dụng hoặc người dùng yêu cầu |
 | Skill activation | Với prompt khớp `description`, các harness đang sử dụng thực tế phải dùng procedure và trả evidence nhận diện được; metadata/path đơn thuần chưa đủ. Harness chưa có subscription không chặn compatibility static |
 | Ingest đầu tiên | Mở nguồn thật, giữ raw/locator, ghi source và node cần thiết, index tìm được, câu trả lời dẫn đúng căn cứ |
@@ -511,7 +521,14 @@ Các đề xuất cấu trúc trước khi chốt dùng số folder khác là l�
 5. Ghi nhận Socket LOW warning của `eval-viewer/viewer.html`; viewer chỉ dùng với output local/trusted hoặc sau kiểm tra/sandbox.
 6. Đây là patch thay mandatory authoring implementation của V0.2 mà không đổi canonical layout hay Staff/Project interface, nên version là V0.2.1.
 
-### 17.4. Nguồn tham khảo và mức bằng chứng
+### 17.4. V0.2.2 — 2026-10-18
+
+1. Thêm session JSONL/resume locator cho clean Intelligence và contract bắt buộc trong mọi Staff/Project mới.
+2. Dùng metadata authoritative của runtime/index; Orca + OMP search theo prompt đầu tiên, agent và cwd.
+3. Giữ transcript/cache ngoài distribution và giữ durable checkpoint độc lập với runtime resume.
+4. Đây là compatibility patch không đổi layout/ownership; component matrix được nâng đồng bộ.
+
+### 17.5. Nguồn tham khảo và mức bằng chứng
 
 - [Karpathy — LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): nguồn chính của raw/wiki/schema, ingest/query/lint, compounding, index và log. Cấu trúc folder cụ thể là thiết kế cùng người dùng, không phải schema bắt buộc của gist.
 - [Nate Herk — Every Level of a Claude Second Brain Explained](https://www.youtube.com/watch?v=DTCyvo6cC54): router, truy xuất theo câu hỏi, phân biệt context bền vững với dữ liệu cần truy cập, kiến trúc tăng theo nhu cầu. [23:10](https://www.youtube.com/watch?v=DTCyvo6cC54&t=1390s) cho thấy bốn đường truy xuất; [25:45](https://www.youtube.com/watch?v=DTCyvo6cC54&t=1545s) mô tả Always-on; [26:45](https://www.youtube.com/watch?v=DTCyvo6cC54&t=1605s) là Four Cs. Không coi graph demo/sample JSON là bằng chứng query engine hoặc dream cycle đã kiểm chứng.
@@ -526,3 +543,5 @@ Các đề xuất cấu trúc trước khi chốt dùng số folder khác là l�
 - Hai spec Staff/Projects được link ở đầu tài liệu cung cấp contract ownership, training/Project Gate, learning và Git. V0.2.1 chỉ thay authoring implementation trong Intelligence, không tự nâng compatibility version hoặc migrate Staff/Project instance.
 
 V0.2.1 đã được kiểm chứng ở source system trước khi đóng gói Ship: exact upstream `skill-creator` 18 files, lock, Apache-2.0 license và Claude adapter cùng realpath; official `quick_validate.py` pass; `skill-authoring` đã retire. Fresh OMP và Codex activation smoke đã dùng Capture Intent, 2–3 eval prompts với baseline và local contract đúng. Ship instance vẫn phải kiểm tra adapter, privacy, routing và prompt creation theo [[11-factory/release]]; learning reuse, concurrent writes, production và bàn giao đa harness là acceptance riêng của từng learner instance.
+
+V0.2.2 là Intelligence contract của Ship source V0.2.0. Runtime smoke và privacy/inventory evidence nằm tại [[11-factory/registry]]; tag/GitHub Release V0.2.0 là lifecycle riêng.

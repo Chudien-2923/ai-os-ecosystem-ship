@@ -1,11 +1,11 @@
 # OS Staff Starter Spec
 
-- **Phiên bản hiện hành:** V0.2.3.
+- **Phiên bản hiện hành:** V0.2.4.
 - **Trạng thái:** contract hiện hành để Factory tạo Staff mới; clean Ship chưa có Staff instance, runtime evidence phải ghi riêng tại registry sau khi tạo.
-- **Ngày ghi nhận:** 2026-10-15.
+- **Ngày ghi nhận:** 2026-10-18.
 - **Nơi duy trì:** OS Intelligence `11-factory/specs/os-staff-starter-spec.md`.
 - **Mục đích:** Lưu quyết định thiết kế, hành trình phát triển spec và tiêu chuẩn để tạo các nhân viên AI độc lập.
-- **Quyết định hiện tại:** Trải nghiệm V0.2.3; thêm Intelligence/Chief of Staff compatibility trên V0.2.2, không triển khai các ý tưởng creative-learning V0.3.
+- **Quyết định hiện tại:** V0.2.4 thêm session JSONL/resume locator tương thích ngược trên V0.2.3; không triển khai các ý tưởng creative-learning V0.3.
 
 > Nhân viên tồn tại liên tục qua các file trong repo. Session là một lần nhân viên làm việc. Harness có thể thay đổi mà không làm mất phần tri thức và trạng thái đã được lưu đúng cách.
 
@@ -145,6 +145,14 @@ V0.2.3 là compatibility patch trên V0.2.2:
 
 Core role, learning evidence, Git approval, `journal/knowledge` starter, một brand mỗi project session và việc hoãn V0.3 không đổi.
 
+### 3.10. V0.2.4 — Session JSONL/resume locator
+
+Mọi `AGENTS.md` của Staff mới và Staff được nâng cấp phải hiển thị `Session hiện tại` trong câu trả lời đầu tiên: transcript JSONL path và exact resume command từ runtime/index, chỉ một lần. Nếu cùng câu trả lời có `Markdown đã cập nhật`, locator đứng ngay trước báo cáo đó; nếu không, nó là phần cuối.
+
+Trên Orca + OMP, dùng một cụm phân biệt từ prompt đầu tiên, giới hạn `agent=omp` và `cwd` là root Staff trong `orca search ... --fresh --json`, rồi lấy nguyên `source.filePath` và `resumeCommand`. Không suy từ Session ID/file mới nhất; metadata không có thì ghi `không khả dụng`. Transcript, runtime IDs, indexes và caches ở ngoài repo; job/Project checkpoint vẫn là durable source of truth.
+
+Output dùng `source.filePath` làm JSONL locator và paste `resumeCommand` nguyên văn trong một fenced block `bash`; không dựng lại command từ path hoặc đổi separator/ký tự.
+
 ## 4. Học từ Hermes Agent và OpenClaw, không phụ thuộc chúng
 
 | Nguyên tắc tham khảo | Áp dụng trong V0.2/V0.2.1 |
@@ -206,6 +214,8 @@ Starter phải có các entrypoint và hai folder nền `knowledge/`, `journal/`
 - `SKILL.md` ưu tiên chuẩn Agent Skills với `name`, `description` và nội dung Markdown; tránh extension riêng của harness trong phần cốt lõi.
 - Harness có thể đọc skill như file bình thường nếu không có native skill loader.
 - Tool/API/MCP nghiệp vụ vẫn cần có trong môi trường. Markdown không thay thế tool còn thiếu.
+
+Mọi `AGENTS.md` được Factory tạo hoặc nâng cấp phải mang contract session locator của V0.2.4. Contract này độc lập với job checkpoint và không biến runtime transcript thành dữ liệu repo.
 
 ### 5.2. Ranh giới dữ liệu
 
@@ -525,9 +535,9 @@ Giới hạn:
 - Không bảo đảm ghi được checkpoint trước crash, tắt cưỡng bức hoặc mất điện.
 - Markdown không cưỡng chế permission, sandbox hoặc approval như runtime.
 
-Chỉ cân nhắc hook khi trải nghiệm cho thấy bỏ sót lặp lại hoặc có nhu cầu kiểm tra bắt buộc tại sự kiện harness hỗ trợ. Hook tương lai nên kích hoạt đánh giá, không tự stage/commit/push. Đây chưa phải phần triển khai của V0.2.3.
+Chỉ cân nhắc hook khi trải nghiệm cho thấy bỏ sót lặp lại hoặc có nhu cầu kiểm tra bắt buộc tại sự kiện harness hỗ trợ. Hook tương lai nên kích hoạt đánh giá, không tự stage/commit/push. Đây chưa phải phần triển khai của V0.2.4.
 
-## 11. Tiêu chí trải nghiệm và kiểm chứng V0.2.3
+## 11. Tiêu chí trải nghiệm và kiểm chứng V0.2.4
 
 Các mục dưới đây là acceptance scenarios cần chạy trên Staff thật, **không phải kết quả đã đạt**.
 
@@ -584,6 +594,14 @@ Các mục dưới đây là acceptance scenarios cần chạy trên Staff thậ
 - Từ job mở đúng Project/workstream rồi backlink quay lại đúng job; kiểm tra cả locator ngoài wikilink và heading đích.
 - Training có thể đọc skill và tạo evidence trong Staff mà không yêu cầu Project Gate; project-bound task vẫn phải qua gate.
 
+### 11.7. Session JSONL/resume locator
+
+- Fresh Staff session trả `Session hiện tại` đúng một lần trong câu trả lời đầu tiên.
+- JSONL path và resume command thuộc đúng agent/cwd; terminal mới tải lại đúng thread.
+- Nếu câu trả lời đầu tiên cập nhật Markdown, locator đứng ngay trước `Markdown đã cập nhật`; metadata không có được báo `không khả dụng`.
+- Transcript/runtime history không được copy hoặc commit vào Staff.
+
+
 ## 12. Cách factory dùng spec để tạo Staff
 
 Khi có yêu cầu tạo một Staff cụ thể:
@@ -591,11 +609,11 @@ Khi có yêu cầu tạo một Staff cụ thể:
 1. Xác định vai trò, outcome, phạm vi, công cụ cần có và tiêu chí hoàn thành.
 2. Chọn tên và đường dẫn riêng dưới `OS Staff`; kiểm tra nội dung có sẵn trước khi ghi.
 3. Tạo starter files có nội dung thực, gồm `knowledge/README.md`, `journal/README.md` và routing từ entrypoint/learning; không chỉ đổi tên một prompt chung.
-4. Ghi Staff được tạo theo `OS Staff Starter Spec V0.2.3`, ví dụ trong metadata đầu `AGENTS.md`.
+4. Ghi Staff được tạo theo `OS Staff Starter Spec V0.2.4`, ví dụ trong metadata đầu `AGENTS.md`.
 5. Chỉ đưa vào Staff `USER.md` bổ sung/override đã xác nhận đúng vai trò; route context chung tới Intelligence, không copy profile hoặc nhập memory cũ.
 6. Tạo skill/knowledge ban đầu theo nhu cầu thực, không nhồi sẵn mọi kỹ năng.
 7. Nối entrypoint/skill discovery vào harness đang sử dụng nếu cần, không tạo nhiều bản nội dung.
-8. Nếu Staff sẽ làm với OS Projects, thêm Project binding/Context Gate vào entrypoint và chạy một project-bound scenario với [[11-factory/specs/os-projects-starter-spec]] V0.1.3.
+8. Nếu Staff sẽ làm với OS Projects, thêm Project binding/Context Gate vào entrypoint và chạy một project-bound scenario với [[11-factory/specs/os-projects-starter-spec]] V0.1.4.
 9. Dùng một job thực để chạy các acceptance scenarios phù hợp; kiểm tra mọi link/heading và locator hai chiều theo root được khai báo, không chỉ tìm chuỗi wikilink.
 10. Đề xuất checkpoint Git khi có mốc đáng lưu; không tự commit/push.
 
@@ -603,7 +621,7 @@ Tài liệu này cho phép dùng làm cơ sở thiết kế Staff, không phải
 
 Staff được tạo từ một phiên bản không tự động nâng cấp khi factory sửa spec. Thay đổi spec sau này cần được xem xét trước khi áp dụng vào Staff đang có công việc và memory riêng.
 
-## 13. Những gì chưa thuộc V0.2.3
+## 13. Những gì chưa thuộc V0.2.4
 
 - Tự xây agent harness hoặc orchestration framework.
 - Bắt buộc Hermes Agent, OpenClaw hoặc một model provider.
@@ -641,4 +659,4 @@ Nguồn dùng để học nguyên tắc, không phải dependency của spec:
 
 Tài liệu và source của các harness thay đổi theo phiên bản. Khi tích hợp phải kiểm tra bản đang dùng, không coi mô tả discovery hôm nay là cam kết vĩnh viễn.
 
-Spec này là contract tạo Staff của Ship V0.1.2. Mỗi Staff mới phải được kiểm tra bằng starter inventory, routing, fresh first-use và Project Context Gate khi có Project; generalized learning reuse, concurrent shared edits và bàn giao đa harness là acceptance theo từng instance. V0.2.3 không triển khai creative-learning V0.3.
+Spec này là contract tạo Staff của Ship source V0.2.0. Mỗi Staff mới phải được kiểm tra bằng starter inventory, routing, fresh first-use, session JSONL/resume và Project Context Gate khi có Project; generalized learning reuse, concurrent shared edits và bàn giao đa harness là acceptance theo từng instance. V0.2.4 không triển khai creative-learning V0.3.
