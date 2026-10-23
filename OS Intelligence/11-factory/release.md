@@ -1,8 +1,8 @@
 # AI OS Ecosystem Ship Release
 
-- Source version: V0.2.0
-- Updated: 2026-10-18
-- Distribution status: GitHub `main`; tag/GitHub Release V0.2.0 chưa tạo
+- Source version: V0.3.0
+- Updated: 2026-10-23
+- Distribution status: GitHub `main`; tag/GitHub Release V0.3.0 là latest
 - Intelligence contract: V0.2.2
 - Staff contract: V0.2.4
 - Projects contract: V0.1.4
@@ -31,6 +31,7 @@ Version Ship độc lập với version ba component. Một release phải ghi r
 | Security hoặc compatibility fix | Ưu tiên patch release |
 | USER, context, work, daily, meeting, private decision | Không copy |
 | Staff/Project instance, brand facts, assets, outputs | Không copy vào clean distribution |
+| Learner-created Staff/Project repositories | Giữ ngoài parent Ship tracking; mỗi child có standalone Git boundary |
 | Playbook/knowledge | Chỉ ship khi được chọn làm curriculum/public method và không chứa dữ liệu riêng |
 | Runtime IDs, transcript, absolute machine path, credentials | Không ship |
 
@@ -39,28 +40,36 @@ Version Ship độc lập với version ba component. Một release phải ghi r
 1. Đọc release hiện hành, source specs/Skills và feedback có evidence.
 2. Lập migration matrix: source artifact → ship artifact → include/exclude/transform → compatibility → verification.
 3. Áp dụng trên bản Ship source-of-truth; không duplicate private state để rồi cố scrub sau.
-4. Chạy privacy scan, mandatory inventory, wikilink/locator, Skill hash/symlink và fresh prompt smoke cho tạo Staff/Project.
+4. Chạy privacy scan, mandatory inventory, wikilink/locator, Skill hash/symlink, learner-data ignore boundary và fresh prompt smoke cho tạo Staff/Project.
 5. Cập nhật release, registry và log; ghi migration notes cho learner instances.
-6. Không tự sửa bản learner đang dùng. Upgrade learner phải giữ `USER`, context, work, Staff, Projects, assets và output; conflict/breaking change cần checkpoint cùng approval.
+6. Không tự sửa bản learner đang dùng. Upgrade learner phải giữ `USER`, context, work, child Staff/Project repositories, assets và output; conflict/breaking change cần checkpoint cùng approval.
 
 ## Fresh-install acceptance
 
-- Root có ba product folders `OS Intelligence`, `OS Staff`, `OS Projects`; repository metadata MAY gồm README, CHANGELOG, VERSION và Git metadata.
+- Root có ba product folders `OS Intelligence`, `OS Staff`, `OS Projects`; repository metadata gồm README, CHANGELOG, VERSION, `.gitignore` và Git metadata.
 - Fresh clone giữ `OS Staff` và `OS Projects` bằng `.gitkeep`; hai placeholder không phải Staff/Project data.
+- Root `.gitignore` loại learner-created child directories khỏi parent Ship nhưng không che `.gitkeep`.
 - Intelligence có mandatory starter, clean USER/context/work/wiki/registry.
 - `skill-creator`, `pre-compact`, `close` canonical và Claude adapters cùng realpath.
-- Prompt tạo Staff/Project route đúng spec và target sibling folder.
+- Prompt tạo Staff/Project route đúng spec, target sibling container, mandatory `README.md`/`VERSION`/`CHANGELOG.md` và standalone Git boundary.
 - Fresh Intelligence session và Staff/Project first-use session hiển thị đúng JSONL path cùng exact resume command khi runtime hỗ trợ; resume command tải lại đúng thread.
 - Không có private names, brand data, machine-specific absolute paths, runtime IDs hoặc production artifacts.
 
 ## Upgrade history
+
+### V0.3.0
+
+- Bổ sung repository metadata bắt buộc và standalone Git boundary cho mọi Staff/Project mới.
+- Thêm parent `.gitignore` bảo vệ learner-created child repositories khỏi accidental commit vào Ship.
+- Nâng generic AGENTS/Skill authoring contract, scrub source-instance identity và giữ Skills bundled không đổi.
+- Source, tag và GitHub Release V0.3.0 đã phát hành; V0.2.0 được backfill thành historical release.
 
 ### V0.2.0
 
 - Thêm session JSONL/resume locator cho Intelligence và contract bắt buộc trong mọi Staff/Project mới.
 - Nâng component matrix lên Intelligence V0.2.2, Staff V0.2.4 và Projects V0.1.4.
 - Giữ runtime transcript/cache ngoài repo; learner instance không bị ghi đè khi nâng cấp.
-- Source V0.2.0 ở GitHub `main`; tag/GitHub Release V0.2.0 chưa tạo.
+- Source V0.2.0 được giữ tại historical tag/GitHub Release V0.2.0.
 
 ### V0.1.2
 

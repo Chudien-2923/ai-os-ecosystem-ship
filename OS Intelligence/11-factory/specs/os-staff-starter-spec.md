@@ -1,7 +1,7 @@
 # OS Staff Starter Spec
 
 - **Phiên bản hiện hành:** V0.2.4.
-- **Trạng thái:** contract hiện hành để Factory tạo Staff mới; clean Ship chưa có Staff instance, runtime evidence phải ghi riêng tại registry sau khi tạo.
+- **Trạng thái:** contract hiện hành để Factory tạo Staff mới; Ship V0.3.0 bổ sung repository metadata và standalone Git boundary, clean distribution chưa có Staff instance.
 - **Ngày ghi nhận:** 2026-10-18.
 - **Nơi duy trì:** OS Intelligence `11-factory/specs/os-staff-starter-spec.md`.
 - **Mục đích:** Lưu quyết định thiết kế, hành trình phát triển spec và tiêu chuẩn để tạo các nhân viên AI độc lập.
@@ -28,8 +28,10 @@ Tri thức và quy trình ưu tiên Markdown liên kết bằng `[[wikilink]]`. 
 Đường dẫn theo layout Ship, resolve từ root OS Intelligence:
 
 - Factory hiện hành: `11-factory/`.
-- Nơi tạo Staff: `../OS Staff/<staff-id>`.
-- Mỗi Staff nằm trong một thư mục/repo riêng dưới `OS Staff`; không phải một subagent prompt trong Factory.
+- `../OS Staff/` là container tổ chức local, không phải Git repository dùng chung.
+- Mỗi Staff nằm tại `../OS Staff/<staff-id>` và là một standalone Git repository; branch, history, tag, remote, approval và recovery độc lập.
+- Factory chỉ chạy Git từ root Staff đích; không init hoặc commit ở `OS Staff` hoặc parent Ship repository.
+- Staff không phải một subagent prompt trong Factory.
 
 Không hard-code đường dẫn máy vào Staff hoặc skill portable.
 
@@ -168,10 +170,13 @@ Không tái tạo background review engine, hệ thống chấm điểm promotio
 
 ## 5. Cấu trúc starter cho một Staff
 
-Starter phải có các entrypoint và hai folder nền `knowledge/`, `journal/` ngay khi khởi tạo. Khi chưa có dữ liệu, mỗi folder giữ `README.md` giải thích mục đích, lúc đọc/ghi, nguồn và scope; không tạo bài học giả. Job, skill, reference và taxonomy con chỉ tạo khi có nhu cầu thực.
+Starter phải có repository metadata, các entrypoint và hai folder nền `knowledge/`, `journal/` ngay khi khởi tạo. `README.md` giới thiệu ngắn gọn đây là OS Staff, identity/role, entrypoint, cấu trúc, quan hệ trong hệ sinh thái, privacy và Git boundary; `VERSION` giữ contract version machine-readable; `CHANGELOG.md` giữ các mốc repository metadata. Khi chưa có knowledge/journal data, mỗi folder giữ `README.md` giải thích mục đích, lúc đọc/ghi, nguồn và scope; không tạo bài học giả. Job, skill, reference và taxonomy con chỉ tạo khi có nhu cầu thực.
 
 ```text
 <staff-name>/
+├── README.md
+├── VERSION
+├── CHANGELOG.md
 ├── AGENTS.md
 ├── ROLE.md
 ├── USER.md
@@ -191,6 +196,9 @@ Starter phải có các entrypoint và hai folder nền `knowledge/`, `journal/`
 
 | File hoặc thư mục | Nội dung | Khi đọc |
 | --- | --- | --- |
+| `README.md` | Overview ngắn: OS type, Staff identity/role, cách bắt đầu, cấu trúc, quan hệ hệ sinh thái, version/Git và privacy | Khi người hoặc Git host cần hiểu repo |
+| `VERSION` | Contract version machine-readable của Staff instance | Khi Factory/upgrade/check cần đối chiếu version |
+| `CHANGELOG.md` | Mốc repository metadata và migration đáng giữ; không thay job/journal | Khi review release/checkpoint |
 | `AGENTS.md` | Entry point, routing, nguyên tắc điều hành, trigger học và Git checkpoints | Khi bắt đầu session |
 | `ROLE.md` | Vai trò, outcome, phạm vi, tiêu chuẩn đầu ra và ranh giới trách nhiệm | Khi bắt đầu hoặc cần xác định phạm vi |
 | `USER.md` | Preferences và cách cộng tác đã được xác nhận, có scope khi cần | Context ban đầu ngắn hoặc trước quyết định liên quan |
@@ -589,8 +597,9 @@ Các mục dưới đây là acceptance scenarios cần chạy trên Staff thậ
 
 ### 11.6. Starter và routing
 
-- `knowledge/README.md` và `journal/README.md` tồn tại, có hướng dẫn thực và được entrypoint/learning router liên kết.
-- README nói đúng trạng thái chưa có entry; không bị tính là tri thức đã học hoặc evidence đã kiểm chứng.
+- `README.md`, `VERSION`, `CHANGELOG.md`, `knowledge/README.md` và `journal/README.md` tồn tại; metadata mô tả đúng Staff/role/version, hai folder nền có hướng dẫn thực và được entrypoint/learning router liên kết.
+- README/index nói đúng trạng thái chưa có entry; không bị tính là tri thức đã học hoặc evidence đã kiểm chứng.
+- Staff root là standalone Git boundary; container `OS Staff` và parent Ship không nhận child history/data.
 - Từ job mở đúng Project/workstream rồi backlink quay lại đúng job; kiểm tra cả locator ngoài wikilink và heading đích.
 - Training có thể đọc skill và tạo evidence trong Staff mà không yêu cầu Project Gate; project-bound task vẫn phải qua gate.
 
@@ -607,15 +616,16 @@ Các mục dưới đây là acceptance scenarios cần chạy trên Staff thậ
 Khi có yêu cầu tạo một Staff cụ thể:
 
 1. Xác định vai trò, outcome, phạm vi, công cụ cần có và tiêu chí hoàn thành.
-2. Chọn tên và đường dẫn riêng dưới `OS Staff`; kiểm tra nội dung có sẵn trước khi ghi.
-3. Tạo starter files có nội dung thực, gồm `knowledge/README.md`, `journal/README.md` và routing từ entrypoint/learning; không chỉ đổi tên một prompt chung.
-4. Ghi Staff được tạo theo `OS Staff Starter Spec V0.2.4`, ví dụ trong metadata đầu `AGENTS.md`.
-5. Chỉ đưa vào Staff `USER.md` bổ sung/override đã xác nhận đúng vai trò; route context chung tới Intelligence, không copy profile hoặc nhập memory cũ.
-6. Tạo skill/knowledge ban đầu theo nhu cầu thực, không nhồi sẵn mọi kỹ năng.
-7. Nối entrypoint/skill discovery vào harness đang sử dụng nếu cần, không tạo nhiều bản nội dung.
-8. Nếu Staff sẽ làm với OS Projects, thêm Project binding/Context Gate vào entrypoint và chạy một project-bound scenario với [[11-factory/specs/os-projects-starter-spec]] V0.1.4.
-9. Dùng một job thực để chạy các acceptance scenarios phù hợp; kiểm tra mọi link/heading và locator hai chiều theo root được khai báo, không chỉ tìm chuỗi wikilink.
-10. Đề xuất checkpoint Git khi có mốc đáng lưu; không tự commit/push.
+2. Chọn tên và đường dẫn riêng dưới container `OS Staff`; kiểm tra nội dung có sẵn trước khi ghi.
+3. Tạo repository metadata `README.md`, `VERSION`, `CHANGELOG.md`; README phải ghi rõ đây là OS Staff và role/ID, không dùng mô tả generic có thể áp cho mọi Staff.
+4. Tạo starter files có nội dung thực, gồm `knowledge/README.md`, `journal/README.md` và routing từ entrypoint/learning; không chỉ đổi tên một prompt chung.
+5. Ghi Staff được tạo theo `OS Staff Starter Spec V0.2.4`, ví dụ trong metadata đầu `AGENTS.md` và `VERSION`.
+6. Chỉ đưa vào Staff `USER.md` bổ sung/override đã xác nhận đúng vai trò; route context chung tới Intelligence, không copy profile hoặc nhập memory cũ.
+7. Tạo skill/knowledge ban đầu theo nhu cầu thực, không nhồi sẵn mọi kỹ năng.
+8. Nối entrypoint/skill discovery vào harness đang sử dụng nếu cần, không tạo nhiều bản nội dung.
+9. Nếu Staff sẽ làm với OS Projects, thêm Project binding/Context Gate vào entrypoint và chạy một project-bound scenario với [[11-factory/specs/os-projects-starter-spec]] V0.1.4.
+10. Chỉ init standalone Git tại root Staff khi người dùng duyệt; không init ở container hoặc parent Ship. Không có approval thì ghi Git setup là pending.
+11. Dùng một job thực để chạy các acceptance scenarios phù hợp; kiểm tra inventory, links/headings, locator hai chiều và Git boundary; đề xuất checkpoint, không tự commit/push.
 
 Tài liệu này cho phép dùng làm cơ sở thiết kế Staff, không phải lệnh tạo ngay mọi Staff hoặc khởi tạo Git cho các folder.
 
@@ -659,4 +669,4 @@ Nguồn dùng để học nguyên tắc, không phải dependency của spec:
 
 Tài liệu và source của các harness thay đổi theo phiên bản. Khi tích hợp phải kiểm tra bản đang dùng, không coi mô tả discovery hôm nay là cam kết vĩnh viễn.
 
-Spec này là contract tạo Staff của Ship source V0.2.0. Mỗi Staff mới phải được kiểm tra bằng starter inventory, routing, fresh first-use, session JSONL/resume và Project Context Gate khi có Project; generalized learning reuse, concurrent shared edits và bàn giao đa harness là acceptance theo từng instance. V0.2.4 không triển khai creative-learning V0.3.
+Spec này là contract tạo Staff của Ship source V0.3.0. Mỗi Staff mới phải được kiểm tra bằng repository metadata, starter inventory, standalone Git boundary, routing, fresh first-use, session JSONL/resume và Project Context Gate khi có Project; generalized learning reuse, concurrent shared edits và bàn giao đa harness là acceptance theo từng instance. V0.2.4 không triển khai creative-learning V0.3.

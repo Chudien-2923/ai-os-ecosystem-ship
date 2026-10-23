@@ -424,9 +424,10 @@ Một mốc qua nhiều repo không atomic. Giữ contract Project commit trư�
 
 ## 14. Hợp nhất và tương thích
 
-### 14.1. Trạng thái Ship source V0.2.0
+### 14.1. Trạng thái Ship source V0.3.0
 
-- Factory, Playbook và shared context thuộc Intelligence; Staff/Projects là các repo độc lập ở sibling folders.
+- Factory, Playbook và shared context thuộc Intelligence; `OS Staff`/`OS Projects` là container local, mỗi child instance là standalone repository.
+- Mọi Staff/Project mới có repository metadata `README.md`, `VERSION`, `CHANGELOG.md`; parent Ship ignore learner-created child directories.
 - Clean distribution không mang legacy Factory, USER, work, Staff, Project hoặc runtime history của người phát hành.
 - Compatibility hiện hành là Staff V0.2.4 và Projects V0.1.4; session locator contract áp dụng cho cả ba OS.
 - Release và migration policy nằm tại [[11-factory/release]]; instance learner không tự nâng khi spec đổi.
@@ -544,4 +545,4 @@ Các đề xuất cấu trúc trước khi chốt dùng số folder khác là l�
 
 V0.2.1 đã được kiểm chứng ở source system trước khi đóng gói Ship: exact upstream `skill-creator` 18 files, lock, Apache-2.0 license và Claude adapter cùng realpath; official `quick_validate.py` pass; `skill-authoring` đã retire. Fresh OMP và Codex activation smoke đã dùng Capture Intent, 2–3 eval prompts với baseline và local contract đúng. Ship instance vẫn phải kiểm tra adapter, privacy, routing và prompt creation theo [[11-factory/release]]; learning reuse, concurrent writes, production và bàn giao đa harness là acceptance riêng của từng learner instance.
 
-V0.2.2 là Intelligence contract của Ship source V0.2.0. Runtime smoke và privacy/inventory evidence nằm tại [[11-factory/registry]]; tag/GitHub Release V0.2.0 là lifecycle riêng.
+V0.2.2 là Intelligence contract của Ship source V0.3.0. Runtime smoke, privacy/inventory và standalone-repository boundary evidence nằm tại [[11-factory/registry]]; Ship release lifecycle được ghi tại [[11-factory/release]].

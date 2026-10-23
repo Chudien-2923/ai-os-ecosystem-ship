@@ -1,13 +1,15 @@
 # OS Projects Starter Spec
 
 - **Phiên bản hiện hành:** V0.1.4.
-- **Trạng thái:** contract hiện hành để Factory tạo Project mới; clean Ship chưa có Project instance, runtime evidence phải ghi riêng tại registry sau khi tạo.
+- **Trạng thái:** contract hiện hành để Factory tạo Project mới; Ship V0.3.0 bổ sung repository metadata và standalone Git boundary, clean distribution chưa có Project instance.
 - **Ngày ghi nhận:** 2026-10-18.
 - **Nơi duy trì:** OS Intelligence `11-factory/specs/os-projects-starter-spec.md`.
 - **Mục đích:** Làm nguồn chính để Factory trong Intelligence tạo các brand workspace độc lập trong OS Projects.
 - **Quyết định hiện tại:** V0.1.4 thêm session JSONL/resume locator tương thích ngược trên V0.1.3; không thêm automation riêng.
 
 > Mỗi Project là một brand workspace dài hạn và một repo độc lập. Staff mang vai trò và năng lực đến Project; Project giữ context, trạng thái chung và lịch sử của brand.
+
+`OS Projects` là container tổ chức local và không phải Git repository dùng chung. Mỗi Project folder bên trong là một standalone Git repository; history, branch, tag, remote, approval và recovery độc lập.
 
 ## 1. Tầm nhìn
 
@@ -66,6 +68,9 @@ Cấu trúc mục tiêu:
 
 ```text
 <brand-project>/
+├── README.md
+├── VERSION
+├── CHANGELOG.md
 ├── AGENTS.md
 ├── PROJECT.md
 ├── WORK.md
@@ -82,12 +87,15 @@ Cấu trúc mục tiêu:
         └── WORKSTREAM.md
 ```
 
-Phần bắt buộc khi khởi tạo: `AGENTS.md`, `PROJECT.md`, `WORK.md`, `brand/foundation.md`, `brand/guidelines.md` có heading `Non-negotiables`, và `assets/ASSETS.md`. Asset index chưa có asset thì phải ghi rõ trạng thái trống và cách đăng ký; README/index không được bịa entry. Audience/voice/visual nodes chỉ tạo khi có dữ liệu tương ứng; router nêu phần thiếu nhưng không link tới file chưa tồn tại. `outputs/`, `references/`, asset subfolders và node con chỉ xuất hiện khi thực sự cần. Hai folder Staff `journal/`, `knowledge/` không phải yêu cầu cấu trúc Project.
+Phần bắt buộc khi khởi tạo: `README.md`, `VERSION`, `CHANGELOG.md`, `AGENTS.md`, `PROJECT.md`, `WORK.md`, `brand/foundation.md`, `brand/guidelines.md` có heading `Non-negotiables`, và `assets/ASSETS.md`. README ghi rõ đây là OS Project, Project ID/type/purpose, cách bắt đầu, cấu trúc, quan hệ với Staff/Intelligence, version/Git và privacy. `VERSION` là contract version machine-readable; `CHANGELOG.md` giữ repository metadata/migration, không thay workstream history. Asset index chưa có asset thì phải ghi rõ trạng thái trống và cách đăng ký; README/index không được bịa entry. Audience/voice/visual nodes chỉ tạo khi có dữ liệu tương ứng; router nêu phần thiếu nhưng không link tới file chưa tồn tại. `outputs/`, `references/`, asset subfolders và node con chỉ xuất hiện khi thực sự cần. Hai folder Staff `journal/`, `knowledge/` không phải yêu cầu cấu trúc Project.
 
 ### 4.1. Trách nhiệm entrypoints
 
 | File | Trách nhiệm | Khi đọc |
 | --- | --- | --- |
+| `README.md` | Overview ngắn: OS type, Project ID/type/purpose, cách bắt đầu, cấu trúc, quan hệ hệ sinh thái, version/Git và privacy | Khi người hoặc Git host cần hiểu repo |
+| `VERSION` | Contract version machine-readable của Project instance | Khi Factory/upgrade/check cần đối chiếu version |
+| `CHANGELOG.md` | Mốc repository metadata và migration đáng giữ; không thay workstream | Khi review release/checkpoint |
 | `AGENTS.md` | Project instructions, context gate, routing, data boundary, learning và Git safety | Khi Staff bắt đầu hoặc resume project session |
 | `PROJECT.md` | Project identity, locator và context map | Mọi project session |
 | `WORK.md` | Index workstream theo trạng thái; không sao chép toàn bộ workstream | Khi chọn hoặc tiếp tục công việc |
@@ -464,7 +472,8 @@ Quyền đọc/ghi repo vẫn do filesystem, Git host và harness quyết địn
 
 ### 14.10. Locator và cấu trúc bắt buộc
 
-- Mandatory files, heading `Non-negotiables` và `assets/ASSETS.md` luôn tồn tại; README/index không dùng nội dung giả để lấp dữ liệu thiếu.
+- `README.md`, `VERSION`, `CHANGELOG.md`, mandatory operating files, heading `Non-negotiables` và `assets/ASSETS.md` luôn tồn tại; README/index không dùng nội dung giả để lấp dữ liệu thiếu.
+- Project root là standalone Git boundary; container `OS Projects` và parent Ship không nhận child history/data.
 - Conditional nodes chưa có được router ghi là chưa có; không có link active tới file thiếu.
 - Staff job resolve đúng Project/workstream; backlink từ workstream resolve đúng Staff job khi mở từ root Project.
 - Cả wikilink/heading lẫn locator plain text/inline code đều được kiểm tra, không chỉ chiều Staff → Project.
@@ -480,16 +489,17 @@ Quyền đọc/ghi repo vẫn do filesystem, Git host và harness quyết địn
 ## 15. Quy trình factory tạo một Project
 
 1. Xác nhận brand/project name, stable ID, repo name và loại Project.
-2. Xác nhận đường dẫn đích trong `OS Projects`; không ghi đè folder có dữ liệu.
+2. Xác nhận đường dẫn đích trong container `OS Projects`; không ghi đè folder có dữ liệu và không init Git ở container hoặc parent Ship.
 3. Dùng spec V0.1.4 này làm nguồn.
-4. Trước khi ghi, lập implementation matrix: từng yêu cầu/spec artifact → target path → bắt buộc/conditional → nguồn dữ liệu → cách kiểm chứng.
-5. Tạo mandatory files, gồm `assets/ASSETS.md`; index chưa có entry phải giữ hướng dẫn và trạng thái trống, không bịa asset.
+4. Trước khi ghi, lập implementation matrix: từng requirement/artifact → target path → bắt buộc/conditional → nguồn dữ liệu → cách kiểm chứng.
+5. Tạo repository metadata `README.md`, `VERSION`, `CHANGELOG.md` và mandatory files, gồm `assets/ASSETS.md`; index chưa có entry phải giữ hướng dẫn và trạng thái trống, không bịa asset.
 6. Điền Project identity và mandatory base; không bịa brand facts còn thiếu.
 7. Tạo conditional context nodes, asset subfolders và workstreams chỉ khi có dữ liệu/nhu cầu thật; ghi uncertainty/evidence phù hợp.
-8. Kiểm tra Project Context Gate bằng một scenario Staff-first nếu có Staff và quyền phù hợp.
-9. Đối chiếu file inventory với implementation matrix; kiểm tra mandatory structure, wikilinks/heading, locator hai chiều theo root khai báo, asset locator/status, data boundaries và Git state.
-10. Chỉ Git init/commit/remote/push trong phạm vi người dùng duyệt.
-11. Ghi Project path, spec/version, sản phẩm, verification và giới hạn vào Intelligence [[log]] và [[11-factory/registry]].
+8. Chỉ init standalone Git tại root Project khi người dùng duyệt; không có approval thì ghi Git setup là pending.
+9. Kiểm tra Project Context Gate bằng một scenario Staff-first nếu có Staff và quyền phù hợp.
+10. Đối chiếu file inventory với implementation matrix; kiểm tra mandatory structure, links/headings, locator hai chiều, asset status, data boundaries và Git boundary.
+11. Chỉ commit/remote/push trong phạm vi người dùng duyệt.
+12. Ghi Project path, spec/version, verification và giới hạn vào Intelligence [[log]] và [[11-factory/registry]].
 
 Tạo Project repo không đồng nghĩa đã cập nhật mọi Staff hoặc Intelligence caller để biết Project Context Gate. Factory phải kiểm tra contract các phía khi triển khai.
 

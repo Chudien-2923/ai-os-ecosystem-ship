@@ -27,5 +27,13 @@
 
 - Thêm session JSONL/resume locator vào clean Intelligence và Factory contracts cho mọi Staff/Project mới.
 - Nâng component matrix lên Intelligence V0.2.2, Staff V0.2.4 và Projects V0.1.4.
-- Giữ transcript, runtime IDs, indexes và caches ngoài distribution; source được commit/push lên `main`, tag/GitHub Release V0.2.0 chưa tạo.
-- Fresh OMP clean-Intelligence smoke trả đúng JSONL locator và exact resume command; terminal mới dùng command đó tải lại đúng thread. Fresh read-only Factory prompt nêu đúng mandatory Staff/Project behavior và component matrix, không mutation. Source Athena/Personal Branding cũng pass nhưng không được coi là learner-instance evidence trong clean Ship.
+- Giữ transcript, runtime IDs, indexes và caches ngoài distribution; source được commit/push lên `main`; tag/GitHub Release V0.2.0 được backfill trong đợt V0.3.0.
+- Fresh OMP clean-Intelligence smoke trả đúng JSONL locator và exact resume command; terminal mới dùng command đó tải lại đúng thread. Fresh read-only Factory prompt nêu đúng mandatory Staff/Project behavior và component matrix, không mutation. Source instances cũng pass nhưng không được coi là learner-instance evidence trong clean Ship.
+
+## 2026-10-23 — Ship V0.3.0 standalone repository boundary
+
+- Đồng bộ clean Factory contracts với repository metadata `README.md`, `VERSION`, `CHANGELOG.md` và standalone Git boundary cho mọi Staff/Project mới.
+- Thêm root `.gitignore` để parent Ship không track learner-created child repositories; giữ `.gitkeep` và distribution files nhìn thấy.
+- Nâng generic Skill integration guidance; bundled Skill trees/lock/adapters không đổi và official validation pass.
+- Privacy, inventory, active wikilinks/headings, Factory planning smoke và clean-clone boundary pass; không đưa source-instance identity, USER/context/work/assets/output vào distribution.
+- Source/tag/GitHub Release V0.3.0 được publish; V0.2.0 được backfill thành historical release.

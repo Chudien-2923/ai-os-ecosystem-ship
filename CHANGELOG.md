@@ -2,6 +2,31 @@
 
 Mọi thay đổi đáng kể của AI OS Ecosystem Ship được ghi tại đây. Ship dùng SemVer độc lập với version của OS Intelligence, Staff và Projects.
 
+## [V0.3.0] — 2026-10-23
+
+### Đã thêm
+
+- Standalone-repository contract cho từng Staff/Project; `OS Staff` và `OS Projects` chỉ là container local.
+- `README.md`, `VERSION` và `CHANGELOG.md` vào mandatory starter của mọi Staff/Project mới.
+- Root `.gitignore` bảo vệ learner-created child repositories và local artifacts khỏi parent Ship repository.
+
+### Đã thay đổi
+
+- Đồng bộ Factory index và clean specs với generic contract hiện hành, không mang absolute path, tên instance hoặc private evidence từ source ecosystem.
+- Nâng Skill integration guidance: portable metadata, canonical adapter realpath, fresh-session activation, eval theo rủi ro và xử lý output không tin cậy.
+- Generalize release evidence để không lộ identity của private source instances.
+
+### Đã kiểm chứng
+
+- Fresh-install inventory, privacy scan, active wikilinks/headings, Skill tree/hash/symlink và official Skill validation.
+- Factory planning smoke cho Staff/Project bắt buộc repository metadata, standalone Git boundary, session locator và không mutation.
+- Parent Git ignore boundary giữ `.gitkeep` nhưng loại child Staff/Project data.
+
+### Trạng thái phát hành
+
+- Source, tag và GitHub Release V0.3.0 được phát hành trên public repository.
+- V0.2.0 được backfill thành historical tag/release tại commit source tương ứng.
+
 ## [V0.2.0] — 2026-10-18
 
 ### Đã thêm
@@ -16,7 +41,7 @@ Mọi thay đổi đáng kể của AI OS Ecosystem Ship được ghi tại đâ
 
 ### Trạng thái phát hành
 
-- Source V0.2.0 được commit/push lên GitHub `main`; tag và GitHub Release V0.2.0 chưa được tạo.
+- Source V0.2.0 được commit/push lên GitHub `main`; tag/GitHub Release được backfill khi phát hành V0.3.0.
 
 ## [V0.1.2] — 2026-10-17
 

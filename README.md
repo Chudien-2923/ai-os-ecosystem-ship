@@ -6,7 +6,7 @@ Tài liệu dành chủ yếu cho học viên Việt Nam nên phần hướng d�
 
 ## Phiên bản hiện hành
 
-- Ship source: **V0.2.0**
+- Ship source và public release: **V0.3.0**
 - OS Intelligence contract: **V0.2.2**
 - OS Staff contract: **V0.2.4**
 - OS Projects contract: **V0.1.4**
@@ -24,6 +24,8 @@ AI OS Ecosystem/
 
 Trong fresh Git clone, `OS Staff` và `OS Projects` chỉ có `.gitkeep` để Git giữ lại hai product folders chưa có instance data.
 
+`OS Staff` và `OS Projects` là container tổ chức local, không phải repository dùng chung. Mỗi Staff/Project được tạo bên trong là một standalone Git repository với history, remote và quyền riêng độc lập. Root `.gitignore` loại các child instance khỏi Ship parent repository để learner data không bị commit nhầm vào distribution.
+
 ## Bắt đầu sử dụng
 
 1. Clone hoặc tải repository về máy.
@@ -33,11 +35,13 @@ Trong fresh Git clone, `OS Staff` và `OS Projects` chỉ có `.gitkeep` để G
 5. Prompt tự nhiên, ví dụ:
    - `Hãy tạo cho tôi một AI Staff Video Editor.`
    - `Hãy tạo Project cho brand của tôi.`
-6. Intelligence dùng Factory specs để tạo Staff trong `OS Staff/` hoặc Project trong `OS Projects/`, sau đó kiểm tra cấu trúc, links và runtime behavior.
+6. Intelligence dùng Factory specs để tạo Staff hoặc Project với `README.md`, `VERSION`, `CHANGELOG.md`, mandatory operating files và standalone Git boundary; sau đó kiểm tra cấu trúc, links và runtime behavior trước khi ghi registry.
 
 ## Ranh giới của bản sạch
 
 Repository không chứa hồ sơ cá nhân, private work, research, runtime IDs, Staff/Project instances, brand data, assets hoặc production outputs của người phát hành. Dữ liệu học viên chỉ được thêm trong quá trình sử dụng và thuộc instance của chính học viên đó.
+
+Learner-created Staff/Project, `USER`, context, work, assets và outputs không phải nội dung của Ship. Không dùng parent Ship repository để version hoặc publish child instance; mỗi child repo chỉ được init/commit/remote/push trong phạm vi người dùng duyệt.
 
 ## Quản lý phiên bản và nâng cấp
 
