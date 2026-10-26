@@ -1,7 +1,7 @@
 # OS Projects Starter Spec
 
 - **Phiên bản hiện hành:** V0.1.4.
-- **Trạng thái:** contract hiện hành để Factory tạo Project mới; Ship V0.4.0 giữ repository metadata/standalone Git boundary và bổ sung generic Orchestration V2 tại Intelligence, clean distribution chưa có Project instance.
+- **Trạng thái:** contract hiện hành để Factory tạo Project mới; Ship V0.5.0 giữ repository metadata/standalone Git boundary, generic Orchestration V2 và repository/worktree capabilities tại Intelligence; clean distribution chưa có Project instance.
 - **Ngày ghi nhận:** 2026-10-18.
 - **Nơi duy trì:** OS Intelligence `11-factory/specs/os-projects-starter-spec.md`.
 - **Mục đích:** Làm nguồn chính để Factory trong Intelligence tạo các brand workspace độc lập trong OS Projects.

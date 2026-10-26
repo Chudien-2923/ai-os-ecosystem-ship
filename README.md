@@ -6,7 +6,7 @@ Tài liệu dành chủ yếu cho học viên Việt Nam nên phần hướng d�
 
 ## Phiên bản hiện hành
 
-- Ship source và public release: **V0.4.0**
+- Ship source và public release: **V0.5.0**
 - OS Intelligence contract: **V0.2.2**
 - OS Staff contract: **V0.2.4**
 - OS Projects contract: **V0.1.4**
@@ -56,3 +56,11 @@ Việc source system được nâng cấp không tự ghi đè bản phân phố
 ## Skills và license
 
 Anthropic `skill-creator` đi kèm vẫn giữ upstream Apache-2.0 license tại `OS Intelligence/.agents/skills/skill-creator/LICENSE.txt`. Release này chưa khai báo repository-wide license riêng.
+
+Bundled portable Skills:
+
+- `/skill:pre-compact` và `/skill:close` — continuity trước compact hoặc đổi session.
+- `/skill:repo-reconcile` — audit stale information/history và đề xuất cleanup có approval gate.
+- `/skill:sync-worktrees-from-main` — local `main` → eligible worktrees.
+- `/skill:merge-worktrees-into-main` — completed worktrees → local `main`.
+- `/skill:sync-main-with-worktrees` — full two-way local reconciliation.

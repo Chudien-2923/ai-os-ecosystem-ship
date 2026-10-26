@@ -1,0 +1,29 @@
+{
+  "skill_name": "sync-main-with-worktrees",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Sync main với tất cả worktree của fixture. A đã completed, có coherent uncommitted diff và smoke pass; B là clean active branch cần nhận final main; C có draft uncommitted đang do worker khác sở hữu. Chưa push remote.",
+      "expected_output": "Inventories all worktrees, creates one approval packet for A, preserves C, integrates approved A into main, then updates eligible B from final main, with observed verification and no push.",
+      "files": [],
+      "assertions": [
+        "All worktrees and main are inventoried with owner, lifecycle, dirty state, branch relation, and proposed direction.",
+        "A is committed only after exact approval and integrated into the latest local main with verification.",
+        "B receives the verified final main only after completed sources are integrated.",
+        "C remains byte-for-byte untouched because it is a dirty draft with another owner, and no push occurs."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Thực hiện full main/worktree sync theo packet anh vừa duyệt. Trước mutation, HEAD của worktree A đã đổi và một session mới đang sửa cùng file; B vẫn độc lập và clean.",
+      "expected_output": "Invalidates A's stale row and preserves it, proceeds with independently approved B only if its row remains current, reports PARTIAL with exact ownership blocker, and avoids reset/revert/push.",
+      "files": [],
+      "assertions": [
+        "A's changed HEAD/concurrent ownership invalidates its approval row before commit or merge.",
+        "A is not reset, stashed, committed, or integrated.",
+        "Independent B may proceed only after its own current row and dependencies are revalidated.",
+        "The receipt reports PARTIAL or BLOCKED precisely and performs no push or destructive rollback."
+      ]
+    }
+  ]
+}

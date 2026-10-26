@@ -1,6 +1,6 @@
 # AI OS Ecosystem Registry
 
-- Ship source/public release: V0.4.0.
+- Ship source/public release: V0.5.0.
 - Last reconciled: 2026-10-26
 - Root convention: sibling `OS Intelligence`, non-Git containers `OS Staff`/`OS Projects`, child standalone repositories
 
@@ -8,7 +8,7 @@
 
 | Component | Version | Source | Status |
 | --- | --- | --- | --- |
-| Intelligence | V0.2.2 | [[11-factory/specs/os-intelligence-starter-spec]] | Clean starter installed; session locator, learner-data boundary và current Skill integration guidance included |
+| Intelligence | V0.2.2 | [[11-factory/specs/os-intelligence-starter-spec]] | Clean starter installed; session locator, event-based Inbox/Daily, repository reconciliation, worktree operations và Skill integration guidance included |
 | Staff | V0.2.4 | [[11-factory/specs/os-staff-starter-spec]] | Factory-ready; no instance yet; repository metadata, standalone Git và session locator mandatory |
 | Projects | V0.1.4 | [[11-factory/specs/os-projects-starter-spec]] | Factory-ready; no instance yet; repository metadata, standalone Git và session locator mandatory |
 
@@ -23,10 +23,10 @@ Version metadata không chứng minh runtime. Sau khi tạo hoặc nâng instanc
 
 ## Ship verification
 
-- V0.4.0 candidate mandatory inventory/version, privacy/credential scan và 110 active wikilinks/headings: pass.
-- Skill trees khớp source; lock cùng bytes; ba Claude adapters cùng realpath; official validator pass cho ba Skills.
-- Fresh OMP 18.12.6 read-only orchestration smoke: same-worker correction, fresh worker tại accepted natural gate, Progressive Context Gate, parallel boundary, risk-based verification, receipt và model/autocompact policy đều đúng; no mutation.
+- V0.5.0 candidate mandatory inventory/version, privacy/credential scan và active wikilinks/headings: pass.
+- Bảy canonical Skill trees, eval JSON và Claude adapter realpaths: pass; official validator pass cho cả bảy Skills.
+- Fresh OMP 18.12.6 read-only smokes: repo cleanup destructive gate, `main → worktrees`, worktrees → `main` và full two-way ordering/ownership preservation đúng; no mutation.
 - Parent ignore smoke giữ `.gitkeep`, ignore child Staff/Project paths và không ignore distribution files.
 - Clean Ship chưa có Staff/Project production instance; source-instance identity/evidence không nằm trong distribution.
-- V0.4.0 source, tag và GitHub Release đã publish; remote clean-clone pass VERSION, clean status, mandatory files, privacy, 110 links, Skills/adapters và parent ignore boundary.
+- V0.5.0 source, tag và GitHub Release đã publish; remote clean-clone pass VERSION, clean status, mandatory files, privacy, links, Skills/adapters và parent ignore boundary.
 - Public documentation: Vietnamese-first cho học viên Việt Nam; English technical terms MAY giữ nguyên khi rõ nghĩa hơn.

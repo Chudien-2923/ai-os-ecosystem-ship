@@ -45,3 +45,10 @@
 - Không ship private USER, exact model/pricing/threshold, runtime IDs, Builder/Project state hoặc production evidence.
 - Component contracts giữ nguyên; V0.4.0 source, tag và GitHub Release đã publish trên public repository, release được đánh dấu Latest.
 - Remote clean-clone pass mandatory inventory/version, privacy/credential scan, 110 active wikilinks/headings, three official Skill validations, adapters, clean status và parent ignore boundary.
+
+## 2026-10-26 — Ship V0.5.0 repository hygiene và worktree operations
+
+- Thêm `repo-reconcile` với evidence hierarchy và destructive approval gate; eval fixture dùng dữ liệu giả, không mang business fact của source ecosystem.
+- Thêm ba Worktree Sync Skills cho từng hướng local `main`/worktrees; shared safety contract bảo toàn dirty/draft/concurrently owned state và cấm push/rewrite/delete ngoài authority.
+- Nâng `pre-compact`, Inbox, Daily, AGENTS và starter spec sang explicit Inbox routing, event-based Daily và no-backfill mặc định; clean starter không chứa learner entry.
+- Component contracts giữ nguyên; V0.5.0 là backward-compatible minor release. Seven-Skill, privacy, inventory, link, parent-ignore, clean-clone và fresh OMP smokes pass.

@@ -1,8 +1,8 @@
 # AI OS Ecosystem Ship Release
 
-- Source version: V0.4.0
+- Source version: V0.5.0
 - Updated: 2026-10-26
-- Distribution status: GitHub `main`; tag/GitHub Release V0.4.0 là latest
+- Distribution status: GitHub `main`; tag/GitHub Release V0.5.0 là latest
 - Intelligence contract: V0.2.2
 - Staff contract: V0.2.4
 - Projects contract: V0.1.4
@@ -50,12 +50,21 @@ Version Ship độc lập với version ba component. Một release phải ghi r
 - Fresh clone giữ `OS Staff` và `OS Projects` bằng `.gitkeep`; hai placeholder không phải Staff/Project data.
 - Root `.gitignore` loại learner-created child directories khỏi parent Ship nhưng không che `.gitkeep`.
 - Intelligence có mandatory starter, clean USER/context/work/wiki/registry.
-- `skill-creator`, `pre-compact`, `close` canonical và Claude adapters cùng realpath.
+- Bảy canonical Skills (`skill-creator`, `pre-compact`, `close`, `repo-reconcile` và ba Worktree Sync Skills) cùng Claude adapters resolve về đúng realpath.
 - Prompt tạo Staff/Project route đúng spec, target sibling container, mandatory `README.md`/`VERSION`/`CHANGELOG.md` và standalone Git boundary.
 - Fresh Intelligence session và Staff/Project first-use session hiển thị đúng JSONL path cùng exact resume command khi runtime hỗ trợ; resume command tải lại đúng thread.
 - Không có private names, brand data, machine-specific absolute paths, runtime IDs hoặc production artifacts.
 
 ## Upgrade history
+
+### V0.5.0
+
+- Thêm repository hygiene capability: `repo-reconcile` dùng evidence hierarchy, bảo toàn historical records và bắt exact approval trước delete/move/archive.
+- Thêm ba Worktree Sync Skills cho từng hướng local `main`/worktrees; dirty/draft/concurrently owned state được preserve, commit/merge dùng approval packet và remote push ngoài scope mặc định.
+- Nâng continuity contract: explicit Inbox routing, event-based Daily và no-backfill mặc định trong `pre-compact`.
+- Component contracts/layout giữ nguyên; learner instance không tự nâng và migration phải giữ learner state.
+- Seven-Skill validation, privacy/inventory/link/ignore/clean-clone checks và fresh OMP direction/gate smokes pass.
+- Source, tag và GitHub Release V0.5.0 đã phát hành; release được đánh dấu Latest.
 
 ### V0.4.0
 

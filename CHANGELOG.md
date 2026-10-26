@@ -2,6 +2,29 @@
 
 Mọi thay đổi đáng kể của AI OS Ecosystem Ship được ghi tại đây. Ship dùng SemVer độc lập với version của OS Intelligence, Staff và Projects.
 
+## [V0.5.0] — 2026-10-26
+
+### Đã thêm
+
+- `repo-reconcile` để audit toàn bộ repository/history, cập nhật current-state information có evidence và lập cleanup proposal; delete/move/archive luôn dừng ở exact approval gate.
+- Ba Worktree Sync Skills: local `main → worktrees`, completed worktrees → local `main`, và full two-way reconciliation với ownership/conflict/verification gates.
+
+### Đã thay đổi
+
+- `pre-compact` route explicit deferred/unowned input vào Inbox và tạo Daily theo event-based trigger thay vì theo mỗi session/ngày.
+- Inbox/Daily starter contract phân biệt hàng chờ tạm, date index và canonical WORK/log/Project/Staff owners.
+- Runtime validation cho Codex/Claude trở thành conditional theo provider availability; fresh OMP và static adapter/discovery vẫn bắt buộc.
+
+### Đã kiểm chứng
+
+- Seven bundled Skills, eval JSON, Claude adapter realpaths và official Skill validation.
+- Privacy/inventory/wikilink/parent-ignore/clean-clone checks cùng fresh OMP read-only smokes cho destructive gate và ba hướng worktree synchronization.
+
+### Tương thích và trạng thái
+
+- Component contracts giữ nguyên: Intelligence V0.2.2, Staff V0.2.4, Projects V0.1.4.
+- V0.5.0 là backward-compatible minor release; learner instance không tự nâng và migration phải giữ learner state.
+
 ## [V0.4.0] — 2026-10-26
 
 ### Đã thêm

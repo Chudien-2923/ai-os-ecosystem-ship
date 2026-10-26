@@ -24,6 +24,38 @@
       "prompt": "Run pre-compact twice against the same fixture after the first run has persisted every durable delta.",
       "expected_output": "The first run persists required deltas; the second run is idempotent with zero new mutation and still returns an accurate receipt.",
       "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Run pre-compact. Today the user approved a cross-system policy and shared a meaningful reflection about why it matters. The canonical decision and WORK are current, but there is no Daily entry for today.",
+      "expected_output": "Creates today's event-based Daily as a short date index linking the canonical decision and WORK, without duplicating their details or backfilling older dates.",
+      "files": [],
+      "assertions": [
+        "A Daily file is created for the current fixture date.",
+        "The Daily uses short summaries and links to canonical owners rather than copying full state.",
+        "No earlier Daily files are backfilled."
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Run pre-compact after a routine implementation substep. The WORK file already has the result; there was no reflection, approval, correction, milestone, cross-owner change, or date-oriented open loop.",
+      "expected_output": "Keeps the WORK as the sole owner, does not create a Daily entry, and returns an accurate idempotent receipt.",
+      "files": [],
+      "assertions": [
+        "No Daily file is created merely because a session or routine substep occurred.",
+        "The current WORK remains the sole durable owner."
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Run pre-compact. The user sent a source link and explicitly said to save it for later without researching it now; it has no WORK, raw, wiki, or Project owner.",
+      "expected_output": "Creates one Inbox entry with source, received date, reason/pending action when known, and prospective owner; does not create a WORK or pretend the source was researched.",
+      "files": [],
+      "assertions": [
+        "Exactly one Inbox entry is created for the explicitly deferred unowned input.",
+        "The entry records the source and pending action without claiming research.",
+        "No Daily or WORK entry is used as a substitute for the Inbox."
+      ]
     }
   ]
 }

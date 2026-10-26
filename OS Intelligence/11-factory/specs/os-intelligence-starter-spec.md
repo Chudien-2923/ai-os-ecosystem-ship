@@ -131,8 +131,8 @@ Các file **conditional** chỉ tạo khi có dữ liệu thật:
 
 | Artifact | Đường dẫn trong instance | Nguồn và điều kiện |
 | --- | --- | --- |
-| Ghi nhận inbox | `01-inbox/<input>.md` | Người dùng gửi để dành hoặc đầu vào chưa xử lý xong |
-| Daily | `02-daily/YYYY-MM-DD.md` | Có ghi nhận đáng giữ từ session hoặc người dùng chia sẻ |
+| Ghi nhận inbox | `01-inbox/<input>.md` | Input được hoãn rõ hoặc còn chưa xử lý, chưa có canonical owner và phải sống qua session |
+| Daily | `02-daily/YYYY-MM-DD.md` | Sự kiện thật có giá trị truy xuất theo ngày; event-based, không bắt buộc theo session/ngày |
 | Công việc | `03-work/<work-name>/WORK.md` | Cần theo dõi, điều phối hoặc tiếp tục qua session |
 | Context dự án | `04-projects/<project>.md` | Index không đủ; chỉ giữ góc nhìn/đường dẫn, không copy brand repo |
 | Quyết định | `05-decisions/<decision>.md` | Quyết định cá nhân/xuyên hệ sinh thái cần nhớ lý do |
@@ -228,15 +228,17 @@ Trong spec này, đường dẫn instance resolve từ root Intelligence. Ba spe
 
 ### 6.1. Inbox
 
-Người dùng có thể đặt file trực tiếp hoặc gửi qua hội thoại; Agent ghi khi nội dung được để dành/chưa xử lý xong. Một entry giữ đầu vào, nguồn, lý do quan tâm nếu biết và việc chờ làm. Xử lý xong thì chuyển nội dung về nơi phù hợp hoặc bỏ khỏi tập chờ; không giữ bản sao dài hạn chỉ để lấp inbox.
+Người dùng có thể đặt file trực tiếp hoặc gửi qua hội thoại. Agent tạo entry khi người dùng nói rõ để dành/xử lý sau, hoặc khi reconciliation thấy một input còn chưa xử lý, chưa thuộc WORK/raw/wiki/Project và phải sống qua session. Một entry giữ đầu vào, nguồn, ngày nhận, lý do quan tâm nếu biết, việc chờ làm và owner dự kiến.
 
-Nguồn cần nghiên cứu ngay được đưa thẳng vào raw và ingest; không bắt đi qua inbox.
+Nguồn cần nghiên cứu ngay được đưa thẳng vào raw và ingest; ý tưởng đã thành việc đi vào WORK; open loop đã có owner không được copy vào Inbox. Xử lý xong thì chuyển nội dung về nơi phù hợp hoặc bỏ khỏi tập chờ. Không suy cụm “có thể dùng sau này” thành deferred input nếu nội dung đã được xử lý hoặc lưu đúng owner.
 
 ### 6.2. Daily
 
-Agent ghi chính từ sự kiện thực trong session hoặc người dùng chia sẻ; người dùng có thể tự bổ sung. Daily giữ suy nghĩ, mốc đáng nhớ, việc chưa khép lại và link tới work/decision/exploration. Không biết thay người dùng các hoạt động ngoài session; không ghi full transcript và không tạo file mỗi ngày nếu không có gì đáng giữ.
+Daily là event-based date index do Agent ghi chính từ sự kiện thật trong session; người dùng có thể tự bổ sung. Tạo hoặc cập nhật `YYYY-MM-DD.md` khi người dùng yêu cầu ghi nhận ngày/chia sẻ reflection hay intention đáng nhớ; khi milestone, approval, correction hoặc open loop có giá trị truy xuất theo ngày và canonical owner đã cập nhật; hoặc khi nhiều owner/work thay đổi đáng kể trong ngày cần một đường timeline chung.
 
-Daily trả lời “hôm đó đã nghĩ/làm gì”; WORK giữ trạng thái tiếp tục của một việc; log ghi thay đổi hệ thống/tri thức. Dùng link, không chép cùng nội dung vào cả ba.
+Mỗi item chỉ tóm tắt một dòng và link tới work/decision/exploration/log/Project/Staff sở hữu chi tiết. Không tạo Daily vì tool call, chỉnh sửa nhỏ, completed substep thông thường hoặc chỉ vì ngày đó có session; không chờ đúng câu “ghi Daily” khi trigger đã rõ.
+
+Daily trả lời “hôm đó đã nghĩ/làm/chốt gì”; WORK giữ trạng thái tiếp tục của một việc; log ghi thay đổi hệ thống/tri thức. Không đoán hoạt động ngoài session, không ghi full transcript và không chép cùng nội dung vào nhiều owner. Không backfill từ transcript/log chỉ để lấp timeline; chỉ ghi hồi tố khi người dùng yêu cầu hoặc có unique uncaptured content với evidence.
 
 ### 6.3. Decisions và meetings
 
@@ -424,12 +426,14 @@ Một mốc qua nhiều repo không atomic. Giữ contract Project commit trư�
 
 ## 14. Hợp nhất và tương thích
 
-### 14.1. Trạng thái Ship source V0.4.0
+### 14.1. Trạng thái Ship source V0.5.0
 
 - Factory, Playbook và shared context thuộc Intelligence; `OS Staff`/`OS Projects` là container local, mỗi child instance là standalone repository.
 - Mọi Staff/Project mới có repository metadata `README.md`, `VERSION`, `CHANGELOG.md`; parent Ship ignore learner-created child directories.
 - Clean distribution không mang legacy Factory, USER, work, Staff, Project hoặc runtime history của người phát hành.
 - Generic Orchestration V2 dùng outcome contract, Progressive Context Gate, one-owner default, risk-based verification, worker continuity và Natural Gate Receipt; không đóng băng model/pricing/autocompact config riêng.
+- Repository hygiene/worktree capability nằm ở portable Skills: evidence-based reconcile, destructive approval gate và ba hướng local `main`/worktrees; không tự commit/push/delete hoặc ghi đè active owner.
+- Inbox là explicit deferred/unowned queue; Daily là event-based date index và không backfill chỉ để lấp timeline.
 - Compatibility hiện hành là Staff V0.2.4 và Projects V0.1.4; session locator contract áp dụng cho cả ba OS.
 - Release và migration policy nằm tại [[11-factory/release]]; instance learner không tự nâng khi spec đổi.
 
@@ -546,4 +550,4 @@ Các đề xuất cấu trúc trước khi chốt dùng số folder khác là l�
 
 V0.2.1 đã được kiểm chứng ở source system trước khi đóng gói Ship: exact upstream `skill-creator` 18 files, lock, Apache-2.0 license và Claude adapter cùng realpath; official `quick_validate.py` pass; `skill-authoring` đã retire. Fresh OMP và Codex activation smoke đã dùng Capture Intent, 2–3 eval prompts với baseline và local contract đúng. Ship instance vẫn phải kiểm tra adapter, privacy, routing và prompt creation theo [[11-factory/release]]; learning reuse, concurrent writes, production và bàn giao đa harness là acceptance riêng của từng learner instance.
 
-V0.2.2 là Intelligence contract của Ship source V0.4.0. Runtime smoke, privacy/inventory và release-candidate evidence nằm tại [[11-factory/registry]]; Ship release lifecycle được ghi tại [[11-factory/release]].
+V0.2.2 là Intelligence contract của Ship source V0.5.0. Runtime smoke, privacy/inventory và release-candidate evidence nằm tại [[11-factory/registry]]; Ship release lifecycle được ghi tại [[11-factory/release]].

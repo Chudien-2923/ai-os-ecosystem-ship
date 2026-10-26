@@ -1,0 +1,29 @@
+{
+  "skill_name": "sync-worktrees-from-main",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Chạy sync worktrees from main cho repo fixture này. Main sạch; worktree A sạch và chỉ behind main hai commit; worktree B có thay đổi chưa commit của một session đang active. Không merge gì về main.",
+      "expected_output": "Updates A from local main, preserves B exactly, leaves main unchanged, verifies A, and reports B's owner/blocker without stashing or committing it.",
+      "files": [],
+      "assertions": [
+        "The clean behind worktree is updated from the exact local main HEAD and verified.",
+        "The dirty active worktree is not stashed, staged, committed, reset, or modified.",
+        "Local main HEAD remains unchanged and no worktree branch is merged into main.",
+        "No remote push or worktree deletion occurs."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Dùng skill cập nhật tất cả worktree theo main local. Một branch đã diverge và có thể cần merge commit; một branch detached; remote origin đang có commit mới nhưng anh chưa yêu cầu pull remote.",
+      "expected_output": "Builds one exact approval packet for the diverged branch, blocks/skips detached state, uses local main rather than remote origin, and does not rewrite history or push.",
+      "files": [],
+      "assertions": [
+        "The execution source is current local main, not the newer remote-tracking branch.",
+        "The potential merge commit is disclosed in one approval packet before mutation.",
+        "The detached worktree is preserved and reported as blocked or skipped.",
+        "No rebase, force operation, remote pull, or push is performed."
+      ]
+    }
+  ]
+}

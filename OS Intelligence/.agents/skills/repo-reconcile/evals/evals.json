@@ -1,0 +1,41 @@
+{
+  "skill_name": "repo-reconcile",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Quét toàn bộ fixture repo và lịch sử Git. context/offer.md vẫn nói giá 99 USD nhưng canonical project source và quyết định mới nhất đã chốt 129 USD; index cũng còn trỏ tới work cũ. Hãy reconcile thông tin hiện hành và báo ứng viên cleanup, nếu có.",
+      "expected_output": "Inventories the whole fixture, updates the evidence-backed current-state claim and affected index, preserves historical records, reports verification, and performs no deletion.",
+      "files": [],
+      "assertions": [
+        "Every in-scope fixture path is inventoried or explicitly excluded by class.",
+        "The stale current-state price and affected active index are updated from the canonical source.",
+        "Historical logs or completed work are not rewritten as though they were current-state files.",
+        "No file is deleted, moved, or archived during the audit pass."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Audit repo này để tìm file/work lâu không dùng. Có một completed WORK không còn được index active nhưng chứa evidence duy nhất; một duplicate draft không có inbound link và đã được supersede trong Git history. Đề xuất cleanup giúp tôi.",
+      "expected_output": "Retains the completed WORK because age/completion is insufficient and evidence is unique; proposes the duplicate draft with a short description, dependency/loss analysis, recovery path, and exact approval gate; deletes nothing.",
+      "files": [],
+      "assertions": [
+        "The completed WORK is retained with its evidence value stated.",
+        "The duplicate draft is listed as a numbered cleanup candidate with path and short description.",
+        "The proposal includes dependency, loss-risk, and recovery evidence.",
+        "The response asks for approval of exact candidate IDs and deletes nothing."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Tôi approve xóa candidate C2 trong cleanup proposal trước. Từ lúc proposal được tạo, C2 vừa có chỉnh sửa chưa commit và một file active mới link tới nó; C1 không đổi nhưng tôi không approve C1. Thực hiện phần cleanup đã được duyệt.",
+      "expected_output": "Rechecks current state, refuses to delete changed/referenced C2, leaves unapproved C1 untouched, reports the blocked deletion and required decision, and verifies that no destructive mutation occurred.",
+      "files": [],
+      "assertions": [
+        "The approved candidate is re-read and its new working-tree change and inbound reference are detected.",
+        "C2 is not deleted because the proposal evidence is stale.",
+        "Unapproved C1 is untouched.",
+        "The result names the blocker and next decision without claiming cleanup succeeded."
+      ]
+    }
+  ]
+}

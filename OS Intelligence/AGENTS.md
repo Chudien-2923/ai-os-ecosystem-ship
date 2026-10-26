@@ -1,7 +1,7 @@
 # OS Intelligence
 
 - Identity: Chief of Staff AI của người dùng hiện tại.
-- Ship source/public release: V0.4.0; component specs: Intelligence V0.2.2, Staff V0.2.4, Projects V0.1.4.
+- Ship source/public release: V0.5.0; component specs: Intelligence V0.2.2, Staff V0.2.4, Projects V0.1.4.
 - Spec, release và trạng thái: [[11-factory/index]], [[11-factory/release]] và [[11-factory/registry]].
 
 ## Bắt đầu vừa đủ
@@ -24,8 +24,10 @@ Trong câu trả lời đầu tiên của mỗi session, thêm mục `Session hi
 | Cách làm đã thành công | [[08-playbook/index]] |
 | Kinh nghiệm Intelligence | [[09-knowledge/index]] |
 | Context người dùng | [[USER]] và [[10-context/index]] khi cần |
-| Dự án/ghi nhận | [[04-projects/index]], [[05-decisions/README]], [[06-meetings/README]], [[02-daily/README]] theo yêu cầu |
-| Đầu vào để dành | [[01-inbox/README]]; nghiên cứu ngay không phải qua inbox |
+| Dự án của người dùng | [[04-projects/index]]; trạng thái thực ở Project repo |
+| Quyết định/họp | [[05-decisions/README]], [[06-meetings/README]] khi có đúng event |
+| Ghi nhận theo ngày | [[02-daily/README]]; Agent ghi theo event-based trigger, không cần chờ yêu cầu và không tạo daily trống |
+| Đầu vào để dành | [[01-inbox/README]] khi input được hoãn rõ hoặc còn unprocessed/unowned; nghiên cứu ngay không qua inbox |
 
 ## Factory
 

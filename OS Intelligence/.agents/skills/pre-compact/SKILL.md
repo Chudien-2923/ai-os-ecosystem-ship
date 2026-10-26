@@ -33,13 +33,20 @@ Audit only the current conversation, its selected work, Project/Staff binding wh
    - Staff capability/learning and Staff assignment checkpoint → Staff;
    - collaboration preference or user context → `USER.md`/`10-context/`;
    - cross-system decision → Decisions or Factory spec/registry when applicable;
-   - significant historical milestone → `log.md`, not every tool call.
-4. **Read every target file again before editing.** Preserve newer or concurrent changes. If ownership is ambiguous, content conflicts, or a destructive replacement would be required, stop that write and mark the receipt `BLOCKED`.
-5. **Apply safe Markdown deltas automatically.** Write only missing durable state. Do not create daily, decision, learning, wiki or log entries unless their normal trigger is satisfied. Do not copy Project/Staff state into Intelligence.
-6. **Reconcile lifecycle precisely.** Compaction does not complete or pause work, grant approval, clear a blocker, or settle a worker. Keep statuses supported by evidence.
-7. **Protect ephemeral task state.** Ensure every task that must survive compaction is represented in a durable WORK/checkpoint with owner, status, evidence/blocker and next step. Do not persist trivial scratch steps.
-8. **Validate the affected surface.** Open changed files and verify relevant wikilinks, headings, locators and resume paths. Do not substitute a full-repo audit.
-9. **Decide readiness.** Return `READY TO COMPACT` when every visible durable delta is persisted and affected paths validate. Return `BLOCKED` when a durable delta cannot be safely written or validated. Open questions do not block if they are accurately checkpointed.
+   - significant historical milestone → `log.md`, not every tool call;
+   - explicitly deferred, unprocessed input with no canonical owner → `01-inbox/`;
+   - date-oriented recall layer → current-session date in `02-daily/`, only when the event-based trigger below is met.
+4. **Evaluate Inbox and Daily without manufacturing content.**
+   - Create an Inbox entry only when the user explicitly postpones an input, or a visible input remains unprocessed, unowned and must survive the session. Do not copy a source being researched now, an idea already represented by WORK, or an owned open loop.
+   - Create or update the current date's Daily when the user asks to record the day or shares a meaningful reflection/intention; a milestone, approval, correction or open loop has date-retrieval value and its canonical owner is current; or multiple owners/work changed materially and need one short timeline route.
+   - Daily items are one-line summaries with links to canonical owners. Tool calls, minor edits, routine completed substeps and the mere existence of a session do not trigger Daily.
+   - Do not backfill earlier dates from transcripts or logs merely to fill the timeline. Retroactive entries require an explicit user request or unique uncaptured content with evidence.
+5. **Read every target file again before editing.** Preserve newer or concurrent changes. If ownership is ambiguous, content conflicts, or a destructive replacement would be required, stop that write and mark the receipt `BLOCKED`.
+6. **Apply safe Markdown deltas automatically.** Write only missing durable state. Do not create decision, learning, wiki or log entries unless their normal trigger is satisfied. Do not copy Project/Staff state into Intelligence.
+7. **Reconcile lifecycle precisely.** Compaction does not complete or pause work, grant approval, clear a blocker, or settle a worker. Keep statuses supported by evidence.
+8. **Protect ephemeral task state.** Ensure every task that must survive compaction is represented in a durable WORK/checkpoint with owner, status, evidence/blocker and next step. Do not persist trivial scratch steps.
+9. **Validate the affected surface.** Open changed files and verify relevant wikilinks, headings, locators and resume paths. Do not substitute a full-repo audit.
+10. **Decide readiness.** Return `READY TO COMPACT` when every visible durable delta is persisted and affected paths validate. Return `BLOCKED` when a durable delta cannot be safely written or validated. Open questions do not block if they are accurately checkpointed.
 
 ## Receipt
 

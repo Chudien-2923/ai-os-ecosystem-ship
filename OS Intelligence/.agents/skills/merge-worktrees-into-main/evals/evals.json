@@ -1,0 +1,29 @@
+{
+  "skill_name": "merge-worktrees-into-main",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Merge các worktree đã hoàn tất vào main. Worktree A có coherent diff đã pass smoke nhưng chưa commit; worktree B vẫn active và có draft changes. Hãy tự chuẩn bị đúng quy trình, nhưng chưa có approval commit cụ thể.",
+      "expected_output": "Reviews both owners/lifecycles, prepares one exact commit-and-merge approval row for A, excludes B, and performs no commit or merge before approval.",
+      "files": [],
+      "assertions": [
+        "Only the completed verified worktree is proposed for integration.",
+        "The active draft worktree and its changes are preserved and excluded.",
+        "One packet names A's exact scope, proposed commit message, verification, risk, and merge order before any commit.",
+        "No push, branch deletion, or unrelated staging occurs."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Anh đã approve packet merge A rồi B vào main. Sau khi A merge, B conflict với main ở shared config. B có owner rõ và test mô tả expected behavior. Hãy tiếp tục an toàn.",
+      "expected_output": "Recomputes B against the new main, resolves the conflict on B only from owner/test evidence, verifies B, integrates it sequentially, verifies main, and does not push.",
+      "files": [],
+      "assertions": [
+        "B's relation and approval assumptions are rechecked after A changes main.",
+        "The conflict is resolved on B's owning worktree from established behavior, not by mechanically choosing a side.",
+        "B and final main both receive changed-path verification before completion is claimed.",
+        "No remote push or unrelated worktree update occurs."
+      ]
+    }
+  ]
+}
