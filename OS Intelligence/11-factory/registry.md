@@ -1,7 +1,7 @@
 # AI OS Ecosystem Registry
 
-- Ship source/public release: V0.3.0.
-- Last reconciled: 2026-10-23
+- Ship source: V0.4.0 local release candidate; latest public release: V0.3.0.
+- Last reconciled: 2026-10-26
 - Root convention: sibling `OS Intelligence`, non-Git containers `OS Staff`/`OS Projects`, child standalone repositories
 
 ## Component contracts
@@ -23,10 +23,10 @@ Version metadata không chứng minh runtime. Sau khi tạo hoặc nâng instanc
 
 ## Ship verification
 
-- Fresh-install inventory, privacy scan và active wikilinks/headings: pass.
+- V0.4.0 candidate mandatory inventory/version, privacy/credential scan và 110 active wikilinks/headings: pass.
 - Skill trees khớp source; lock cùng bytes; ba Claude adapters cùng realpath; official validator pass cho ba Skills.
-- Factory planning smoke cho Staff và Project bắt buộc repository metadata, standalone Git boundary, session locator và không mutation.
+- Fresh OMP 18.12.6 read-only orchestration smoke: same-worker correction, fresh worker tại accepted natural gate, Progressive Context Gate, parallel boundary, risk-based verification, receipt và model/autocompact policy đều đúng; no mutation.
 - Parent ignore smoke giữ `.gitkeep`, ignore child Staff/Project paths và không ignore distribution files.
 - Clean Ship chưa có Staff/Project production instance; source-instance identity/evidence không nằm trong distribution.
-- Source/tag/GitHub Release V0.3.0 đã publish; V0.2.0 tồn tại như historical release.
+- Local source V0.4.0 candidate đã pass local verification; latest public source/tag/GitHub Release vẫn là V0.3.0. Git checkpoint, clean-clone và publication proof của V0.4.0 còn pending.
 - Public documentation: Vietnamese-first cho học viên Việt Nam; English technical terms MAY giữ nguyên khi rõ nghĩa hơn.

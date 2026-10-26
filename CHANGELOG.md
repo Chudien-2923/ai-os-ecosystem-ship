@@ -2,6 +2,30 @@
 
 Mọi thay đổi đáng kể của AI OS Ecosystem Ship được ghi tại đây. Ship dùng SemVer độc lập với version của OS Intelligence, Staff và Projects.
 
+## [V0.4.0] — 2026-10-26
+
+### Đã thêm
+
+- Orchestration V2 cho Intelligence: outcome contract thích ứng, Progressive Context Gate, one-owner default và Natural Gate Receipt.
+- Worker continuity curriculum: reuse trong cùng feedback loop, fresh worker tại accepted natural gate và recovery trước duplicate.
+- Risk-based verification ownership và model/context routing dựa trên độ rủi ro thay vì một model hoặc ngưỡng provider cố định.
+
+### Đã thay đổi
+
+- Autocompact được hướng dẫn theo economics của từng model/provider; context window không còn được coi là mục tiêu phải dùng hết.
+- Parallel implementation chỉ hợp lệ khi ownership, interface contract và verification boundary đều độc lập trước dispatch.
+
+### Đã kiểm chứng
+
+- Mandatory inventory/version consistency, privacy/credential scan và 110 active wikilinks/headings.
+- Bundled Skill tree/hash/lock/symlink parity cùng official validation cho ba Skills; parent learner-data ignore boundary.
+- Fresh OMP 18.12.6 read-only orchestration scenario chọn đúng same-worker correction, fresh worker tại natural gate, Progressive Context Gate, verification ownership và durable receipt; không mutation.
+
+### Tương thích và trạng thái
+
+- Component contracts giữ nguyên: Intelligence V0.2.2, Staff V0.2.4, Projects V0.1.4.
+- Đây là local release candidate. Git checkpoint, clean-clone proof, tag và GitHub Release V0.4.0 chưa thực hiện; latest public release vẫn là V0.3.0.
+
 ## [V0.3.0] — 2026-10-23
 
 ### Đã thêm

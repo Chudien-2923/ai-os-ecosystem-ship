@@ -37,3 +37,11 @@
 - Nâng generic Skill integration guidance; bundled Skill trees/lock/adapters không đổi và official validation pass.
 - Privacy, inventory, active wikilinks/headings, Factory planning smoke và clean-clone boundary pass; không đưa source-instance identity, USER/context/work/assets/output vào distribution.
 - Source/tag/GitHub Release V0.3.0 được publish; V0.2.0 được backfill thành historical release.
+
+## 2026-10-26 — Ship V0.4.0 Orchestration V2 release candidate
+
+- Port generic outcome contract, Progressive Context Gate, one-owner default, risk-based verification và Natural Gate Receipt vào clean Intelligence.
+- Thêm worker continuity curriculum: reuse trong feedback loop, fresh worker tại accepted natural gate, recovery trước duplicate và autocompact theo provider economics hiện hành.
+- Không ship private USER, exact model/pricing/threshold, runtime IDs, Builder/Project state hoặc production evidence.
+- Component contracts giữ nguyên; local candidate chờ Git checkpoint, clean-clone proof, tag và GitHub Release V0.4.0.
+- Local verification pass: mandatory inventory/version, privacy/credential scan, 110 active wikilinks/headings, exact bundled Skills/lock/adapters, three official Skill validations, parent ignore boundary và fresh OMP orchestration behavior; clean-clone/publication vẫn gated.
