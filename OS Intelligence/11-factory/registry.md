@@ -1,6 +1,6 @@
 # AI OS Ecosystem Registry
 
-- Ship source: V0.4.0 local release candidate; latest public release: V0.3.0.
+- Ship source: V0.4.0 candidate trên GitHub `main`; latest tagged public release: V0.3.0.
 - Last reconciled: 2026-10-26
 - Root convention: sibling `OS Intelligence`, non-Git containers `OS Staff`/`OS Projects`, child standalone repositories
 
@@ -28,5 +28,5 @@ Version metadata không chứng minh runtime. Sau khi tạo hoặc nâng instanc
 - Fresh OMP 18.12.6 read-only orchestration smoke: same-worker correction, fresh worker tại accepted natural gate, Progressive Context Gate, parallel boundary, risk-based verification, receipt và model/autocompact policy đều đúng; no mutation.
 - Parent ignore smoke giữ `.gitkeep`, ignore child Staff/Project paths và không ignore distribution files.
 - Clean Ship chưa có Staff/Project production instance; source-instance identity/evidence không nằm trong distribution.
-- Local source V0.4.0 candidate đã pass local verification; latest public source/tag/GitHub Release vẫn là V0.3.0. Git checkpoint, clean-clone và publication proof của V0.4.0 còn pending.
+- V0.4.0 content commit `350b97615fc23cd37d71dc5a8e2707b1e3143916` đã push; remote clean-clone pass VERSION, clean status, mandatory files, privacy, 110 links, Skills/adapters và parent ignore boundary. Tag/GitHub Release V0.4.0 chưa tạo.
 - Public documentation: Vietnamese-first cho học viên Việt Nam; English technical terms MAY giữ nguyên khi rõ nghĩa hơn.

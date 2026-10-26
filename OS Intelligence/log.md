@@ -43,5 +43,5 @@
 - Port generic outcome contract, Progressive Context Gate, one-owner default, risk-based verification và Natural Gate Receipt vào clean Intelligence.
 - Thêm worker continuity curriculum: reuse trong feedback loop, fresh worker tại accepted natural gate, recovery trước duplicate và autocompact theo provider economics hiện hành.
 - Không ship private USER, exact model/pricing/threshold, runtime IDs, Builder/Project state hoặc production evidence.
-- Component contracts giữ nguyên; local candidate chờ Git checkpoint, clean-clone proof, tag và GitHub Release V0.4.0.
-- Local verification pass: mandatory inventory/version, privacy/credential scan, 110 active wikilinks/headings, exact bundled Skills/lock/adapters, three official Skill validations, parent ignore boundary và fresh OMP orchestration behavior; clean-clone/publication vẫn gated.
+- Component contracts giữ nguyên; V0.4.0 content commit `350b97615fc23cd37d71dc5a8e2707b1e3143916` đã push lên GitHub `main`.
+- Remote clean-clone pass mandatory inventory/version, privacy/credential scan, 110 active wikilinks/headings, three official Skill validations, adapters, clean status và parent ignore boundary. Tag/GitHub Release V0.4.0 chưa tạo; latest tagged release vẫn là V0.3.0.

@@ -24,7 +24,7 @@ Mọi thay đổi đáng kể của AI OS Ecosystem Ship được ghi tại đâ
 ### Tương thích và trạng thái
 
 - Component contracts giữ nguyên: Intelligence V0.2.2, Staff V0.2.4, Projects V0.1.4.
-- Đây là local release candidate. Git checkpoint, clean-clone proof, tag và GitHub Release V0.4.0 chưa thực hiện; latest public release vẫn là V0.3.0.
+- Source candidate đã commit/push lên GitHub `main` tại content commit `350b97615fc23cd37d71dc5a8e2707b1e3143916`; remote clean-clone proof pass. Tag và GitHub Release V0.4.0 chưa tạo; latest tagged release vẫn là V0.3.0.
 
 ## [V0.3.0] — 2026-10-23
 

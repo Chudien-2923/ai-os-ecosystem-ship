@@ -2,7 +2,7 @@
 
 - Source version: V0.4.0 release candidate
 - Updated: 2026-10-26
-- Distribution status: local candidate; GitHub `main`, tag và latest public release vẫn là V0.3.0
+- Distribution status: V0.4.0 source candidate trên GitHub `main`; content commit `350b97615fc23cd37d71dc5a8e2707b1e3143916`; latest tagged GitHub Release vẫn là V0.3.0
 - Intelligence contract: V0.2.2
 - Staff contract: V0.2.4
 - Projects contract: V0.1.4
@@ -63,8 +63,8 @@ Version Ship độc lập với version ba component. Một release phải ghi r
 - Thêm worker continuity curriculum: reuse trong feedback loop, fresh worker tại accepted natural gate, recovery trước duplicate.
 - Dạy model/autocompact theo risk và provider economics hiện hành; không ship tên model, pricing, threshold hoặc global config riêng của người phát hành.
 - Component contracts và layout giữ nguyên. Learner instance không tự nâng; migration phải giữ toàn bộ learner state.
-- Local verification pass: mandatory inventory/version, privacy, 110 active wikilinks/headings, exact bundled Skills/lock/adapters, official Skill validation, parent ignore boundary và fresh OMP orchestration behavior; clean-clone proof vẫn chờ Git checkpoint.
-- Git checkpoint, clean-clone proof, tag và GitHub Release V0.4.0 còn chờ approval.
+- Git checkpoint/push và remote clean-clone proof pass tại content commit `350b97615fc23cd37d71dc5a8e2707b1e3143916`: VERSION 0.4.0, clean status, mandatory files, privacy, 110 links, Skills/adapters và parent ignore boundary đều đạt.
+- Tag và GitHub Release V0.4.0 chưa tạo; latest tagged release vẫn là V0.3.0.
 
 ### V0.3.0
 
