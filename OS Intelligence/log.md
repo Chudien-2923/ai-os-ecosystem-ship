@@ -38,10 +38,10 @@
 - Privacy, inventory, active wikilinks/headings, Factory planning smoke và clean-clone boundary pass; không đưa source-instance identity, USER/context/work/assets/output vào distribution.
 - Source/tag/GitHub Release V0.3.0 được publish; V0.2.0 được backfill thành historical release.
 
-## 2026-10-26 — Ship V0.4.0 Orchestration V2 release candidate
+## 2026-10-26 — Ship V0.4.0 Orchestration V2
 
 - Port generic outcome contract, Progressive Context Gate, one-owner default, risk-based verification và Natural Gate Receipt vào clean Intelligence.
 - Thêm worker continuity curriculum: reuse trong feedback loop, fresh worker tại accepted natural gate, recovery trước duplicate và autocompact theo provider economics hiện hành.
 - Không ship private USER, exact model/pricing/threshold, runtime IDs, Builder/Project state hoặc production evidence.
-- Component contracts giữ nguyên; V0.4.0 content commit `350b97615fc23cd37d71dc5a8e2707b1e3143916` đã push lên GitHub `main`.
-- Remote clean-clone pass mandatory inventory/version, privacy/credential scan, 110 active wikilinks/headings, three official Skill validations, adapters, clean status và parent ignore boundary. Tag/GitHub Release V0.4.0 chưa tạo; latest tagged release vẫn là V0.3.0.
+- Component contracts giữ nguyên; V0.4.0 source, tag và GitHub Release đã publish trên public repository, release được đánh dấu Latest.
+- Remote clean-clone pass mandatory inventory/version, privacy/credential scan, 110 active wikilinks/headings, three official Skill validations, adapters, clean status và parent ignore boundary.

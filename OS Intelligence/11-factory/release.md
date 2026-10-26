@@ -1,8 +1,8 @@
 # AI OS Ecosystem Ship Release
 
-- Source version: V0.4.0 release candidate
+- Source version: V0.4.0
 - Updated: 2026-10-26
-- Distribution status: V0.4.0 source candidate trên GitHub `main`; content commit `350b97615fc23cd37d71dc5a8e2707b1e3143916`; latest tagged GitHub Release vẫn là V0.3.0
+- Distribution status: GitHub `main`; tag/GitHub Release V0.4.0 là latest
 - Intelligence contract: V0.2.2
 - Staff contract: V0.2.4
 - Projects contract: V0.1.4
@@ -57,14 +57,14 @@ Version Ship độc lập với version ba component. Một release phải ghi r
 
 ## Upgrade history
 
-### V0.4.0 release candidate
+### V0.4.0
 
 - Thêm generic Orchestration V2: outcome contract, Progressive Context Gate, one implementation owner, risk-based verification và Natural Gate Receipt.
 - Thêm worker continuity curriculum: reuse trong feedback loop, fresh worker tại accepted natural gate, recovery trước duplicate.
 - Dạy model/autocompact theo risk và provider economics hiện hành; không ship tên model, pricing, threshold hoặc global config riêng của người phát hành.
 - Component contracts và layout giữ nguyên. Learner instance không tự nâng; migration phải giữ toàn bộ learner state.
-- Git checkpoint/push và remote clean-clone proof pass tại content commit `350b97615fc23cd37d71dc5a8e2707b1e3143916`: VERSION 0.4.0, clean status, mandatory files, privacy, 110 links, Skills/adapters và parent ignore boundary đều đạt.
-- Tag và GitHub Release V0.4.0 chưa tạo; latest tagged release vẫn là V0.3.0.
+- Git checkpoints/push và remote clean-clone proof pass: VERSION 0.4.0, clean status, mandatory files, privacy, 110 links, Skills/adapters và parent ignore boundary đều đạt.
+- Source, tag và GitHub Release V0.4.0 đã phát hành; release được đánh dấu Latest.
 
 ### V0.3.0
 

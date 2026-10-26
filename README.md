@@ -6,7 +6,7 @@ Tài liệu dành chủ yếu cho học viên Việt Nam nên phần hướng d�
 
 ## Phiên bản hiện hành
 
-- Ship source candidate: **V0.4.0**; latest public release: **V0.3.0**
+- Ship source và public release: **V0.4.0**
 - OS Intelligence contract: **V0.2.2**
 - OS Staff contract: **V0.2.4**
 - OS Projects contract: **V0.1.4**
