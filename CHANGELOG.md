@@ -1,6 +1,39 @@
 # Lịch sử thay đổi
 
-Mọi thay đổi đáng kể của AI OS Ecosystem Ship được ghi tại đây. Ship dùng SemVer độc lập với version của OS Intelligence, Staff và Projects.
+Mọi thay đổi đáng kể của AI OS Ecosystem Ship được ghi tại đây. Ship dùng SemVer độc lập với version của OS Intelligence, Staff, Projects và Builder App.
+
+## [V1.0.0] — 2026-11-20
+
+### Đã thêm
+
+- Lớp thứ tư **OS Builder**: container `OS Builder/`, spec Builder App V0.2.2 và `11-factory/builder-runtime/` (`create-app.ts`, hook `check-gate`, template) để tạo repo app cho người dùng vibe coding trực tiếp.
+- Runtime hook cho Oh My Pi kèm test: `freshness` cho Intelligence (session cũ chưa đối soát, dấu hiệu Markdown cũ, session song song), `learning-loop` và `/learn` cho Staff, `project-health` và Skill `brand-curation` cho Project, `ecosystem-catalog` cho mọi repo con; script `bu-headless` chạy Browser Use trên Chromium headless riêng (macOS).
+- Danh bạ `11-factory/catalog.md` (bản sạch rỗng) để Staff/Project/app biết nhau.
+- Skill `io-map` (Input/Output kèm bản đồ Excalidraw, chỉ bật khi người dùng yêu cầu) và `learn` (chế độ học); Playbook Input/Output và knowledge về ownership xuyên repo.
+- README có mục cài công cụ nền; `release.md` có hướng dẫn nâng cấp từ V0.5.0.
+
+### Đã thay đổi
+
+- Intelligence V0.2.3: hook `freshness`, quy tắc một fact một nơi, mục `Đang cân nhắc`, chế độ đối soát session cũ của `pre-compact`.
+- Staff V0.2.16: learning loop theo chủ đề với archive/quên/hạn dùng, `/learn` dùng Skill Creator, bộ nền Impeccable + Superpowers, Browser Use qua `bu-headless`, ranh giới không điều khiển máy/trình duyệt cá nhân, danh bạ, sổ feedback brand, `io-map`.
+- Projects V0.2.3: Team Lead tại root Project biên tập `brand/` hai tầng, Staff ghi sổ `brand/feedback.md` ngay, workstream có `log.md`, file sản xuất ngoài Git, bộ nền công cụ như Staff.
+- Orchestration: follow-up chỉ gửi delta, placement đúng workspace, `--task-title`, đo context tại natural gate, retain/release quyết định lúc nghiệm thu, boundary xuyên repo gồm Builder.
+- Spec và plan ghi vào file theo dõi việc, không tạo `docs/superpowers/` (trừ repo Builder app).
+- Ship chuyển sang ưu tiên Oh My Pi; Codex/Claude Code đọc được Markdown và Skill nhưng không chạy hook.
+
+### Đã kiểm chứng
+
+- Bản clone sạch: layout bốn container với `.gitkeep`; `.gitignore` loại repo con, `OS Worktree/`, sổ `.omp/state/` và plugin cài trên máy.
+- `bun test 11-factory`: 167 test pass trên 10 file.
+- Chín Skill hợp lệ theo validator chính thức; chín Claude adapter cùng realpath; 141 wikilink/heading mở được; quét dữ liệu riêng và credential không còn kết quả.
+- Hook `freshness` nhận đúng root `OS Intelligence` khi nằm trong repo Ship; danh bạ rỗng thì hook `ecosystem-catalog` im lặng; `baseline` đưa session cũ về 0.
+- Phiên Oh My Pi mới, chỉ đọc: lượt đầu, tạo Staff, tạo Project, tạo Builder app đều route đúng spec; việc nhiều hạng mục không tự bật `io-map`; không ghi file ngoài sổ `.omp/state/` đã ignore.
+
+### Tương thích và trạng thái
+
+- Component contracts: Intelligence V0.2.3, Staff V0.2.16, Projects V0.2.3, Builder App V0.2.2.
+- Major release vì đổi layout, cách giữ brand của Project và chuyển sang OMP-first. Instance của người dùng không tự nâng; xem hướng dẫn nâng cấp trong `OS Intelligence/11-factory/release.md`.
+- Chưa kiểm: resume command thật (Orca chưa index bản clone tạm), chạy `create-app.ts` và cài plugin thật trên máy học viên mới, Codex/Claude Code runtime.
 
 ## [V0.5.0] — 2026-10-26
 

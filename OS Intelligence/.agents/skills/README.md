@@ -11,6 +11,8 @@
 - `sync-worktrees-from-main` — đưa local `main` vào các eligible worktree mà không merge ngược; invocation `/skill:sync-worktrees-from-main`.
 - `merge-worktrees-into-main` — chuẩn bị approved commits rồi integrate completed worktrees tuần tự vào local `main`; invocation `/skill:merge-worktrees-into-main`.
 - `sync-main-with-worktrees` — full local reconciliation hai chiều: completed worktrees → `main` → eligible worktrees còn lại; invocation `/skill:sync-main-with-worktrees`.
+- `io-map` — khung Input/Output kèm bản đồ Excalidraw sống (`tong-quan.excalidraw`); **chỉ bật khi người dùng yêu cầu cho từng việc** (`/skill:io-map` hoặc nói rõ), hoặc việc đã có bản đồ. Script `scripts/io-map.ts` sinh bản đồ từ mục `## Bản đồ Input/Output` của WORK/WORKSTREAM/job. **Canonical cho cả hệ:** Factory copy nguyên thư mục sang mọi Staff (`skills/io-map/`) và Project (`.agents/skills/io-map/`); sửa ở đây, chạy `bun test 11-factory/shared-runtime`, rồi copy lại. Playbook: [[08-playbook/input-output-map]].
+- `learn` — chế độ học chỉ kích hoạt bằng `/skill:learn`; dùng learning map, progressive disclosure, source ingest, topic-level compounding và kết thúc bằng Markdown learning outputs cùng một HTML hub.
 
 ## Bắt buộc khi tạo Skill
 

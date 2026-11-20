@@ -1,6 +1,6 @@
 ---
 name: pre-compact
-description: Reconciles the current OS Intelligence session into durable Markdown before context compaction. Use whenever the user says they are about to compact, asks to run pre-compact, wants to preserve session context before `/compact`, or worries that decisions, corrections, artifacts, tasks, or next steps have not been saved.
+description: Reconciles OS Intelligence sessions into durable Markdown. Use whenever the user says they are about to compact, asks to run pre-compact, wants to preserve session context before `/compact`, or worries that decisions, corrections, artifacts, tasks, or next steps have not been saved. Also use for the old-session mode whenever the `ai-os.freshness` hook lists sessions awaiting reconciliation and the user agrees, or the user says "đối soát", "đối soát session cũ" or "dọn tồn đọng" about earlier sessions.
 ---
 
 # Pre-compact
@@ -15,7 +15,7 @@ On Oh My Pi, the user invokes `/skill:pre-compact`, reviews the receipt, then ru
 
 ## Scope
 
-Audit only the current conversation, its selected work, Project/Staff binding when present, files touched or referenced in this session, and runtime evidence available to the Agent. Do not scan unrelated work or concurrent sessions.
+Default mode: audit only the current conversation, its selected work, Project/Staff binding when present, files touched or referenced in this session, and runtime evidence available to the Agent. Do not scan unrelated work or concurrent sessions. The old-session mode below is the only exception.
 
 ## Reconciliation workflow
 
@@ -68,6 +68,37 @@ Markdown đã cập nhật
 ```
 
 Omit `Markdown đã cập nhật` when no Markdown file changed. Keep it as the final section when present, satisfying the user's per-prompt Markdown mutation report.
+
+The literal `READY TO COMPACT` line is also read by the `freshness` hook as proof that this session was reconciled up to that moment; keep the wording exact.
+
+## Old-session mode
+
+Earlier sessions that ended without `pre-compact`/`close`, or ran outside the repo (for example `/tmp`), leave decisions only in transcripts. This mode moves them into their owners so later sessions stop reading stale files.
+
+1. **List.** Run `bun 11-factory/intelligence-runtime/freshness-cli.ts pending` from the Intelligence root. Take the oldest `batchSize` sessions (default 5); older facts must land before newer ones can supersede them.
+2. **Extract with `seance`.** Dispatch one `seance` agent per session (`sourceSession` = the JSONL path) in a single batch. Sub-agents only extract; deciding is your job. Ask for, in this fixed shape:
+   - the user's decisions, corrections, facts about themselves, and preferences, each with a short verbatim quote and timestamp;
+   - each proposal the assistant made and whether the user confirmed it clearly, vaguely (for example "Oke" then moved on), or not at all;
+   - files the session created or edited;
+   - the state at the end of the session (done, waiting on the user, abandoned).
+3. **Compare with owners.** For each item, read the canonical owner (per `LEARNING.md`) and classify it as `already present`, `missing`, `conflicting`, or `unconfirmed proposal`. A later decision in the same scope wins over an older transcript; never overwrite newer state with an older session.
+4. **Apply.**
+   - `missing` and clearly confirmed → write to the owner and update every active place that depends on it in the same pass (`LEARNING.md` → one owner per fact).
+   - `unconfirmed proposal` → add to the owner's `Đang cân nhắc` section as `- YYYY-MM-DD · <proposal> · chưa chốt · nguồn: <session title or id>`; never promote it to a decision.
+   - `conflicting` → do not pick a side. Record the open question in the owner (or the freshness WORK when no owner fits) and ask the user once, all conflicts of the batch together.
+   - Nothing durable (one-off tool help, downloads, chit-chat) → no Markdown change.
+5. **Mark.** After each session's items are written or recorded as open questions, run `bun 11-factory/intelligence-runtime/freshness-cli.ts mark <id> --note "<short summary>"` (use `--note "không liên quan"` when nothing was durable). Do not mark a session whose extraction failed.
+6. **Report.** Use this receipt, then the usual `Markdown đã cập nhật` section:
+
+```text
+Đối soát session cũ: <n> session (<ids>)
+- Đã ghi: <owner — fact>, or none
+- Đang cân nhắc: <owner — proposal>, or none
+- Hỏi người dùng: <conflict>, or none
+- Còn chờ: <m> session
+```
+
+Old-session mode never returns `READY TO COMPACT`; it does not judge the current session.
 
 ## Boundaries
 

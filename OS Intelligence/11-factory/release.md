@@ -1,15 +1,16 @@
 # AI OS Ecosystem Ship Release
 
-- Source version: V0.5.0
-- Updated: 2026-10-26
-- Distribution status: GitHub `main`; tag/GitHub Release V0.5.0 là latest
-- Intelligence contract: V0.2.2
-- Staff contract: V0.2.4
-- Projects contract: V0.1.4
+- Source version: V1.0.0
+- Updated: 2026-11-20
+- Distribution status: chuẩn bị phát hành; tag/GitHub Release V0.5.0 là latest cho tới khi V1.0.0 được publish
+- Intelligence contract: V0.2.3
+- Staff contract: V0.2.16
+- Projects contract: V0.2.3
+- Builder App contract: V0.2.2
 
 ## Mục đích
 
-Bản ship là clean teaching distribution. Nó giữ generic operating system, Factory specs, portable Skills và khả năng tạo Staff/Project từ prompt; không chứa dữ liệu, work, research, output hoặc runtime history của người phát hành.
+Bản ship là clean teaching distribution. Nó giữ generic operating system, Factory specs, runtime hook, portable Skills và khả năng tạo Staff/Project/Builder app từ prompt; không chứa dữ liệu, work, research, output hoặc runtime history của người phát hành.
 
 ## Ngôn ngữ phân phối
 
@@ -21,7 +22,7 @@ Public README, changelog, repository description và release notes dùng tiếng
 - **Minor:** capability/spec/Skill mới tương thích ngược.
 - **Patch:** bug, security, link, wording hoặc adapter fix không đổi contract chính.
 
-Version Ship độc lập với version ba component. Một release phải ghi rõ component matrix như header trên.
+Version Ship độc lập với version bốn component. Một release phải ghi rõ component matrix như header trên.
 
 ## Include / exclude
 
@@ -31,7 +32,8 @@ Version Ship độc lập với version ba component. Một release phải ghi r
 | Security hoặc compatibility fix | Ưu tiên patch release |
 | USER, context, work, daily, meeting, private decision | Không copy |
 | Staff/Project instance, brand facts, assets, outputs | Không copy vào clean distribution |
-| Learner-created Staff/Project repositories | Giữ ngoài parent Ship tracking; mỗi child có standalone Git boundary |
+| Learner-created Staff/Project/app repositories | Giữ ngoài parent Ship tracking; mỗi child có standalone Git boundary |
+| Runtime hook/script | Ship mã nguồn kèm test; chuỗi prompt và fixture dùng xưng hô trung tính, ví dụ giả |
 | Playbook/knowledge | Chỉ ship khi được chọn làm curriculum/public method và không chứa dữ liệu riêng |
 | Runtime IDs, transcript, absolute machine path, credentials | Không ship |
 
@@ -40,22 +42,46 @@ Version Ship độc lập với version ba component. Một release phải ghi r
 1. Đọc release hiện hành, source specs/Skills và feedback có evidence.
 2. Lập migration matrix: source artifact → ship artifact → include/exclude/transform → compatibility → verification.
 3. Áp dụng trên bản Ship source-of-truth; không duplicate private state để rồi cố scrub sau.
-4. Chạy privacy scan, mandatory inventory, wikilink/locator, Skill hash/symlink, learner-data ignore boundary và fresh prompt smoke cho tạo Staff/Project.
+4. Chạy privacy scan, mandatory inventory, wikilink/locator, Skill hash/symlink, `bun test` của runtime, learner-data ignore boundary và fresh prompt smoke cho tạo Staff/Project/app.
 5. Cập nhật release, registry và log; ghi migration notes cho learner instances.
 6. Không tự sửa bản learner đang dùng. Upgrade learner phải giữ `USER`, context, work, child Staff/Project repositories, assets và output; conflict/breaking change cần checkpoint cùng approval.
 
 ## Fresh-install acceptance
 
-- Root có ba product folders `OS Intelligence`, `OS Staff`, `OS Projects`; repository metadata gồm README, CHANGELOG, VERSION, `.gitignore` và Git metadata.
-- Fresh clone giữ `OS Staff` và `OS Projects` bằng `.gitkeep`; hai placeholder không phải Staff/Project data.
-- Root `.gitignore` loại learner-created child directories khỏi parent Ship nhưng không che `.gitkeep`.
-- Intelligence có mandatory starter, clean USER/context/work/wiki/registry.
-- Bảy canonical Skills (`skill-creator`, `pre-compact`, `close`, `repo-reconcile` và ba Worktree Sync Skills) cùng Claude adapters resolve về đúng realpath.
-- Prompt tạo Staff/Project route đúng spec, target sibling container, mandatory `README.md`/`VERSION`/`CHANGELOG.md` và standalone Git boundary.
+- Root có bốn product folders `OS Intelligence`, `OS Staff`, `OS Projects`, `OS Builder`; repository metadata gồm README, CHANGELOG, VERSION, `.gitignore` và Git metadata.
+- Fresh clone giữ `OS Staff`, `OS Projects`, `OS Builder` bằng `.gitkeep`; placeholder không phải instance data.
+- Root `.gitignore` loại learner-created child directories, `OS Worktree/`, sổ `OS Intelligence/.omp/state/` và plugin cài trên máy khỏi parent Ship nhưng không che `.gitkeep`.
+- Intelligence có mandatory starter, clean USER/context/work/wiki/registry, danh bạ rỗng và hook `freshness` cài qua `.omp/hooks/pre/freshness.ts`.
+- Chín canonical Skills (`skill-creator`, `pre-compact`, `close`, `repo-reconcile`, ba Worktree Sync Skills, `io-map`, `learn`) cùng Claude adapters resolve về đúng realpath.
+- `bun test 11-factory` pass từ root `OS Intelligence`.
+- Prompt tạo Staff/Project/app route đúng spec, target sibling container, file vận hành bắt buộc và standalone Git boundary.
 - Fresh Intelligence session và Staff/Project first-use session hiển thị đúng JSONL path cùng exact resume command khi runtime hỗ trợ; resume command tải lại đúng thread.
 - Không có private names, brand data, machine-specific absolute paths, runtime IDs hoặc production artifacts.
 
+## Nâng cấp từ V0.5.0 lên V1.0.0
+
+V1.0.0 là major release. Không có bước nào ghi đè `USER`, context, work hay repo con của bạn; repo con không tự nâng.
+
+**Thay đổi chính:** thêm `OS Builder/`; Intelligence V0.2.2 → V0.2.3 (hook `freshness`, quy tắc một fact một nơi); Staff V0.2.4 → V0.2.16 (learning loop và `/learn` bằng hook, bộ nền plugin, Browser Use, danh bạ, sổ feedback brand, `io-map`); Projects V0.1.4 → V0.2.3 (Team Lead biên tập `brand/`, sổ `brand/feedback.md`, bộ nền công cụ); Builder App V0.2.2 mới; Ship chuyển sang ưu tiên Oh My Pi.
+
+1. **Giữ trạng thái hiện tại.** Trong bản Ship của bạn, commit mọi thay đổi chưa lưu (hoặc tạo một branch backup) trước khi lấy bản mới.
+2. **Lấy V1.0.0** từ remote gốc (`git fetch` rồi merge tag `v1.0.0` vào branch của bạn). File bạn sở hữu như `USER.md`, `10-context/`, `02-daily/`, nội dung `03-work/`, `07-wiki/`, `log.md` không bị bản mới sửa nội dung. Nếu có conflict ở `11-factory/registry.md`: lấy bảng component contracts của bản mới, giữ nguyên các dòng instance của bạn. Conflict ở file khác: giữ phần bạn tự thêm, lấy phần contract của bản mới; không chắc thì hỏi Intelligence lập bảng so sánh trước khi chọn.
+3. **Cài công cụ nền** theo README gốc (OMP, Bun, plugin Superpowers + Impeccable cho `OS Intelligence`, Browser Use + `bu-headless`; phần Builder chỉ khi cần).
+4. **Mở phiên OMP mới** tại `OS Intelligence`. Hook `freshness` chạy từ lượt đầu. Để không bị liệt kê toàn bộ session cũ trước ngày nâng cấp, chạy một lần: `bun 11-factory/intelligence-runtime/freshness-cli.ts baseline --since <YYYY-MM-DD của ngày nâng cấp>`.
+5. **Danh bạ:** thêm một dòng cho mỗi Staff/Project đang có vào `11-factory/catalog.md` để hook `ecosystem-catalog` của repo con nhận ra nhau.
+6. **Nâng repo con khi cần:** nhờ Intelligence nâng từng Staff hoặc Project theo spec mới (Staff §12, Projects §15). Projects đổi cách giữ brand nên cần checkpoint Git trước và bạn duyệt từng bước; repo nào chưa nâng vẫn chạy theo contract cũ.
+7. **Kiểm:** `bun test 11-factory` pass; phiên mới trả lời đúng `Session hiện tại`; `git status` của Ship không hiện repo con.
+
 ## Upgrade history
+
+### V1.0.0
+
+- Thêm lớp OS Builder (spec V0.2.2, `builder-runtime/`) và container `OS Builder/`.
+- Ship runtime hook kèm test cho Intelligence, Staff, Project và app; script `bu-headless`; danh bạ rỗng.
+- Nâng component matrix: Intelligence V0.2.3, Staff V0.2.16, Projects V0.2.3, Builder App V0.2.2; thêm Skill `io-map`, `learn`.
+- Hook `freshness` xác định root Intelligence theo vị trí runtime, đúng cả khi Intelligence nằm trong repo Ship.
+- Major release: đổi layout, cách giữ brand của Project, OMP-first. Instance không tự nâng; hướng dẫn nâng cấp ở mục trên.
+- Kiểm chứng trên bản clone sạch: 167 test, 9 Skill, 141 wikilink, privacy/credential, ignore boundary, năm phiên OMP mới chỉ đọc (lượt đầu, tạo Staff/Project/app, `io-map` không tự bật). Chưa kiểm resume command thật, cài plugin/`create-app.ts` thật trên máy mới, Codex/Claude runtime.
 
 ### V0.5.0
 

@@ -1,62 +1,62 @@
 # AI OS Ecosystem Factory
 
-Factory là chức năng của OS Intelligence. Nó duy trì specs/version, tạo hoặc nâng cấp standalone Staff/Project repositories, xử lý feedback và theo dõi compatibility.
+Factory là chức năng của OS Intelligence. Nó duy trì specs/version, tạo hoặc nâng cấp standalone Staff, Project và Builder app repositories, xử lý feedback và theo dõi compatibility.
 
 ## Nguồn chính
 
-- [[11-factory/release]] — Ship release hiện hành và upgrade policy.
+- [[11-factory/release]] — Ship release hiện hành, component matrix và hướng dẫn nâng cấp.
 - [[11-factory/registry]] — instances đã được tạo trong bản của người dùng này.
-- [[11-factory/specs/os-intelligence-starter-spec]] — Intelligence V0.2.2.
-- [[11-factory/specs/os-staff-starter-spec]] — Staff V0.2.4.
-- [[11-factory/specs/os-projects-starter-spec]] — Projects V0.1.4.
+- [[11-factory/catalog]] — danh bạ Staff/Project/app (ID, một câu mục đích, locator); hook `ecosystem-catalog` chèn danh bạ này vào các repo con.
+- [[11-factory/specs/os-intelligence-starter-spec]] — Intelligence V0.2.3: hook `freshness` giữ Markdown đúng hiện trạng (§10.4).
+- [[11-factory/specs/os-staff-starter-spec]] — Staff V0.2.16: learning loop và `/learn` bằng hook OMP, bộ nền Impeccable + Superpowers, Browser Use qua `bu-headless`, danh bạ, sổ feedback brand, Skill `io-map`. Quy trình tạo ở §12.
+- [[11-factory/specs/os-projects-starter-spec]] — Projects V0.2.3: Team Lead biên tập `brand/`, sổ `brand/feedback.md`, bộ nền công cụ như Staff (§4.2). Quy trình tạo ở §15.
+- [[11-factory/specs/os-builder-app-starter-spec]] — Builder App V0.2.2: repo app để người dùng vibe coding trực tiếp; quy trình tạo ở §2.
 - [[log]] — lịch sử thay đổi có ý nghĩa; không thay spec/registry.
+
+## Runtime đi kèm
+
+Mã nguồn hook/script nằm trong `11-factory/`; Factory copy vào repo con theo spec. Hook chỉ chạy trong Oh My Pi (OMP); Codex/Claude Code vẫn đọc được Markdown và Skill nhưng không chạy hook.
+
+| Thư mục | Nội dung | Test |
+| --- | --- | --- |
+| `intelligence-runtime/` | Hook `freshness` của chính Intelligence (cài qua `.omp/hooks/pre/freshness.ts`), CLI `freshness-cli.ts pending\|check\|mark\|baseline`; cấu hình `.omp/freshness.json`, sổ `.omp/state/` ngoài Git | `bun test 11-factory/intelligence-runtime` |
+| `staff-runtime/` | Hook `learning-loop` và adapter `/learn` cho Staff | `bun test 11-factory/staff-runtime` |
+| `project-runtime/` | Hook `project-health`, Skill `brand-curation`, template sổ feedback và khối `AGENTS.md` Team Lead; bảng nguồn → đích ở `project-runtime/README.md` | `bun test 11-factory/project-runtime` |
+| `shared-runtime/` | Hook `ecosystem-catalog` cho Staff/Project/app; script `bu-headless` (Browser Use trên Chromium headless riêng, macOS); test của Skill `io-map` | `bun test 11-factory/shared-runtime` |
+| `builder-runtime/` | `create-app.ts` dựng repo app, hook `check-gate.ts`, `template/` | `bun test 11-factory/builder-runtime` |
+
+Công cụ cần cài trên máy (OMP, Bun, Git, Orca, plugin, Browser Use, phần riêng của Builder) ở README gốc của Ship.
 
 ## Layout của ecosystem
 
 Từ root `OS Intelligence`:
 
-- `../OS Staff/` — container tổ chức local cho từng Staff; ban đầu chỉ có `.gitkeep`.
-- `../OS Projects/` — container tổ chức local cho từng Project; ban đầu chỉ có `.gitkeep`.
-- Mỗi child Staff/Project là một standalone Git repository với history, remote, approval và recovery độc lập.
+- `../OS Staff/`, `../OS Projects/`, `../OS Builder/` — container tổ chức local; ban đầu chỉ có `.gitkeep`.
+- Mỗi Staff/Project/app bên trong là một standalone Git repository với history, remote, approval và recovery độc lập.
+- `../OS Worktree/<repo>/<worktree>` — nơi đặt Git worktree khi cần; không tạo worktree cùng cấp với repo chính.
 - Intelligence giữ Factory, context chung, research, Playbook và Skills của Chief of Staff.
 
-Không tạo Staff/Project bên trong Intelligence, không init Git tại hai container và không dùng parent Ship repository để version learner data. Root `.gitignore` loại child directories khỏi parent repository.
+Không tạo Staff/Project/app bên trong Intelligence, không init Git tại ba container và không dùng parent Ship repository để version dữ liệu của người dùng. Root `.gitignore` loại các thư mục con khỏi parent repository.
 
-## Tạo Staff từ prompt
+## Tạo repo từ prompt
 
-Khi người dùng yêu cầu như “tạo cho tôi một AI Video Editor”:
+Prompt tự nhiên là đủ, ví dụ “tạo cho tôi một AI Content Writer”, “tạo Project cho brand X”, “tạo app quản lý lịch hẹn”.
 
-1. Rút từ prompt: role, outcome, scope, tool/runtime cần thiết và acceptance. Chỉ hỏi gap ảnh hưởng kết quả.
-2. Đề xuất stable ID dạng lowercase-kebab-case và target `../OS Staff/<staff-id>`; kiểm tra target trước khi ghi.
-3. Đọc đúng phần của [[11-factory/specs/os-staff-starter-spec]] và lập implementation matrix artifact → path → requirement → source → verification.
-4. Tạo repository metadata `README.md`, `VERSION`, `CHANGELOG.md` và starter thật: `AGENTS.md`, `ROLE.md`, `USER.md`, `MEMORY.md`, `WORK.md`, `LEARNING.md`, `jobs/`, `knowledge/README.md`, `journal/README.md`. Skill/knowledge/job chỉ thêm khi có dữ liệu thật.
-5. Trong `AGENTS.md`, bắt buộc thêm `Session hiện tại` ở câu trả lời đầu tiên với JSONL path và exact resume command từ runtime metadata.
-6. Staff `USER.md` chỉ giữ role-specific override; context chung route về Intelligence `USER.md` bằng locator tương đối từ Staff root.
-7. Nếu Staff làm cho Project, thêm Project Context Gate và locator; brand/shared state vẫn thuộc Project.
-8. Chỉ init standalone Git tại root Staff khi người dùng duyệt; không init ở `OS Staff` hoặc parent Ship.
-9. Mở mọi link/heading/locator, chạy fresh first-use và session-resume scenario, rồi cập nhật [[11-factory/registry]]. Chỉ commit/remote/push trong phạm vi được duyệt.
-
-## Tạo Project từ prompt
-
-Khi người dùng yêu cầu như “tạo Project cho brand X”:
-
-1. Xác định project/brand name, stable ID, loại Project và thông tin đã biết; không bịa brand facts.
-2. Target là `../OS Projects/<project-id>`; kiểm tra target trước khi ghi.
-3. Đọc [[11-factory/specs/os-projects-starter-spec]] và lập implementation matrix.
-4. Tạo repository metadata `README.md`, `VERSION`, `CHANGELOG.md` cùng mandatory files: `AGENTS.md`, `PROJECT.md`, `WORK.md`, `brand/foundation.md`, `brand/guidelines.md` có heading `Non-negotiables`, `assets/ASSETS.md`.
-5. Trong `AGENTS.md`, bắt buộc thêm `Session hiện tại` ở câu trả lời đầu tiên với JSONL path và exact resume command từ runtime metadata.
-6. Audience/voice/visual, asset folders và workstreams chỉ tạo khi có dữ liệu thật. File trống phải nói đúng trạng thái và cách cập nhật.
-7. Chỉ init standalone Git tại root Project khi người dùng duyệt; không init ở `OS Projects` hoặc parent Ship.
-8. Nếu đã có Staff phù hợp, chạy Staff-first Project Context Gate; nếu chưa có, kiểm tra cấu trúc/link và ghi rõ runtime chưa kiểm chứng.
-9. Cập nhật Intelligence [[04-projects/index]], [[11-factory/registry]] và [[log]]. Chỉ commit/remote/push trong phạm vi được duyệt.
+1. Rút từ prompt và context đã có: vai trò hoặc brand hoặc mục đích app, outcome, Project liên quan. Chỉ hỏi phần thiếu ảnh hưởng kết quả; Builder chỉ hỏi đúng ba thông tin theo spec.
+2. Đề xuất stable ID lowercase-kebab-case và target trong đúng container; kiểm tra target trước khi ghi.
+3. Đọc đúng quy trình trong spec (Staff §12, Projects §15, Builder §2) và lập implementation matrix: artifact → path → bắt buộc/điều kiện → nguồn → cách kiểm.
+4. Tạo nội dung thật theo spec, gồm `README.md`, `VERSION`, `CHANGELOG.md`, hook/Skill/plugin bắt buộc. File chưa có dữ liệu nói đúng trạng thái; không bịa brand facts hay placeholder giả.
+5. `AGENTS.md` của repo con có mục `Session hiện tại` ở câu trả lời đầu tiên (JSONL path và exact resume command từ runtime metadata).
+6. Yêu cầu tạo Staff/Project/app là approval cho `git init` + root commit local tại root repo con; remote, push, tag cần người dùng duyệt riêng.
+7. Mở mọi link/locator, chạy scenario first-use bằng phiên OMP mới, rồi cập nhật [[11-factory/registry]] và thêm dòng vào [[11-factory/catalog]] cùng lượt. Project mới thêm vào [[04-projects/index]].
 
 ## Upgrade
 
-Spec hoặc Ship release mới không tự nâng learner instance. Trước migration phải phân biệt:
+Spec hoặc Ship release mới không tự nâng instance của người dùng. Trước migration phải phân biệt:
 
-- generic system behavior/spec/Skill có thể nâng;
-- `USER`, context, work, research, child Staff/Project repositories, assets và outputs của learner phải giữ;
-- parent Ship ignore boundary không thay quyền hoặc history của child repositories;
+- generic system behavior/spec/Skill/hook có thể nâng;
+- `USER`, context, work, research, repo con Staff/Project/app, assets và outputs phải giữ;
+- parent Ship ignore boundary không thay quyền hoặc history của repo con;
 - conflict hoặc breaking migration cần checkpoint và approval.
 
 Quy trình đầy đủ ở [[11-factory/release]].

@@ -31,7 +31,8 @@ After reconciliation:
    - runtime: none, settled, retained with owner, or blocked;
    - approval: granted, absent or still required.
 4. **Build a minimal handoff.** Name the repository/cwd, durable work locator, first files to read, one concrete next action and an optional suggested prompt. Do not create a second session-summary document when existing canonical sources are sufficient.
-5. **Decide readiness.** Return `READY TO CLOSE` when durable state is reconciled, affected paths validate, and session-owned runtime is safe. Open work may remain. Return `BLOCKED` only when state cannot be safely persisted/validated or owned runtime would be orphaned.
+5. **Report reconciliation fixes explicitly.** Tell the user which durable Markdown update was missed earlier in the session, the path repaired during close, and what information was added. If reconciliation finds no omission, say so explicitly. Separately list every Markdown file mutated during the close cycle with its durable delta; do not hide this evidence inside `Already current`.
+6. **Decide readiness.** Return `READY TO CLOSE` when durable state is reconciled, affected paths validate, and session-owned runtime is safe. Open work may remain. Return `BLOCKED` only when state cannot be safely persisted/validated or owned runtime would be orphaned.
 
 ## Receipt
 
@@ -39,6 +40,9 @@ Use this structure and keep it concise:
 
 ```text
 Session close: READY TO CLOSE | BLOCKED
+Đã đối chiếu và khắc phục:
+- <path> — trước đó còn thiếu: <durable information>; close đã bổ sung: <information persisted>
+- <Không phát hiện nội dung bền vững nào bị bỏ sót trong session>
 Already current:
 - <durable item already stored, or none>
 Open work:
@@ -56,7 +60,7 @@ Markdown đã cập nhật
 - <path> — <short durable delta>
 ```
 
-Omit `Markdown đã cập nhật` when no Markdown file changed. Keep it as the final section when present, satisfying the user's per-prompt Markdown mutation report.
+Always include the exact heading `Đã đối chiếu và khắc phục:` and never rename or silently omit it. Under that heading, list each repaired path with both the earlier omission and the information added. When no omission was found, write `Không phát hiện nội dung bền vững nào bị bỏ sót trong session.` Omit `Markdown đã cập nhật` only when no Markdown file changed during the close cycle. When present, keep it as the final section and list every changed Markdown path with the information added, satisfying the user's per-prompt Markdown mutation report.
 
 ## Boundaries
 

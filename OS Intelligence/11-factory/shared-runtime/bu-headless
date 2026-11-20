@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# Browser Use CLI on an isolated headless Chromium (temp profile, localhost only).
+# Never attaches to the user's own Chrome, tabs or logins.
+#   bu-headless <<'PY' ... PY     run helpers (new_tab, page_info, capture_screenshot, ...)
+#   bu-headless stop              stop the headless Chromium
+#   bu-headless <browser-use args> pass-through (e.g. --doctor)
+set -euo pipefail
+
+PORT="${BU_HEADLESS_PORT:-9334}"
+ROOT="${XDG_CACHE_HOME:-$HOME/.cache}/bu-headless"
+URL="http://127.0.0.1:$PORT"
+export BU_NAME="${BU_HEADLESS_NAME:-headless}" BU_CDP_URL="$URL" ANONYMIZED_TELEMETRY=false
+
+find_chromium() {
+  if [[ -n "${BU_HEADLESS_CHROMIUM:-}" ]]; then echo "$BU_HEADLESS_CHROMIUM"; return; fi
+  ls -d "$HOME"/Library/Caches/ms-playwright/chromium-*/chrome-mac-*/"Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing" 2>/dev/null | sort -t- -k2 -n | tail -1
+}
+
+browser_id() { curl -sf --max-time 2 "$URL/json/version" | sed -n 's/.*"Browser": *"\([^"]*\)".*/\1/p'; }
+
+stop_browser() {
+  if [[ -f "$ROOT/pid" ]]; then kill "$(cat "$ROOT/pid")" 2>/dev/null || true; rm -f "$ROOT/pid"; fi
+  rm -rf "$ROOT/profile"
+}
+
+if [[ "${1:-}" == "stop" ]]; then stop_browser; browser-use --reload >/dev/null 2>&1 || true; exit 0; fi
+
+listener="$(lsof -nP -iTCP:"$PORT" -sTCP:LISTEN -t 2>/dev/null | head -1 || true)"
+if [[ -n "$listener" && "$listener" != "$(cat "$ROOT/pid" 2>/dev/null || true)" ]]; then
+  echo "bu-headless: port $PORT is held by pid $listener, not bu-headless's own Chromium; refusing. Set BU_HEADLESS_PORT." >&2
+  exit 1
+fi
+
+if [[ -z "$listener" ]]; then
+  chromium="$(find_chromium)"
+  if [[ ! -x "$chromium" ]]; then echo "bu-headless: Chromium not found; run: browser-use install" >&2; exit 1; fi
+  stop_browser
+  mkdir -p "$ROOT"
+  nohup "$chromium" --headless=new --remote-debugging-address=127.0.0.1 --remote-debugging-port="$PORT" \
+    --user-data-dir="$ROOT/profile" --no-first-run --no-default-browser-check \
+    --use-mock-keychain --password-store=basic about:blank >"$ROOT/chromium.log" 2>&1 &
+  echo $! >"$ROOT/pid"
+  for _ in $(seq 1 50); do [[ -n "$(browser_id || true)" ]] && break; sleep 0.2; done
+  if [[ -z "$(browser_id || true)" ]]; then echo "bu-headless: Chromium did not start; see $ROOT/chromium.log" >&2; exit 1; fi
+  browser-use --reload >/dev/null 2>&1 || true
+fi
+
+exec browser-use "$@"

@@ -4,7 +4,7 @@ Chief of Staff AI, Second Brain và Factory của AI OS Ecosystem. Bắt đầu 
 
 ## Bắt đầu
 
-- Tạo Staff hoặc Project: [[11-factory/index]].
+- Tạo Staff, Project hoặc Builder app: [[11-factory/index]].
 - Tiếp tục công việc: [[03-work/index]].
 - Nghiên cứu: [[07-wiki/index]] và [[07-wiki/WIKI]].
 - Skills: `.agents/skills/README.md`.

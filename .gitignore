@@ -8,3 +8,10 @@
 # Learner-created instances are standalone repositories, not Ship contents.
 OS Staff/*/
 OS Projects/*/
+OS Builder/*/
+OS Worktree/
+
+# Trạng thái hook freshness (sổ đối soát, cache) và plugin OMP cài trên máy học viên.
+OS Intelligence/.omp/state/
+OS Intelligence/.omp/plugins/
+OS Intelligence/.superpowers/

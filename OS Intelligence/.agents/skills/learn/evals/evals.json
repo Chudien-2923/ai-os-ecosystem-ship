@@ -1,0 +1,59 @@
+{
+  "skill_name": "learn",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "/skill:learn Người dùng biết chạy quảng cáo nhưng vẫn lẫn lộn attribution với incrementality. Dạy người dùng để người dùng biết khi nào dùng mỗi loại trong cửa hàng trực tuyến mẫu.",
+      "expected_output": "Opens one thread-scoped learning session, shows a compact 2–6-part roadmap with a duration range and observable finish line, begins only the first part, and distinguishes practical relevance without dumping the entire lesson.",
+      "files": [],
+      "expectations": [
+        "The response states the learning objective, a 2–6 part roadmap, an estimated duration range, and an observable finish line.",
+        "The response begins Part 1 and does not reveal the full teaching content for all later parts.",
+        "The explanation distinguishes attribution from incrementality without claiming attribution proves causality.",
+        "The response connects the topic to a sample online store only where the mechanism is credible."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "/skill:learn Người dùng muốn học từ một Instagram post ở https://www.instagram.com/p/example/. Trong tình huống này URL yêu cầu đăng nhập và em không thể đọc nội dung công khai.",
+      "expected_output": "Does not bypass access controls or pretend to ingest the post; states the access boundary and asks for a useful export such as copied text, screenshots, video, or transcript before teaching from the source.",
+      "files": [],
+      "expectations": [
+        "The response does not claim it accessed, transcribed, screenshotted, saved the post content, or ingested claims from the inaccessible post; preserving a locator-only checkpoint is permitted.",
+        "The response explicitly states the access limitation and requests at least one usable alternative input.",
+        "The response does not invent post claims or proceed with a source-based lesson as if the content were known."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "/skill:learn Đây là phần kết thúc buổi học về customer journey. Dùng file nguồn được cung cấp, tạo một completed learning output và HTML hub trong thư mục output được chỉ định. Chỉ đưa thông tin quan trọng lên HTML; Markdown giữ chi tiết và liên kết nguồn.",
+      "expected_output": "Creates a completed overview Markdown with the required metadata/headings, generates one concise responsive HTML hub that links to the Markdown, and reports the concrete capability and output paths.",
+      "files": [
+        "evals/files/customer-journey-source.md"
+      ],
+      "expectations": [
+        "A completed overview.md exists at <domain>/<topic>/overview.md and contains Domain, Updated, Status, Tóm tắt, Điều cần nhớ, Kết quả, and source linkage.",
+        "A single index.html exists, links to overview.md with a relative path, and contains no transcript-sized source dump.",
+        "The final response states what the learner can now do and reports both Markdown and HTML output paths.",
+        "The generated hub is static, responsive, dependency-free, and presents concise knowledge cards."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "/skill:learn Đây là nguồn video thứ ba về dựng video bằng AI. Hãy nối nó với topic đã có, chỉ dạy phần bổ sung hoặc điều chỉnh, và cập nhật learning output mà không tạo bản trùng.",
+      "expected_output": "Updates the existing canonical AI-video topic in place, preserves prior source lineage, adds source 3 exactly once, merges only novel/qualifying claims, surfaces the master-prompt conflict, and teaches the delta instead of replacing or repeating prior knowledge.",
+      "files": [
+        "evals/files/ai-video-compounding/existing/overview.md",
+        "evals/files/ai-video-compounding/existing/sources.md",
+        "evals/files/ai-video-compounding/source-3.md"
+      ],
+      "expectations": [
+        "The existing canonical topic is updated in place; no second topic folder, dated copy, or per-source overview is created.",
+        "The revised overview preserves the established shot-plan/reference/editing insights and adds motion planning plus edit handles without duplicating repeated claims.",
+        "sources.md retains Video A and Video B, adds Video C exactly once, and classifies its relationship and limitations.",
+        "The unsupported master-prompt claim is not silently deleted: the synthesis records that Video C contradicts or qualifies it and states the current interpretation.",
+        "The learner-facing response focuses on what source 3 adds or changes instead of reteaching the complete AI-video workflow."
+      ]
+    }
+  ]
+}

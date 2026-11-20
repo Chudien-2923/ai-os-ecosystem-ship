@@ -4,7 +4,7 @@
     {
       "id": 1,
       "prompt": "Close this fixture session. The work is still active, two todo items exist only in the conversation, and the next session must resume from the fixture WORK file.",
-      "expected_output": "Loads the pre-compact core, persists durable todo state, keeps work active, emits a usable next-session handoff, and returns READY TO CLOSE.",
+      "expected_output": "Loads the pre-compact core, persists durable todo state, keeps work active, uses the exact `Đã đối chiếu và khắc phục:` heading to report the missed WORK update and what was repaired, lists the changed Markdown path, emits a usable next-session handoff, and returns READY TO CLOSE.",
       "files": []
     },
     {
@@ -22,7 +22,7 @@
     {
       "id": 4,
       "prompt": "Run close twice after all fixture state is checkpointed and no runtime remains.",
-      "expected_output": "The second run makes no new mutation, retains the same accurate next action, and returns READY TO CLOSE.",
+      "expected_output": "The second run makes no new mutation, includes `Đã đối chiếu và khắc phục:` with the exact no-omission sentence, retains the same accurate next action, omits the Markdown-changes section, and returns READY TO CLOSE.",
       "files": []
     }
   ]

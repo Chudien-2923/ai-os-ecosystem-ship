@@ -52,3 +52,9 @@
 - Thêm ba Worktree Sync Skills cho từng hướng local `main`/worktrees; shared safety contract bảo toàn dirty/draft/concurrently owned state và cấm push/rewrite/delete ngoài authority.
 - Nâng `pre-compact`, Inbox, Daily, AGENTS và starter spec sang explicit Inbox routing, event-based Daily và no-backfill mặc định; clean starter không chứa learner entry.
 - Component contracts giữ nguyên; V0.5.0 là backward-compatible minor release. Seven-Skill, privacy, inventory, link, parent-ignore, clean-clone và fresh OMP smokes pass.
+
+## 2026-11-20 — Ship V1.0.0 bốn lớp, ưu tiên Oh My Pi
+
+- Thêm lớp OS Builder, runtime hook kèm test cho Intelligence/Staff/Project/app, danh bạ rỗng, script `bu-headless`, Skill `io-map` và `learn`.
+- Nâng component matrix lên Intelligence V0.2.3, Staff V0.2.16, Projects V0.2.3, Builder App V0.2.2; Orchestration bổ sung follow-up delta, placement, đo context tại gate, retain/release và boundary xuyên repo.
+- Major release; instance không tự nâng, hướng dẫn nâng cấp ở [[11-factory/release]]. 167 test, 9 Skill, 141 wikilink, privacy, ignore boundary và năm phiên OMP mới chỉ đọc pass trên bản clone sạch.

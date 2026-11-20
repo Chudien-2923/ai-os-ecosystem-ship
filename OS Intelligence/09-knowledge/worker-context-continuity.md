@@ -1,7 +1,8 @@
 # Giữ continuity của worker trong feedback loop
 
 - Status: method candidate; áp dụng trên task thật rồi mới nâng thành Playbook
-- Scope: supervised orchestration từ OS Intelligence tới Staff hoặc Project
+- Scope: supervised orchestration từ OS Intelligence tới Staff, Project hoặc Builder App Agent
+- Quy tắc hiện hành: [[03-work/ORCHESTRATION#Continuity và vòng đời worker]]. Note này chỉ giữ lý do và scenario.
 - Evidence boundary: private production evidence không nằm trong Ship; mỗi learner instance tự ghi bằng chứng của mình
 
 ## Bài học
@@ -15,7 +16,7 @@ Mặc định: **reuse trong cùng feedback loop, fresh tại natural gate**.
 - Dispatch còn active: gửi input, câu trả lời và correction vào đúng worker/Dispatch.
 - Attempt đã settlement nhưng correction vẫn dành cho cùng output: reuse cùng terminal/worker bằng authority mới theo runtime guide; không tái sử dụng lifecycle ID cũ.
 - Timeout, mất kết nối hoặc trạng thái chưa xác minh không chứng minh worker đã thoát. Inspect/recover trước khi tạo bản sao.
-- Retain worker khi có follow-up gần; release khi output đã được chấp nhận, việc đóng/hoãn hoặc không còn nhu cầu tra cứu. Không giữ vô thời hạn.
+- Retain worker khi có follow-up gần; release khi output đã được chấp nhận, việc đóng/hoãn hoặc không còn nhu cầu tra cứu. Quyết định ngay lúc nghiệm thu khi terminal còn mở; không giữ vô thời hạn.
 
 ## Natural gate
 
@@ -31,6 +32,7 @@ Retain terminal cũ để hỏi lại không bắt buộc slice kế tiếp ti�
 
 - Context window là giới hạn kỹ thuật, không phải mục tiêu sử dụng hết.
 - Khi provider có long-context pricing tier, đặt autocompact theo từng model ở phía an toàn trước tier đó; kiểm tra catalog/runtime hiện hành thay vì copy một ngưỡng cố định.
+- Đo context của worker tại mỗi natural gate: vượt tier thì bước kế tiếp dùng fresh worker với receipt; dưới tier thì giữ để reuse.
 - Compact không xóa filesystem hoặc runtime authority, nhưng summary có thể làm mất nuance chỉ tồn tại trong conversation.
 - Một bounded task thường xuyên chạm autocompact là tín hiệu review scope, tool loop, context preload và lifecycle; tăng threshold không sửa thiết kế task quá rộng.
 

@@ -1,11 +1,11 @@
 # OS Intelligence Starter Spec
 
-- **Phiên bản hiện hành:** V0.2.2.
-- **Ngày chốt:** 2026-10-18.
-- **Trạng thái:** V0.2.2 giữ kiến trúc Skill portable của V0.2.1 và thêm session JSONL/resume locator thống nhất cho Intelligence, Staff và Project.
+- **Phiên bản hiện hành:** V0.2.3.
+- **Ngày chốt:** theo lịch sử phiên bản tại §17.
+- **Trạng thái:** V0.2.3 thêm cơ chế giữ Markdown đúng hiện trạng: hook `freshness` đầu session, sổ đối soát session ngoài Git, chế độ old-session của `pre-compact` và quy tắc một fact một nơi (§10.4). Giữ kiến trúc Skill portable (V0.2.1) và session JSONL/resume locator (V0.2.2). Trạng thái triển khai/runtime của instance được ghi tại [[11-factory/registry]].
 - **Nơi duy trì hiện tại:** OS Intelligence `11-factory/specs/os-intelligence-starter-spec.md`.
 - **Instance:** clean Ship instance; root resolve theo sibling folders, không hard-code đường dẫn máy.
-- **Compatibility hiện hành:** [[11-factory/specs/os-staff-starter-spec]] V0.2.4 và [[11-factory/specs/os-projects-starter-spec]] V0.1.4.
+- **Compatibility hiện hành:** [[11-factory/specs/os-staff-starter-spec]] V0.2.16, [[11-factory/specs/os-projects-starter-spec]] V0.2.3, [[11-factory/specs/os-builder-app-starter-spec]] V0.2.2.
 
 > OS Intelligence là Chief of Staff AI của người dùng: hiểu người dùng, cùng nghiên cứu và phát triển ý tưởng, tích lũy tri thức, điều phối Staff, đồng thời thiết kế và duy trì AI OS Ecosystem.
 
@@ -17,7 +17,7 @@
 2. **Suy nghĩ cùng người dùng:** brainstorming, nghiên cứu, phân tích, hỗ trợ quyết định và tích lũy hiểu biết có nguồn.
 3. **Chief of Staff và Factory:** làm rõ brief, giao đúng Staff, theo dõi kết quả; duy trì spec, khởi tạo repo, nhận feedback và quản lý việc nâng cấp.
 
-Người dùng có thể làm việc tại Intelligence thay vì tự mở từng Staff. Staff vẫn là nhân viên chuyên môn thực thi trong repo/session phù hợp; Intelligence không giả làm mọi Staff trong một context chung. Làm trực tiếp với Staff vẫn được hỗ trợ.
+Người dùng có thể làm việc trực tiếp với Staff/Project/app hoặc qua Intelligence. Staff vẫn là nhân viên chuyên môn thực thi trong repo/session phù hợp; Intelligence không giả làm mọi Staff trong một context chung.
 
 Một danh tính và bộ nhớ lâu dài chung; nhiều session là các luồng công việc độc lập. Chưa tách một Chief of Staff repo thứ hai.
 
@@ -44,11 +44,11 @@ Một danh tính và bộ nhớ lâu dài chung; nhiều session là các luồn
 | Intelligence `11-factory/` | Spec, kiến trúc OS, quy trình tạo/nâng cấp, registry các repo | Một bản song song của Factory cũ sau khi cutover |
 | Orca | Run/Task/Dispatch, thông điệp và quyền điều phối runtime | Bản duy nhất của brief, output, quyết định hoặc bài học cần tiếp tục |
 
-**Factory và OS Playbook sẽ được hợp nhất vào Intelligence.** Staff và Projects vẫn là các repo độc lập bên ngoài Intelligence. Phát hành spec không đồng nghĩa đã di chuyển dữ liệu hoặc thay đổi filesystem.
+**Factory và OS Playbook thuộc Intelligence.** Staff, Projects và app Builder vẫn là các repo độc lập bên ngoài Intelligence. Phát hành spec không đồng nghĩa đã di chuyển dữ liệu hoặc thay đổi filesystem.
 
 `04-projects/` là góc nhìn của người dùng: dự án nào, vì sao quan trọng, đường dẫn tới workspace. Trạng thái mới nhất phải đọc tại Project khi cần, không duy trì bản tiến độ thứ hai.
 
-Public voice của một Project không mặc định là cách người dùng muốn AI giao tiếp. Context của một brand không tự trở thành quy tắc cho brand khác.
+Public voice của một brand không mặc định là cách người dùng muốn AI giao tiếp. Context của một brand không tự trở thành quy tắc cho brand khác.
 
 ## 3. Starter tree và danh mục bắt buộc
 
@@ -196,7 +196,7 @@ Symlink Claude chỉ là adapter filesystem, không được sửa thành nguồ
 
 `skill-creator` là Skill nền bắt buộc và là exact upstream package `anthropics/skills@skill-creator`; `skills-lock.json` giữ source/path/computed hash, package giữ `LICENSE.txt` Apache-2.0. Không sửa upstream body để nhúng rule riêng OS. Tạo Skill mới phải invoke `skill-creator` trước; update behavior/trigger, evaluate, benchmark hoặc tối ưu Skill cũng dùng Skill Creator. Sửa path/typo/metadata không đổi hành vi chỉ cần focused validation. Sau methodology, đọc `.agents/skills/README.md` để áp dụng ownership, canonical path, adapter và smoke contract.
 
-Skill Intelligence chỉ giữ năng lực của Intelligence. Skill chuyên môn của từng Staff ở đúng Staff repo; brand-specific procedure ở Project; cách làm đã có evidence liên Staff/Project ở `08-playbook/`. Skill có thể tham chiếu Playbook nhưng không biến Playbook thành instruction package hoặc sao chép nội dung.
+Skill Intelligence chỉ giữ năng lực của Intelligence. Skill chuyên môn của Staff ở đúng Staff repo còn tồn tại; brand-specific procedure ở Project; cách làm đã có evidence liên Staff/Project ở `08-playbook/`. Skill có thể tham chiếu Playbook nhưng không biến Playbook thành instruction package hoặc sao chép nội dung.
 
 Eval depth phải theo rủi ro: objective/high-impact dùng realistic prompts và baseline; subjective/creative ưu tiên human review; minor non-behavioral fix dùng focused smoke. Claude-only script được ghi `not run` khi không có subscription. Socket cảnh báo LOW tại upstream `eval-viewer/viewer.html` về DOM XSS/iframe URI với dữ liệu không tin cậy; chỉ mở viewer cho output local/trusted hoặc review trong sandbox. Harness phải thấy metadata trước và chỉ nạp body khi task khớp hoặc người dùng gọi trực tiếp; file tồn tại hoặc metadata được list không chứng minh Skill hoạt động đúng.
 
@@ -222,7 +222,7 @@ Wikilink trong instance resolve từ root repo chứa link, không theo cwd ho�
 
 Cross-repo locator khai báo root resolve và identity đích. Staff locator của Project, workstream locator và backlink tiếp tục theo contract Staff–Project hiện hành. Khi chuyển/đổi tên file, sửa các tham chiếu liên quan và mở đích thật để kiểm tra.
 
-Trong spec này, đường dẫn instance resolve từ root Intelligence. Ba spec nằm dưới `11-factory/specs/`; wikilink active dùng đường dẫn root-relative và không giữ alias tại Factory cũ.
+Trong spec này, đường dẫn instance resolve từ root Intelligence. Bốn spec nằm dưới `11-factory/specs/`; wikilink active dùng đường dẫn root-relative và không giữ alias tại Factory cũ.
 
 ## 6. Đầu vào, daily, decisions, meetings và raw
 
@@ -330,7 +330,7 @@ Preference được người dùng nói rõ không cần xin xác nhận lần h
 | Diễn biến/feedback riêng việc | WORK hoặc Project workstream | Sự kiện thực và artifact liên quan |
 | Mốc tiếp nhận thay đổi bền vững | Log | Link tới nội dung và kiểm chứng, không copy bài học |
 
-Nếu Intelligence diễn giải sai brief: học cách giao việc. Nếu một Staff thiếu kỹ năng: đi qua learning của Staff đó. Nếu brand context sai/thiếu: xử lý ở Project theo approval hiện hành. Không gom chuyên môn của mọi Staff vào Intelligence.
+Nếu Intelligence diễn giải sai brief: học cách giao việc. Nếu Staff thiếu kỹ năng: đi qua learning của đúng Staff còn tồn tại. Nếu brand context sai/thiếu: xử lý ở Project theo approval hiện hành. Không gom chuyên môn của mọi Staff vào Intelligence.
 
 ### 9.4. Truy xuất và sửa sai
 
@@ -360,6 +360,19 @@ WORK mở rộng theo thực tế: mục tiêu/scope, yêu cầu gốc quan tr�
 
 Quy ước Markdown và đọc lại không phải khóa nguyên tử. V0.1 chưa có lock service/hàng đợi ghi; phải kiểm chứng bằng session thực và chỉ thêm cơ chế khi có lỗi quan sát được.
 
+### 10.4. Giữ Markdown đúng hiện trạng (V0.2.3)
+
+Tự giác ghi chép trong từng session không đủ: session kết thúc không qua `pre-compact`/`close` hoặc chạy ngoài repo (ví dụ `/tmp`) để lại quyết định chỉ trong transcript, và sửa một chỗ thường bỏ sót các chỗ phụ thuộc. Contract:
+
+- **Hook đầu session** `freshness` (source `11-factory/intelligence-runtime/freshness.ts`, cài qua `.omp/hooks/pre/freshness.ts`): lượt đầu của session chính chèn một message ẩn (`ai-os.freshness`) gồm session cũ chưa đối soát, dấu hiệu Markdown cũ và session Intelligence song song; im lặng khi không có gì. Agent trả lời yêu cầu trước, thêm mục `Việc tồn đọng`, chỉ xử lý khi người dùng đồng ý.
+- **Phạm vi session** theo cwd: root Intelligence, worktree Intelligence (chỉ sau khi worktree đã gỡ) và mọi thư mục ngoài các repo của hệ sinh thái. Session Staff/Project/Builder thuộc owner của chúng.
+- **Mốc đối soát**: dòng trạng thái `READY TO CLOSE`/`READY TO COMPACT` của Skill trong lời assistant, hoặc dòng sổ `<root>/.omp/state/reconciled.jsonl` (ngoài Git) do `freshness-cli.ts mark` ghi. Câu nói ngắn sau mốc (< 80 ký tự) không làm session hiện lại.
+- **Đối soát**: Skill `pre-compact` chế độ old-session; sub-agent chỉ trích, Intelligence đối chiếu owner; đề xuất chưa chốt vào mục `Đang cân nhắc` của owner, không thành quyết định; mâu thuẫn hỏi người dùng.
+- **Dấu hiệu cũ** (`freshness-cli.ts check`): tên thực thể đã xóa trong file active, version lệch giữa `VERSION`/spec/registry/instance, WORK active đứng yên > 7 ngày, Inbox > 7 ngày, thay đổi chưa commit > 3 ngày, wikilink gãy, `Đang cân nhắc` > 30 ngày. Danh sách tên và ngưỡng ở `.omp/freshness.json`; mẫu Ship dùng `removedNames: []`, mỗi learner tự khai báo tên cần theo dõi. Chỉ báo, không tự sửa.
+- **Một fact, một nơi**: mỗi fact có một owner theo `LEARNING.md`; nơi khác chỉ link; sửa fact thì sửa luôn các chỗ phụ thuộc trong cùng lượt.
+
+Cơ chế này không phải khóa ghi; §10.2 vẫn áp dụng cho shared file.
+
 ### 10.3. Resume và tác động bên ngoài
 
 Session mới đọc checkpoint và các nguồn hiện hành trước khi hành động. Với worker đã dispatch, xác minh assignment cũ qua Orca trước khi gửi lại; mất kết nối/chờ lâu/thiếu câu trả lời không chứng minh worker đã dừng. Không khởi chạy duplicate editor hoặc lặp external action chỉ vì transcript hiện tại không có kết quả.
@@ -382,7 +395,7 @@ Chief of Staff tự trả lời câu hỏi worker nếu context đã có. Chỉ 
 
 ### 11.3. Training và production
 
-Training của một Staff cập nhật knowledge/skill/evidence ở Staff đó. Chưa có Project thì không tự nạp brand hoặc ép Project Gate. Khi áp dụng production, assignment phải có Project ID/repo/workstream và worker thực hiện Project Context Gate theo spec hiện hành.
+Training của Staff cập nhật knowledge/skill/evidence ở đúng Staff repo. Chưa có Project thì không tự nạp brand hoặc ép Project Gate, trừ rule brand do learning-loop chèn theo contract Staff hiện hành. Khi áp dụng production gắn Project, assignment phải có Project ID/repo/workstream và worker thực hiện Project Context Gate theo spec hiện hành.
 
 Một worker project session có một active brand. Đổi brand dùng session riêng, không tái sử dụng context cũ tùy tiện. Intelligence có thể biết nhiều Project để điều phối nhưng chỉ cấp context đúng assignment cho từng worker.
 
@@ -390,7 +403,7 @@ Một worker project session có một active brand. Đổi brand dùng session 
 
 ORCHESTRATION chỉ chứa nguyên tắc, cách tìm guide và contract; khi thực thi phải đọc skill/guide Orca đúng phiên bản CLI, xác nhận runtime và placement thật trước khi dispatch. Không sao chép một danh sách lệnh cũ thành API bất biến; không dùng subagent ngoài Orca để giả provenance Orca.
 
-Mỗi luồng coordinator gắn đúng Run; mỗi attempt có Task/Dispatch authority riêng. Worker đọc entrypoint Staff và các context bắt buộc, không chỉ nhận một danh xưng vai trò. Tên terminal hoặc ID trong note cũ không cấp quyền điều phối.
+Mỗi luồng coordinator gắn đúng Run; mỗi attempt có Task/Dispatch authority riêng. Worker đọc entrypoint Staff và các context bắt buộc, không chỉ nhận danh xưng một Staff trong note cũ. Tên terminal hoặc ID trong note cũ không cấp quyền điều phối.
 
 Chief of Staff xử lý question/result theo runtime contract, xác nhận worker report thuộc đúng active dispatch, kiểm tra output/evidence theo yêu cầu và báo đúng outcome. Worker “done” không đồng nghĩa workstream xong; không làm lại toàn bộ việc chỉ để review. Quyết định reuse/retain/release worker theo guide runtime; không bỏ terminal vô chủ sau settlement.
 
@@ -426,15 +439,17 @@ Một mốc qua nhiều repo không atomic. Giữ contract Project commit trư�
 
 ## 14. Hợp nhất và tương thích
 
-### 14.1. Trạng thái Ship source V0.5.0
+### 14.1. Trạng thái Ship V1.0.0
 
-- Factory, Playbook và shared context thuộc Intelligence; `OS Staff`/`OS Projects` là container local, mỗi child instance là standalone repository.
-- Mọi Staff/Project mới có repository metadata `README.md`, `VERSION`, `CHANGELOG.md`; parent Ship ignore learner-created child directories.
-- Clean distribution không mang legacy Factory, USER, work, Staff, Project hoặc runtime history của người phát hành.
-- Generic Orchestration V2 dùng outcome contract, Progressive Context Gate, one-owner default, risk-based verification, worker continuity và Natural Gate Receipt; không đóng băng model/pricing/autocompact config riêng.
+- Bốn lớp gồm OS Intelligence, OS Staff, OS Projects và OS Builder; Factory, Playbook và shared context thuộc Intelligence. Các container `OS Staff`/`OS Projects`/`OS Builder` chứa child instance là standalone repository.
+- Mọi Staff/Project mới có repository metadata `README.md`, `VERSION`, `CHANGELOG.md`; app Builder theo cấu trúc trong spec Builder; parent Ship ignore learner-created child directories.
+- Clean distribution không mang legacy Factory, USER, work, Staff, Project hoặc runtime history của người phát hành. Người dùng có thể làm việc trực tiếp với Staff/Project/app hoặc qua Intelligence.
+- Generic Orchestration dùng outcome contract, Progressive Context Gate, one-owner default, risk-based verification, worker continuity và Natural Gate Receipt; không đóng băng model/pricing/autocompact config riêng.
+- Hook OMP theo owner: `freshness` ở Intelligence; `learning-loop`, `/learn` và danh bạ ở Staff; `project-health` và danh bạ ở Project; `check-gate` và danh bạ ở Builder. Markdown giữ dữ liệu bền vững và đường làm thủ công cho harness khác.
+- Skill `io-map` chỉ bật khi người dùng yêu cầu cho từng việc hoặc tiếp tục việc đã bật. Spec/plan ghi vào file theo dõi việc đúng owner, không tạo `docs/superpowers/`.
 - Repository hygiene/worktree capability nằm ở portable Skills: evidence-based reconcile, destructive approval gate và ba hướng local `main`/worktrees; không tự commit/push/delete hoặc ghi đè active owner.
 - Inbox là explicit deferred/unowned queue; Daily là event-based date index và không backfill chỉ để lấp timeline.
-- Compatibility hiện hành là Staff V0.2.4 và Projects V0.1.4; session locator contract áp dụng cho cả ba OS.
+- Compatibility hiện hành là Staff V0.2.16, Projects V0.2.3 và Builder App V0.2.2; session locator contract áp dụng cho cả bốn lớp.
 - Release và migration policy nằm tại [[11-factory/release]]; instance learner không tự nâng khi spec đổi.
 
 ### 14.2. Quy trình cutover đã áp dụng và dùng lại cho instance khác
@@ -442,13 +457,13 @@ Một mốc qua nhiều repo không atomic. Giữ contract Project commit trư�
 1. Kiểm tra source/target thực, Git roots, file inventory và thay đổi đang có; lập migration matrix, không dựa vào tên folder để đoán dữ liệu trống.
 2. Chuẩn bị starter bắt buộc, ghi identity Chief of Staff theo vai trò đã chốt; không bịa tên riêng, hồ sơ hay lịch sử người dùng.
 3. Chuyển spec và trách nhiệm Factory về `11-factory/`; đưa lịch sử CHANGELOG vào root log, giữ ngày và ý nghĩa các mốc cũ. Instance AGENTS là router mới, không paste toàn bộ Factory AGENTS vào mọi session.
-4. Kiểm tra OS Playbook source; môi trường hiện tại không có folder đó nên `08-playbook/` được khởi tạo trống có giải thích, không bịa nội dung.
+4. Kiểm tra OS Playbook source; nếu chưa có nội dung thì khởi tạo `08-playbook/` trống có giải thích, không bịa nội dung.
 5. Áp dụng compatibility patch cho Staff/Projects: shared USER, Playbook/spec locator và coordinator entrypoint; giữ Staff-local preference, Project ownership, training separation và Project Gate.
 6. Chuyển caller sang nguồn chính mới, cập nhật wikilink/locator và registry. Không giữ hai bản spec/profile active hoặc shim trùng nội dung.
 7. Đối chiếu inventory, mở link/heading/locator hai chiều, chạy scenario phù hợp và ghi giới hạn. Chỉ ghi “đã đồng bộ” cho phần đã kiểm tra.
 8. Đề xuất checkpoint Git theo từng repo và phạm vi người dùng duyệt. Không tự commit/push; kết thúc cutover chỉ sau khi nguồn cũ không còn caller active.
 
-Ba spec hiện resolve dưới `11-factory/specs/`; historical version statements trong log vẫn mô tả đúng mốc cũ, còn link trỏ nguồn chính hiện hành.
+Bốn spec hiện resolve dưới `11-factory/specs/`; historical version statements trong log vẫn mô tả đúng mốc cũ, còn link trỏ nguồn chính hiện hành.
 
 ## 15. Acceptance scenarios cho instance tương lai
 
@@ -471,7 +486,7 @@ Ba spec hiện resolve dưới `11-factory/specs/`; historical version statement
 | Bài học gây hại | Có thể thu hẹp/thu hồi bài học và loại khỏi chỉ dẫn active; không chỉ thêm một note trái ngược |
 | Nhiều work song song | A và B có checkpoint khác nhau, không ghi current task toàn cục; resume mỗi việc mở đúng dữ liệu |
 | Shared edit | Hai session cùng muốn sửa node chung được phân trách nhiệm/hợp nhất; không mất một thay đổi; ghi rõ giới hạn không có lock |
-| Orca đơn Staff | Intelligence giao việc thật tới đúng Staff workspace; worker đọc role/context, trả output có thể mở, coordinator báo đúng outcome và xử lý worker theo runtime guide |
+| Orca đơn Staff | Intelligence giao việc thật tới đúng workspace Staff đang tồn tại; worker đọc role/context, trả output có thể mở, coordinator báo đúng outcome và xử lý worker theo runtime guide |
 | Training rồi Project | Training không tự nạp brand; production có Project binding/Gate; output/shared state ở Project, skill/evidence nghiệp vụ ở Staff |
 | Resume worker | Session mới kiểm tra assignment cũ trước dispatch; không lặp việc hoặc external action khi status chưa rõ |
 | Factory/registry | Phân biệt metadata khớp với cấu trúc thiếu; kiểm tra repo thật trước khẳng định đồng bộ; spec mới không auto-upgrade instance |
@@ -486,7 +501,7 @@ Thứ tự trải nghiệm: starter và đọc context → learning/resume → m
 - Tự xây harness, scheduler, database hoặc framework orchestration.
 - Vector index, knowledge graph engine, temporal graph và semantic search bắt buộc.
 - Dream cycle, ingest mọi dữ liệu, server 24/7 hoặc background sync mặc định.
-- Hook bắt buộc, lock service hoặc đảm bảo concurrent writes tuyệt đối.
+- Hook/model nền ngoài contract hiện hành, lock service hoặc đảm bảo concurrent writes tuyệt đối.
 - Tự publish, chi tiền, commit/push, tự mở rộng quyền hoặc tự nâng mọi repo.
 - Folder People/Companies riêng ở root; chưa được người dùng yêu cầu bổ sung.
 - Kho MEMORY.md toàn cục trùng USER/Knowledge/Decisions/Work.
@@ -497,7 +512,7 @@ Chỉ thêm cơ chế khi có vấn đề quan sát được và cách kiểm ch
 
 ## 17. Hành trình quyết định và nguồn nền
 
-### 17.1. V0.1 — 2026-10-15
+### 17.1. V0.1
 
 1. Khởi đầu là Second Brain/kho context cá nhân dùng chung để giảm giải thích lại với Staff/Projects.
 2. Người dùng xác nhận sẽ nghiên cứu/brainstorm trực tiếp tại Intelligence; hợp nhất trách nhiệm Factory và OS Playbook vào đây.
@@ -510,7 +525,7 @@ Chỉ thêm cơ chế khi có vấn đề quan sát được và cách kiểm ch
 
 Các đề xuất cấu trúc trước khi chốt dùng số folder khác là lịch sử brainstorming, không là alias phải duy trì. Mỗi thay đổi spec tương lai ghi lý do, phạm vi, version trước/sau, ảnh hưởng instance và bằng chứng; không âm thầm sửa ý nghĩa phiên bản đã phát hành.
 
-### 17.2. V0.2 — 2026-10-16
+### 17.2. V0.2
 
 1. Người dùng xác nhận Intelligence thiếu Skill và yêu cầu Skill được Oh My Pi, Codex và Claude Code nhận biết/sử dụng.
 2. Chọn `.agents/skills/` làm nguồn chính portable vì OMP hỗ trợ Agents provider và Codex discover trực tiếp; Claude Code dùng symlink theo từng Skill tại `.claude/skills/`. Khi OMP đồng thời scan Claude provider, path hiển thị có thể là adapter nhưng realpath vẫn phải về canonical source.
@@ -518,7 +533,7 @@ Các đề xuất cấu trúc trước khi chốt dùng số folder khác là l�
 4. Bổ sung `skill-authoring`, contract Agent Skills tối thiểu, ownership boundary với Staff/Project/Playbook và acceptance discovery/activation bằng fresh session.
 5. Đây là capability và starter-structure mới nên nâng V0.1 → V0.2, không gọi là compatibility patch.
 
-### 17.3. V0.2.1 — 2026-10-16
+### 17.3. V0.2.1
 
 1. Người dùng yêu cầu mọi lần tạo Skill phải dùng Skill Creator chính thức vì đánh giá cao workflow và cách trình bày của Claude Code.
 2. Chọn exact upstream + clean cutover: vendor `anthropics/skills@skill-creator`, giữ Apache-2.0/provenance/lock, không fork body.
@@ -527,14 +542,20 @@ Các đề xuất cấu trúc trước khi chốt dùng số folder khác là l�
 5. Ghi nhận Socket LOW warning của `eval-viewer/viewer.html`; viewer chỉ dùng với output local/trusted hoặc sau kiểm tra/sandbox.
 6. Đây là patch thay mandatory authoring implementation của V0.2 mà không đổi canonical layout hay Staff/Project interface, nên version là V0.2.1.
 
-### 17.4. V0.2.2 — 2026-10-18
+### 17.4. V0.2.2
 
-1. Thêm session JSONL/resume locator cho clean Intelligence và contract bắt buộc trong mọi Staff/Project mới.
-2. Dùng metadata authoritative của runtime/index; Orca + OMP search theo prompt đầu tiên, agent và cwd.
-3. Giữ transcript/cache ngoài distribution và giữ durable checkpoint độc lập với runtime resume.
-4. Đây là compatibility patch không đổi layout/ownership; component matrix được nâng đồng bộ.
+1. Người dùng yêu cầu Intelligence, mọi Staff/Project hiện tại và tương lai, cùng teaching Ship đều cung cấp JSONL path và resume command ở câu trả lời đầu tiên.
+2. Chọn metadata authoritative của runtime/index thay vì suy từ Session ID hoặc newest file; Orca + OMP dùng search theo prompt đầu tiên, agent và cwd.
+3. Giữ transcript ngoài repo và giữ durable checkpoint độc lập với runtime resume.
+4. Đây là compatibility patch không đổi layout/ownership, nên Intelligence nâng V0.2.1 → V0.2.2; Staff/Projects nâng patch tương ứng.
 
-### 17.5. Nguồn tham khảo và mức bằng chứng
+### 17.5. V0.2.3
+
+1. Người dùng nhận thấy Markdown của Intelligence bị quên/cũ/xung đột giống Staff trước harness V0.2.6; ví dụ mục tiêu học đổi ở session này nhưng session sau vẫn đọc bản phỏng vấn cũ.
+2. Chẩn đoán bốn lỗi: session không được đối soát, đề xuất chưa chốt không có chỗ lưu, sửa không lan, tồn đọng không ai đóng. Người dùng chọn hướng hook OMP trong repo thay vì siết luật thuần văn bản hoặc model chạy nền.
+3. Thêm hook `freshness`, CLI và sổ ngoài Git; chế độ old-session cho `pre-compact`; quy tắc một fact một nơi và `Đang cân nhắc` trong LEARNING. Không đổi canonical layout hay Staff/Project interface, nên là patch V0.2.2 → V0.2.3.
+
+### 17.6. Nguồn tham khảo và mức bằng chứng
 
 - [Karpathy — LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): nguồn chính của raw/wiki/schema, ingest/query/lint, compounding, index và log. Cấu trúc folder cụ thể là thiết kế cùng người dùng, không phải schema bắt buộc của gist.
 - [Nate Herk — Every Level of a Claude Second Brain Explained](https://www.youtube.com/watch?v=DTCyvo6cC54): router, truy xuất theo câu hỏi, phân biệt context bền vững với dữ liệu cần truy cập, kiến trúc tăng theo nhu cầu. [23:10](https://www.youtube.com/watch?v=DTCyvo6cC54&t=1390s) cho thấy bốn đường truy xuất; [25:45](https://www.youtube.com/watch?v=DTCyvo6cC54&t=1545s) mô tả Always-on; [26:45](https://www.youtube.com/watch?v=DTCyvo6cC54&t=1605s) là Four Cs. Không coi graph demo/sample JSON là bằng chứng query engine hoặc dream cycle đã kiểm chứng.
@@ -546,8 +567,8 @@ Các đề xuất cấu trúc trước khi chốt dùng số folder khác là l�
 - [Anthropic — Skill Creator package](https://github.com/anthropics/skills/tree/main/skills/skill-creator): nguồn upstream được vendor nguyên package, gồm Skill, scripts, agents, schemas, viewer, assets và Apache-2.0 license.
 - [Anthropic — Improving skill-creator](https://claude.com/resources/articles/improving-skill-creator-test-measure-and-refine-agent-skills): phân biệt capability-uplift/encoded-preference, eval, benchmark, multi-agent comparison và description tuning.
 - Orca Orchestration: đã đọc guide do CLI hiện có cung cấp trong phiên thiết kế; đó là tài liệu contract, chưa phải smoke chạy worker. Khi thực thi phải đọc lại guide phù hợp phiên bản đang chạy.
-- Hai spec Staff/Projects được link ở đầu tài liệu cung cấp contract ownership, training/Project Gate, learning và Git. V0.2.1 chỉ thay authoring implementation trong Intelligence, không tự nâng compatibility version hoặc migrate Staff/Project instance.
+- Các spec Staff/Projects/Builder được link ở đầu tài liệu cung cấp contract ownership, training/Project Gate, learning và Git. V0.2.1 chỉ thay authoring implementation trong Intelligence, không tự nâng compatibility version hoặc migrate instance.
 
-V0.2.1 đã được kiểm chứng ở source system trước khi đóng gói Ship: exact upstream `skill-creator` 18 files, lock, Apache-2.0 license và Claude adapter cùng realpath; official `quick_validate.py` pass; `skill-authoring` đã retire. Fresh OMP và Codex activation smoke đã dùng Capture Intent, 2–3 eval prompts với baseline và local contract đúng. Ship instance vẫn phải kiểm tra adapter, privacy, routing và prompt creation theo [[11-factory/release]]; learning reuse, concurrent writes, production và bàn giao đa harness là acceptance riêng của từng learner instance.
+Evidence triển khai V0.2.1 được ghi tại [[11-factory/registry]] của từng learner instance: upstream `skill-creator`, lock/license, adapter, discovery và activation được phân biệt rõ với acceptance learning reuse, concurrent writes, production và bàn giao điều phối. Mỗi learner tự kiểm trên harness thực tế; runtime chưa khả dụng ghi `not run`, không kế thừa kết quả của người phát hành.
 
-V0.2.2 là Intelligence contract của Ship source V0.5.0. Runtime smoke, privacy/inventory và release-candidate evidence nằm tại [[11-factory/registry]]; Ship release lifecycle được ghi tại [[11-factory/release]].
+Evidence fresh-session/resume của V0.2.2 được ghi tại [[11-factory/registry]] của từng learner instance. Mỗi learner tự kiểm JSONL locator và exact resume command trên từng bề mặt; metadata khớp không thay thế kiểm chứng runtime.
